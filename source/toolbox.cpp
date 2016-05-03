@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.09"
+#define STR_APP_VER	 "02.02.10"
 
 
 
@@ -2035,7 +2035,9 @@ void dump_root_key()
 	if(c_firmware==4.76f && !dex_mode) strcpy(version, "475");   else
 	if(c_firmware==4.76f &&  dex_mode) strcpy(version, "475d");  else
 	if(c_firmware==4.78f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.78f &&  dex_mode) strcpy(version, "475d");  else	return;
+    if(c_firmware==4.78f &&  dex_mode) strcpy(version, "475d");  else
+	if(c_firmware==4.80f && !dex_mode) strcpy(version, "480");   else
+    if(c_firmware==4.80f &&  dex_mode) strcpy(version, "480d");  else	return;
 
     char rkdumper[64];
     sprintf(rkdumper, "/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_%s.self", version);
@@ -3031,7 +3033,7 @@ int load_texture(u8 *data, char *name, uint16_t dw)
 void pokeq( uint64_t addr, uint64_t val)
 {
 	if(c_firmware!=3.55f && c_firmware!=3.41f && c_firmware!=3.15f && c_firmware!=4.21f && c_firmware!=4.30f && c_firmware!=4.31f && c_firmware!=4.40f && c_firmware!=4.41f && c_firmware!=4.46f && c_firmware!=4.50f && c_firmware!=4.53f &&
-	   c_firmware!=4.55f && c_firmware!=4.60f && c_firmware!=4.65f && c_firmware!=4.66f && c_firmware!=4.70f && c_firmware!=4.75f && c_firmware!=4.76f && c_firmware!=4.78f) return;
+	   c_firmware!=4.55f && c_firmware!=4.60f && c_firmware!=4.65f && c_firmware!=4.66f && c_firmware!=4.70f && c_firmware!=4.75f && c_firmware!=4.76f && c_firmware!=4.78f && c_firmware!=4.80f) return;
 
 	if(!pp_enabled) return;
 	system_call_2(SYSCALL_POKE, addr, val);
@@ -5323,6 +5325,7 @@ u8 swap_emu=0;
 u8 gameos_flag=0;
 u8 webman_mode=0;
 u8 cfw_settings=0;
+u8 xmb_plugin=0;
 
 u8 lv1_pp=0;
 u8 lv1_sm=0;
@@ -5371,6 +5374,7 @@ void parse_settings()
 			else if(!strcmp(oini, "swap_emu"))		swap_emu		=val;
 			else if(!strcmp(oini, "webman_mode"))		webman_mode		=val;
 			else if(!strcmp(oini, "cfw_settings"))		cfw_settings		=val;
+			else if(!strcmp(oini, "xmb_plugin"))		xmb_plugin		=val;
 			else if(!strcmp(oini, "confirm_with_x"))	{confirm_with_x	=val; set_xo(); save_options();}
 			else if(!strcmp(oini, "gameos_flag"))		gameos_flag		=val;
 
@@ -5431,7 +5435,7 @@ void add_utilities()
 	}
 
 	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle QA Flag", (char*)"Enable or disable QA flag functions.",	(char*)"util_qa");
-	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f)
+	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
 	{
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
@@ -5524,7 +5528,7 @@ void add_utilities()
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
 
-	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f)
+	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
 	{
 	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Dump eid root key", (char*)"Dump eid root key at dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.",
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
@@ -5601,7 +5605,7 @@ void add_settings_column()
 		xmb[col].member[xmb[col].size-1].option_selected=menu_mode;
 		xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-		if((c_firmware==4.78f) && cobra_compatible)
+		if((c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle XMB CFW settings", (char*)"Enable or Disable XMB CFW settings v0.1a (MOD)",	(char*)"cfw_settings");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
@@ -5610,8 +5614,17 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
 
+		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
+		{
+			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Host Information on XMB", (char*)"Enable or Disable Host Information on XMB",	(char*)"xmb_plugin");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
+			xmb[col].member[xmb[col].size-1].option_selected=xmb_plugin;
+			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}
+		
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) && cobra_compatible)
+		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
@@ -5654,7 +5667,7 @@ void add_settings_column()
 	else if(cobra_compatible)
 	{
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) && cobra_compatible)
+		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
@@ -7244,13 +7257,13 @@ void write_to_device()
 {
     if(!exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
     {
-        if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) && dex_mode)
+        if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && dex_mode)
         {
             char message[512];
             sprintf(message, "Your firmware and current mode(%2.2f and DEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from DEX to CEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
             cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
         }
-        else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) && !dex_mode)
+        else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && !dex_mode)
         {
             char message[512];
             sprintf(message, "Your firmware and current mode(%2.2f and CEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from CEX to DEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
@@ -7669,6 +7682,10 @@ int main(int argc, char **argv)
 	else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F31322FULL) {dex_mode=2; c_firmware=4.78f;} //timestamp: 2015/12
 	else
+	if(peekq(0x80000000002ED808ULL)==CEX) {dex_mode=0; c_firmware=4.80f;}
+	else
+	if(peekq(0x800000000030F3A0ULL)==DEX) {dex_mode=2; c_firmware=4.80f;}
+	else
 	if(c_firmware == 0)
     {
     dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Cannot detect firmware version, press OK to exit.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
@@ -7862,6 +7879,20 @@ int main(int argc, char **argv)
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_475D;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_475D;
 		SYSCALL_TABLE			= SYSCALL_TABLE_475D;
+	}
+	else
+	if(c_firmware==4.80f && !dex_mode)
+	{
+		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_480;
+		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_480;
+		SYSCALL_TABLE			= SYSCALL_TABLE_475; // The same for 4.75-4.80
+	}
+	else
+	if(c_firmware==4.80f && dex_mode)
+	{
+		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_480D;
+		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_480D;
+		SYSCALL_TABLE			= SYSCALL_TABLE_480D;
 	}
 	else
 	/*if(c_firmware==4.76f && !dex_mode)
@@ -8069,7 +8100,7 @@ force_reload:
 			if(xmb[xmb_icon].first==n+5) {export_lv(1);} //lv1
 			if(xmb[xmb_icon].first==n+6) {export_lv(0);} //lv2
 			if(xmb[xmb_icon].first==n+7) {dump_flash();}
-            if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f)
+            if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
 			{
 			  if(xmb[xmb_icon].first==n+8) {dump_root_key();}
 			}
@@ -9072,7 +9103,7 @@ void check_settings()
 		if(is_nor() && (cid!=0x82) &&((peek_lv1_cobra(0xF307C) >> 32) == 0x38600001ULL) ) lv1_go=1;
 
 	}
-	else if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) // Fixed
+	else if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
 	{
 		if(  peek_lv1_cobra(0x309E4C       ) == 0xE8830018E8840000ULL)	lv1_pp=1;	else lv1_pp=0;    // Fixed   IDA
 		if( (peek_lv1_cobra(0x2b4434) >> 32) == 0x60000000ULL)			lv1_lv2=1;	else lv1_lv2=0;   // Fixed   IDA
@@ -9155,6 +9186,10 @@ else
 		cfw_settings=1;	//enabled
 	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw") )
 		cfw_settings=0;	//disabled
+	if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex") )
+		xmb_plugin=1;	//enabled
+	else if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex") )
+		xmb_plugin=0;	//disabled	
 
 	if( exist((char*)"/dev_flash/vsh/module/vsh.self.swp") )
 	{
@@ -9297,7 +9332,7 @@ void change_lv1_um(u8 val)
 		if(val)	poke_lv1(0x0FEB8C, 0x3800000000000000ULL | org);
 		else	poke_lv1(0x0FEB8C, 0xE818000800000000ULL | org);
 	}
-	if(c_firmware==4.50f ||  c_firmware==4.53f ||  c_firmware==4.55f ||  c_firmware==4.60f ||  c_firmware==4.65f ||  c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) // Fixed
+	if(c_firmware==4.50f ||  c_firmware==4.53f ||  c_firmware==4.55f ||  c_firmware==4.60f ||  c_firmware==4.65f ||  c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
 	{
 		u64 org=peek_lv1_cobra(0x0FEBD4) & 0x00000000FFFFFFFFULL;
 		if(val)	poke_lv1(0x0FEBD4, 0x3800000000000000ULL | org);
@@ -9345,7 +9380,7 @@ void change_lv1_dm(u8 val)
 		else	poke_lv1(0x16F800, 0x4800606500000000ULL | org);
 	}
 
-	if(c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) // Fixed
+	if(c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
 	{
 		u64 org=peek_lv1_cobra(0x16FA64) & 0x00000000FFFFFFFFULL;
 		if(val)	poke_lv1(0x16FA64, 0x6000000000000000ULL | org); //enable patch
@@ -11328,7 +11363,7 @@ void apply_settings(char *option, int val, u8 _forced)
 
 	} // 4.60 Firmware
 
-	if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) // Fixed
+	if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
 	{
 		if(!strcmp(option, "lv1_pp"))// || _forced) // Fixed
 		{
@@ -12026,6 +12061,44 @@ void apply_settings(char *option, int val, u8 _forced)
 		//system_call_4(379,0x1200,0,0,0);
 		}
 	}
+	
+	if(!strcmp(option, "xmb_plugin"))
+	{
+
+	if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex") )
+		xmb_plugin=1;	//enabled
+	else if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex") )
+		xmb_plugin=0;	//disabled
+
+			if(xmb_plugin==1 && exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex") )
+			{
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex");
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex",
+					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
+			strcpy(status, "HOST information will no longer be displayed on XMB.");
+			auto_reboot = 1;
+			}
+			else
+			if(xmb_plugin==0  && exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex")	)
+			{
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
+					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
+			strcpy(status, "HOST information will no longer be displayed on XMB.");
+			auto_reboot = 1;
+			}
+		if(auto_reboot)
+		{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+		wait_dialog_simple();
+
+
+		//system_call_4(379,0x1200,0,0,0);
+		}
+	}	
 
 	if(!strcmp(option, "gameos_flag"))
 	{

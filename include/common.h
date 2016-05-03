@@ -40,8 +40,8 @@
 #define HVSC_SYSCALL_ADDR_470D		0x80000000002BC084ULL	// where above syscall is in lv2 4.70 DEX
 #define HVSC_SYSCALL_ADDR_475		0x80000000002A0F58ULL	// where above syscall is in lv2 4.75, 4.76, 4.78 // 
 #define HVSC_SYSCALL_ADDR_475D		0x80000000002BC0FCULL	// where above syscall is in lv2 4.75, 4.76, 4.78 DEX
-//#define HVSC_SYSCALL_ADDR_476		0x80000000002A0F58ULL	// where above syscall is in lv2 4.76 // 
-//#define HVSC_SYSCALL_ADDR_476D		0x80000000002BC0FCULL	// where above syscall is in lv2 4.76 DEX
+#define HVSC_SYSCALL_ADDR_480		0x80000000002A0F4CULL	// where above syscall is in lv2 4.80 // 
+#define HVSC_SYSCALL_ADDR_480D		0x80000000002BC1C8ULL	// where above syscall is in lv2 4.80 DEX
 
 #define NEW_POKE_SYSCALL			813                  	// which syscall to overwrite with new poke
 #define NEW_POKE_SYSCALL_ADDR_341	0x80000000001BB93CULL	// where above syscall is in lv2 3.41
@@ -72,8 +72,8 @@
 #define NEW_POKE_SYSCALL_ADDR_470D	0x80000000002BC5ACULL   // where above syscall is in lv2 4.70 DEX
 #define NEW_POKE_SYSCALL_ADDR_475	0x80000000002A1480ULL	// where above syscall is in lv2 4.75 , 4.76, 4.78 CEX
 #define NEW_POKE_SYSCALL_ADDR_475D	0x80000000002BC624ULL   // where above syscall is in lv2 4.75 , 4.76, 4.78 DEX
-//#define NEW_POKE_SYSCALL_ADDR_476	0x80000000002A1480ULL	// where above syscall is in lv2 4.76
-//#define NEW_POKE_SYSCALL_ADDR_476D	0x80000000002BC624ULL   // where above syscall is in lv2 4.76 DEX
+#define NEW_POKE_SYSCALL_ADDR_480	0x80000000002A1474ULL	// where above syscall is in lv2 4.80
+#define NEW_POKE_SYSCALL_ADDR_480D	0x80000000002BC6F0ULL   // where above syscall is in lv2 4.80 DEX
 
 #define SYSCALL_TABLE_341			0x80000000002EB128ULL	// 3.41
 #define SYSCALL_TABLE_355			0x8000000000346570ULL	// 3.55
@@ -101,10 +101,10 @@
 #define SYSCALL_TABLE_466D			0x800000000038A120ULL	// 4.66 DEX
 #define SYSCALL_TABLE_470			0x8000000000363B60ULL	// 4.70
 #define SYSCALL_TABLE_470D			0x800000000038A368ULL	// 4.70 DEX
-#define SYSCALL_TABLE_475			0x8000000000363BE0ULL	// 4.75
-#define SYSCALL_TABLE_475D			0x800000000038A3E8ULL	// 4.75 DEX , TOC : 3758E0
-#define SYSCALL_TABLE_476			0x8000000000363BE0ULL	// 4.76
-#define SYSCALL_TABLE_476D			0x800000000038A3E8ULL	// 4.76 DEX , TOC : 3758E0
+#define SYSCALL_TABLE_475			0x8000000000363BE0ULL	// 4.75-4.78
+#define SYSCALL_TABLE_475D			0x800000000038A3E8ULL	// 4.75-4.78 DEX , TOC : 0x3758E0
+#define SYSCALL_TABLE_480			0x8000000000363BE0ULL	// 4.80
+#define SYSCALL_TABLE_480D			0x800000000038A4E8ULL	// 4.80 DEX , TOC : 0x3759B0
 
 
 #define SYSCALL_PTR(n)				(SYSCALL_TABLE + 8 * (n))
@@ -153,7 +153,7 @@
 #define	HV_START_OFFSET_453 		0x370AA8				// remove lv2 protection
 #define	HV_START_OFFSET2_453		0x16FA60    			// set lv2 access rights for sys_storage
 */
-// 4.55-4.78
+// 4.55-4.80
 #define	HV_START_OFFSET_455 		0x370F28				// remove lv2 protection // Fixed
 #define	HV_START_OFFSET2_455		0x16FA60    			// set lv2 access rights for sys_storage
 /*

@@ -235,7 +235,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x800000000005A66CULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x8000000000056230ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
 		}
-		if(c_firmware==4.70f)
+		if(c_firmware==4.70f || c_firmware==4.80f)
 		{
 			Lv2Syscall2(7, 0x8000000000056588ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x800000000005664CULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
@@ -363,7 +363,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000059C00ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
         }
 
-		if(c_firmware==4.70f)
+		if(c_firmware==4.70f || c_firmware==4.80f)
 		{		
 			Lv2Syscall2(7, 0x8000000000059F58ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x800000000005A01CULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
