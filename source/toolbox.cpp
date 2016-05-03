@@ -12086,7 +12086,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
 				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-			strcpy(status, "HOST information will no longer be displayed on XMB.");
+			strcpy(status, "HOST information will be displayed on XMB.");
 			auto_reboot = 1;
 			}
 		if(auto_reboot)
