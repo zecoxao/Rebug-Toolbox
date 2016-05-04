@@ -5616,7 +5616,7 @@ void add_settings_column()
 
 		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Host Information on XMB", (char*)"Enable or Disable Host Information on XMB",	(char*)"xmb_plugin");
+			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Host Information on XMB [DEX]", (char*)"Enable or Disable Host Information on XMB",	(char*)"xmb_plugin");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=xmb_plugin;
