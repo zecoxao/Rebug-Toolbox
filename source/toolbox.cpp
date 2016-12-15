@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.10"
+#define STR_APP_VER	 "02.02.11"
 
 
 
@@ -2037,7 +2037,9 @@ void dump_root_key()
 	if(c_firmware==4.78f && !dex_mode) strcpy(version, "475");   else
     if(c_firmware==4.78f &&  dex_mode) strcpy(version, "475d");  else
 	if(c_firmware==4.80f && !dex_mode) strcpy(version, "480");   else
-    if(c_firmware==4.80f &&  dex_mode) strcpy(version, "480d");  else	return;
+    if(c_firmware==4.80f &&  dex_mode) strcpy(version, "480d");  else
+	if(c_firmware==4.81f && !dex_mode) strcpy(version, "475");   else
+    if(c_firmware==4.81f &&  dex_mode) strcpy(version, "481d");  else	return;
 
     char rkdumper[64];
     sprintf(rkdumper, "/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_%s.self", version);
@@ -5325,6 +5327,7 @@ u8 swap_emu=0;
 u8 gameos_flag=0;
 u8 webman_mode=0;
 u8 cfw_settings=0;
+u8 wmlp=0;
 u8 xmb_plugin=0;
 
 u8 lv1_pp=0;
@@ -5371,9 +5374,10 @@ void parse_settings()
 			else if(!strcmp(oini, "xmb_mode"))			xmb_mode		=val;
 			else if(!strcmp(oini, "menu_mode"))			menu_mode		=val;
 			else if(!strcmp(oini, "cobra_mode"))		cobra_mode		=val;
-			else if(!strcmp(oini, "swap_emu"))		swap_emu		=val;
+			else if(!strcmp(oini, "swap_emu"))			swap_emu		=val;
 			else if(!strcmp(oini, "webman_mode"))		webman_mode		=val;
 			else if(!strcmp(oini, "cfw_settings"))		cfw_settings		=val;
+			else if(!strcmp(oini, "wmlp"))				wmlp		=val;
 			else if(!strcmp(oini, "xmb_plugin"))		xmb_plugin		=val;
 			else if(!strcmp(oini, "confirm_with_x"))	{confirm_with_x	=val; set_xo(); save_options();}
 			else if(!strcmp(oini, "gameos_flag"))		gameos_flag		=val;
@@ -5435,7 +5439,7 @@ void add_utilities()
 	}
 
 	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle QA Flag", (char*)"Enable or disable QA flag functions.",	(char*)"util_qa");
-	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
+	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 	{
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
@@ -5528,7 +5532,7 @@ void add_utilities()
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
 
-	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
+	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 	{
 	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Dump eid root key", (char*)"Dump eid root key at dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.",
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
@@ -5605,7 +5609,7 @@ void add_settings_column()
 		xmb[col].member[xmb[col].size-1].option_selected=menu_mode;
 		xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-		if((c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
+		if((c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle XMB CFW settings", (char*)"Enable or Disable XMB CFW settings v0.1a (MOD)",	(char*)"cfw_settings");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
@@ -5613,8 +5617,17 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=cfw_settings;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
+		/*
+		if((c_firmware==4.81f) && cobra_compatible)
+		{
+			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle webMAN LaunchPAD", (char*)"Enable or Disable webMAN MOD LaunchPAD v0.1a",	(char*)"wmlp");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
+			xmb[col].member[xmb[col].size-1].option_selected=wmlp;
+			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}*/		
 
-		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
+		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Host Information on XMB [DEX]", (char*)"Enable or Disable Host Information on XMB",	(char*)"xmb_plugin");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
@@ -5622,9 +5635,9 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=xmb_plugin;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
-		
+
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
+		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
@@ -5667,7 +5680,7 @@ void add_settings_column()
 	else if(cobra_compatible)
 	{
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && cobra_compatible)
+		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
@@ -7257,13 +7270,13 @@ void write_to_device()
 {
     if(!exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
     {
-        if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && dex_mode)
+        if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && dex_mode)
         {
             char message[512];
             sprintf(message, "Your firmware and current mode(%2.2f and DEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from DEX to CEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
             cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
         }
-        else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) && !dex_mode)
+        else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && !dex_mode)
         {
             char message[512];
             sprintf(message, "Your firmware and current mode(%2.2f and CEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from CEX to DEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
@@ -7676,6 +7689,8 @@ int main(int argc, char **argv)
     else
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031352F31322FULL) {dex_mode=0; c_firmware=4.78f;} //timestamp: 2015/12
     else
+	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031362F31302FULL) {dex_mode=0; c_firmware=4.81f;} //timestamp: 2016/10
+    else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F30342FULL) {dex_mode=2; c_firmware=4.75f;} //timestamp: 2015/04
     else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F30382FULL) {dex_mode=2; c_firmware=4.76f;} //timestamp: 2015/08
@@ -7685,6 +7700,8 @@ int main(int argc, char **argv)
 	if(peekq(0x80000000002ED808ULL)==CEX) {dex_mode=0; c_firmware=4.80f;}
 	else
 	if(peekq(0x800000000030F3A0ULL)==DEX) {dex_mode=2; c_firmware=4.80f;}
+	else
+	if(peekq(0x800000000030F3B0ULL)==DEX) {dex_mode=2; c_firmware=4.81f;}
 	else
 	if(c_firmware == 0)
     {
@@ -7867,7 +7884,7 @@ int main(int argc, char **argv)
 		SYSCALL_TABLE			= SYSCALL_TABLE_470D;
 	}
 	else
-	if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f && !dex_mode)
+	if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f && !dex_mode)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_475;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_475;
@@ -7892,6 +7909,13 @@ int main(int argc, char **argv)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_480D;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_480D;
+		SYSCALL_TABLE			= SYSCALL_TABLE_480D;
+	}
+	else
+	if(c_firmware==4.81f && dex_mode)
+	{
+		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_481D;
+		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_481D;
 		SYSCALL_TABLE			= SYSCALL_TABLE_480D;
 	}
 	else
@@ -8100,7 +8124,7 @@ force_reload:
 			if(xmb[xmb_icon].first==n+5) {export_lv(1);} //lv1
 			if(xmb[xmb_icon].first==n+6) {export_lv(0);} //lv2
 			if(xmb[xmb_icon].first==n+7) {dump_flash();}
-            if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f)
+            if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 			{
 			  if(xmb[xmb_icon].first==n+8) {dump_root_key();}
 			}
@@ -9103,7 +9127,7 @@ void check_settings()
 		if(is_nor() && (cid!=0x82) &&((peek_lv1_cobra(0xF307C) >> 32) == 0x38600001ULL) ) lv1_go=1;
 
 	}
-	else if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
+	else if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) // Fixed
 	{
 		if(  peek_lv1_cobra(0x309E4C       ) == 0xE8830018E8840000ULL)	lv1_pp=1;	else lv1_pp=0;    // Fixed   IDA
 		if( (peek_lv1_cobra(0x2b4434) >> 32) == 0x60000000ULL)			lv1_lv2=1;	else lv1_lv2=0;   // Fixed   IDA
@@ -9182,14 +9206,22 @@ else
 		webman_mode=1;	//enabled
 	else if( exist((char*)"/dev_flash/vsh/module/webftp_server.sprx.bak") )
 		webman_mode=0;	//disabled
-	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org") )
+	if(  (c_firmware==4.78f || c_firmware==4.80f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org") )
 		cfw_settings=1;	//enabled
-	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw") )
+	else if(  (c_firmware==4.78f || c_firmware==4.80f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw") )
 		cfw_settings=0;	//disabled
+	if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
+		cfw_settings=1;	//enabled
+	else if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on") )
+		cfw_settings=0;	//disabled
+	/*if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
+		wmlp=1;	//enabled
+	else if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp") )
+		wmlp=0;	//disabled*/	
 	if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex") )
 		xmb_plugin=1;	//enabled
 	else if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex") )
-		xmb_plugin=0;	//disabled	
+		xmb_plugin=0;	//disabled
 
 	if( exist((char*)"/dev_flash/vsh/module/vsh.self.swp") )
 	{
@@ -9332,7 +9364,7 @@ void change_lv1_um(u8 val)
 		if(val)	poke_lv1(0x0FEB8C, 0x3800000000000000ULL | org);
 		else	poke_lv1(0x0FEB8C, 0xE818000800000000ULL | org);
 	}
-	if(c_firmware==4.50f ||  c_firmware==4.53f ||  c_firmware==4.55f ||  c_firmware==4.60f ||  c_firmware==4.65f ||  c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
+	if(c_firmware==4.50f ||  c_firmware==4.53f ||  c_firmware==4.55f ||  c_firmware==4.60f ||  c_firmware==4.65f ||  c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) // Fixed
 	{
 		u64 org=peek_lv1_cobra(0x0FEBD4) & 0x00000000FFFFFFFFULL;
 		if(val)	poke_lv1(0x0FEBD4, 0x3800000000000000ULL | org);
@@ -9380,7 +9412,7 @@ void change_lv1_dm(u8 val)
 		else	poke_lv1(0x16F800, 0x4800606500000000ULL | org);
 	}
 
-	if(c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
+	if(c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) // Fixed
 	{
 		u64 org=peek_lv1_cobra(0x16FA64) & 0x00000000FFFFFFFFULL;
 		if(val)	poke_lv1(0x16FA64, 0x6000000000000000ULL | org); //enable patch
@@ -11363,7 +11395,7 @@ void apply_settings(char *option, int val, u8 _forced)
 
 	} // 4.60 Firmware
 
-	if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f) // Fixed
+	if(c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) // Fixed
 	{
 		if(!strcmp(option, "lv1_pp"))// || _forced) // Fixed
 		{
@@ -11637,17 +11669,17 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.swp" )== 0 &&
 				rename ("/dev_rebug/vsh/etc/version.txt.nrm", "/dev_rebug/vsh/etc/version.txt") == 0)
 			{
-				strcpy(status, "[NORMAL MODE] is now active.\n\nSystem will auto-reboot when you quit.");
+				sprintf(status, "[NORMAL MODE] is now active.\n\nSystem will auto-reboot when you quit.");
 				auto_reboot = 1;
 			}
 			else
 			{
-				strcpy(status, "FAILED: PLEASE TRY AGAIN");
+				sprintf(status, "FAILED: PLEASE TRY AGAIN");
 			}
 		  }
 		  else
 		  {
-				strcpy(status, "[NORMAL MODE] IS ALREADY SET!!");
+				sprintf(status, "[NORMAL MODE] IS ALREADY SET!!");
 		  }
 		}
 
@@ -11683,17 +11715,17 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.nrm" )== 0 &&
 				rename ("/dev_rebug/vsh/etc/version.txt.swp", "/dev_rebug/vsh/etc/version.txt") == 0)
 			{
-				strcpy(status, "[REBUG MODE] is now active.\n\nSystem will auto-reboot when you quit.");
+				sprintf(status, "[REBUG MODE] is now active.\n\nSystem will auto-reboot when you quit.");
 				auto_reboot = 1;
 			}
 			else
 			{
-				strcpy(status, "FAILED: PLEASE TRY AGAIN");
+				sprintf(status, "FAILED: PLEASE TRY AGAIN");
 			}
 		  }
 		  else
 		  {
-			strcpy(status, "[REBUG MODE] IS ALREADY SET!");
+			sprintf(status, "[REBUG MODE] IS ALREADY SET!");
 		  }
 		}
 
@@ -11703,6 +11735,8 @@ void apply_settings(char *option, int val, u8 _forced)
 	}
 
     //bool is_cobra_toggle = (!strcmp(option, "cobra_mode"));
+#define ORG_DIR              "/dev_hdd0/game/RBGTLBOX2/USRDIR/wm_lang"	
+#define LANG_DIR             "/dev_hdd0/tmp/wm_lang"
 
 	if(!strcmp(option, "webman_mode"))
 	{
@@ -11711,13 +11745,37 @@ void apply_settings(char *option, int val, u8 _forced)
 			rename ("/dev_rebug/vsh/module/webftp_server.sprx","/dev_rebug/vsh/module/webftp_server.sprx.bak" );
 			cellFsUnlink("/dev_hdd0/xmlhost/game_plugin/fb.xml");
 
-			strcpy(status, "WebMAN is disabled, System will auto-reboot when you quit.");
+			sprintf(status, "WebMAN is disabled, System will auto-reboot when you quit.");
 			auto_reboot = 1;
 		}
 		else if((webman_mode==1) && exist((char*)"/dev_rebug/vsh/module/webftp_server.sprx.bak"))
 		{
 			rename ("/dev_rebug/vsh/module/webftp_server.sprx.bak","/dev_rebug/vsh/module/webftp_server.sprx" );
-			strcpy(status, "WebMAN is enabled. webMAN will be loaded on next boot.\n\nMake sure to enable COBRA after enabling webMAN");
+				mkdir((char*)"/dev_hdd0/tmp/wm_lang", S_IRWXO | S_IRWXU | S_IRWXG | S_IFDIR);
+				file_copy((char*)ORG_DIR "/LANG_EN.TXT", (char*)LANG_DIR "/LANG_EN.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_AR.TXT", (char*)LANG_DIR "/LANG_AR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_CN.TXT", (char*)LANG_DIR "/LANG_CN.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_DE.TXT", (char*)LANG_DIR "/LANG_DE.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_ES.TXT", (char*)LANG_DIR "/LANG_ES.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_FR.TXT", (char*)LANG_DIR "/LANG_FR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_GR.TXT", (char*)LANG_DIR "/LANG_GR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_DK.TXT", (char*)LANG_DIR "/LANG_DK.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_HU.TXT", (char*)LANG_DIR "/LANG_HU.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_HR.TXT", (char*)LANG_DIR "/LANG_HR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_BG.TXT", (char*)LANG_DIR "/LANG_BG.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_CZ.TXT", (char*)LANG_DIR "/LANG_CZ.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_SK.TXT", (char*)LANG_DIR "/LANG_SK.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_IN.TXT", (char*)LANG_DIR "/LANG_IN.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_IT.TXT", (char*)LANG_DIR "/LANG_IT.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_JP.TXT", (char*)LANG_DIR "/LANG_JP.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_KR.TXT", (char*)LANG_DIR "/LANG_KR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_NL.TXT", (char*)LANG_DIR "/LANG_NL.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_PL.TXT", (char*)LANG_DIR "/LANG_PL.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_PT.TXT", (char*)LANG_DIR "/LANG_PT.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_RU.TXT", (char*)LANG_DIR "/LANG_RU.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_TR.TXT", (char*)LANG_DIR "/LANG_TR.TXT", 0);
+				file_copy((char*)ORG_DIR "/LANG_ZH.TXT", (char*)LANG_DIR "/LANG_ZH.TXT", 0);
+			sprintf(status, "WebMAN is enabled. webMAN will be loaded on next boot.\n\nMake sure to enable COBRA after enabling webMAN");
 			auto_reboot = 1;
 		}
 		if(auto_reboot)
@@ -11756,22 +11814,22 @@ void apply_settings(char *option, int val, u8 _forced)
 								rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
 						}*/
 					}
-					strcpy(status, "[RETAIL XMB] is now active.\n\nSystem will auto-reboot when you quit.");
+					sprintf(status, "[RETAIL XMB] is now active.\n\nSystem will auto-reboot when you quit.");
 					auto_reboot = 1;
 				}
 				else
 				{
-					strcpy(status, "FAILED: PLEASE TRY AGAIN");
+					sprintf(status, "FAILED: PLEASE TRY AGAIN");
 				}
 			}
 			else
 			{
-				strcpy(status, "PLEASE TRY [DEBUG XMB]");
+				sprintf(status, "PLEASE TRY [DEBUG XMB]");
 			}
 		  }
 		  else
 		  {
-			strcpy(status, "UNAVAILABLE IN [NORMAL MODE]");
+			sprintf(status, "UNAVAILABLE IN [NORMAL MODE]");
 		  }
 		}
 
@@ -11787,22 +11845,22 @@ void apply_settings(char *option, int val, u8 _forced)
 				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.cexsp" )== 0 &&
 					rename ("/dev_rebug/vsh/module/vsh.self.dexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
 				{
-					strcpy(status, "[DEBUG XMB] is now active.\n\nSystem will auto-reboot when you quit.");
+					sprintf(status, "[DEBUG XMB] is now active.\n\nSystem will auto-reboot when you quit.");
 					auto_reboot = 1;
 				}
 				else
 				{
-					strcpy(status, "FAILED: PLEASE TRY AGAIN");
+					sprintf(status, "FAILED: PLEASE TRY AGAIN");
 				}
 			}
 			else
 			{
-				strcpy(status, "PLEASE TRY [RETAIL XMB]");
+				sprintf(status, "PLEASE TRY [RETAIL XMB]");
 			}
 		  }
 		  else
 		  {
-			strcpy(status, "UNAVAILABLE IN [NORMAL MODE]");
+			sprintf(status, "UNAVAILABLE IN [NORMAL MODE]");
 		  }
 		}
 
@@ -11831,21 +11889,21 @@ void apply_settings(char *option, int val, u8 _forced)
 				{
 					if(auto_reboot)
 					{
-						strcpy(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.\n\nSystem will auto-reboot when you quit.");
+						sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.\n\nSystem will auto-reboot when you quit.");
 					}
 					else
 					{
-						strcpy(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.");
+						sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.");
 					}
 				}
 				else
 				{
-					strcpy(status, "[DEBUG SETTINGS: MENU CEX QA] FAILED");
+					sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] FAILED");
 				}
 			}
 			else
 			{
-				strcpy(status, "TRY [DEBUG SETTINGS: MENU DEBUG]");
+				sprintf(status, "TRY [DEBUG SETTINGS: MENU DEBUG]");
 			}
 		}
 		// [DEBUG SETTINGS: MENU 2]: DEX
@@ -11866,21 +11924,21 @@ void apply_settings(char *option, int val, u8 _forced)
 				{
 					if(auto_reboot)
 					{
-						strcpy(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.\n\nSystem will auto-reboot when you quit.");
+						sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.\n\nSystem will auto-reboot when you quit.");
 					}
 					else
 					{
-						strcpy(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.");
+						sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.");
 					}
 				}
 				else
 				{
-					strcpy(status, "[DEBUG SETTINGS: MENU DEBUG] FAILED");
+					sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] FAILED");
 				}
 			}
 			else
 			{
-				strcpy(status, "TRY [DEBUG SETTINGS: MENU CEX QA]");
+				sprintf(status, "TRY [DEBUG SETTINGS: MENU CEX QA]");
 			}
 		}
 
@@ -11906,7 +11964,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				}
 
 				{
-					strcpy(status, "COBRA Mode enabled." /*"System will reboot now."*/);
+					sprintf(status, "COBRA Mode enabled." /*"System will reboot now."*/);
 					auto_reboot = 1;
 				}
 			}
@@ -11926,14 +11984,14 @@ void apply_settings(char *option, int val, u8 _forced)
 				}
 
 				{
-					strcpy(status, "COBRA Mode disabled." /*"System will reboot now."*/);
+					sprintf(status, "COBRA Mode disabled." /*"System will reboot now."*/);
 					auto_reboot = 1;
 				}
 			}
 		}
 		else
 		{
-		strcpy(status, "Error in flash, reinstall firmware to fix this");
+		sprintf(status, "Error in flash, reinstall firmware to fix this");
 		}
 
 		dialog_ret=0;
@@ -12005,7 +12063,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		}
 	}
 
-	if(!strcmp(option, "cfw_settings"))
+	if((c_firmware==4.78f || c_firmware==4.80f) && !strcmp(option, "cfw_settings"))
 	{
 
 	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org") )
@@ -12027,7 +12085,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw");
 				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org",
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
-			strcpy(status, "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.");
+			sprintf(status, "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.");
 			auto_reboot = 1;
 			}
 			else
@@ -12048,7 +12106,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org");
 				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw",
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
-			strcpy(status, "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.");
+			sprintf(status, "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.");
 			auto_reboot = 1;
 			}
 		if(auto_reboot)
@@ -12061,7 +12119,127 @@ void apply_settings(char *option, int val, u8 _forced)
 		//system_call_4(379,0x1200,0,0,0);
 		}
 	}
-	
+	else if((c_firmware==4.81f) && !strcmp(option, "cfw_settings"))
+	{
+
+	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
+		cfw_settings=1;	//enabled
+	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on") )
+		cfw_settings=0;	//disabled
+
+			if(cfw_settings==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
+			{
+				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
+			sprintf(status, "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.");
+			auto_reboot = 1;
+			}
+			else
+			if(cfw_settings==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on")
+								&& exist((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak")
+				)
+			{
+				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak",
+					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
+			sprintf(status, "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.");
+			auto_reboot = 1;
+			}
+		if(auto_reboot)
+		{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+		wait_dialog_simple();
+
+
+		//system_call_4(379,0x1200,0,0,0);
+		}
+	}/*
+	if(!strcmp(option, "wmlp"))
+	{
+
+	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
+		wmlp=1;	//enabled
+	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp") )
+		wmlp=0;	//disabled
+
+			if(wmlp==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
+			{
+				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp");
+				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org",
+					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");					
+				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp");
+				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org",
+					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");					
+				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
+					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp");
+				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org",
+					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");					
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");					
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");				
+			sprintf(status, "webMAN MOD LaunchPAD is Disabled. The plugin will be unloaded on next boot.");				
+			auto_reboot = 1;
+			}
+			else
+			if(wmlp==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp"))
+			{									
+				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org");
+				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp",
+					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");					
+				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
+					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org");
+				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp",
+					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");					
+				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
+					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org");
+				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp",
+					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");					
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");					
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");	
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org");
+				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp",
+					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");
+			sprintf(status, "webMAN MOD LaunchPAD is Enabled. The feature will be available on What's NEW on XMB.\n\n webMAN must be enabled to use this feature as well as PSN account registration on your user profile.");			
+			auto_reboot = 1;
+			}
+		if(auto_reboot)
+		{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+		wait_dialog_simple();
+
+
+		//system_call_4(379,0x1200,0,0,0);
+		}
+	}	*/
+
 	if(!strcmp(option, "xmb_plugin"))
 	{
 
@@ -12076,7 +12254,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex");
 				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex",
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-			strcpy(status, "HOST information will no longer be displayed on XMB.");
+			sprintf(status, "HOST information will no longer be displayed on XMB.");
 			auto_reboot = 1;
 			}
 			else
@@ -12086,7 +12264,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
 				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-			strcpy(status, "HOST information will be displayed on XMB.");
+			sprintf(status, "HOST information will be displayed on XMB.");
 			auto_reboot = 1;
 			}
 		if(auto_reboot)
@@ -12098,7 +12276,7 @@ void apply_settings(char *option, int val, u8 _forced)
 
 		//system_call_4(379,0x1200,0,0,0);
 		}
-	}	
+	}
 
 	if(!strcmp(option, "gameos_flag"))
 	{

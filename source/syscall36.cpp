@@ -245,7 +245,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x800000000005A6F0ULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x800000000005622CULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
 		}
-		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f)
+		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f)
 		{
 			Lv2Syscall2(7, 0x800000000005658CULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x8000000000056650ULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
@@ -374,7 +374,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000059BFCULL, 0x386000012F830000ULL ); // ignore LIC.DAT check		
 		}
 
-		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f)
+		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f)
 		{		
 			Lv2Syscall2(7, 0x80000000000595FCULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x800000000005A020ULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
@@ -383,7 +383,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x800000000005E0B0ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
 			Lv2Syscall2(7, 0x800000000005E0C4ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
 			Lv2Syscall2(7, 0x8000000000059C00ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
-		}
+		}	
 	}
 }
 
