@@ -546,7 +546,7 @@ void get_all_language()
 	int fd;
 	
 	lang_N = 0;
-	strcpy(STR_LANGUAGE[lang_N], "English") ;
+	strcpy(STR_LANGUAGE[lang_N], "English (default)") ;
 	lang_N++;
 	sprintf(LOCPath, "/dev_hdd0/game/%s/USRDIR/loc", STR_APP_ID);
 	
