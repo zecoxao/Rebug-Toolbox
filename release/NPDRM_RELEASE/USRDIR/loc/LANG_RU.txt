@@ -1,0 +1,245 @@
+STR_LANGUAGE				{Русский}
+STR_LANGCODE				{\x07}
+STR_LANG					{Язык}
+STR_LANGDESC				{Выбор языка Rebug Toolbox}
+STR_DISABLE					{Отключено}
+STR_ENABLE					{Включено}
+STR_NO						{Не выбрано}
+STR_SYSTEM					{Система}
+STR_SELECTOR				{Режимы}
+STR_LV1PATCH				{LV1 Патчи}
+STR_DTC						{DEX/CEX}
+STR_UTLS					{Утилиты}
+STR_EIDRK					{Сохранить 'eid root key' в '/dev_hdd0/game/RBGTLBOX2/USRDIR'\n\nи перезагрузить PS3?}
+STR_SCRSHOT					{Сохранять скриншоты в}
+STR_DONE					{Готово!}
+STR_SHTDWN					{Выключение...}
+STR_TRYRESTART				{Попытка перезагрузки...}
+STR_NOTFOUND				{не найден!}
+STR_PETBOOTINST				{Установить Petitboot на VFLASH/NAND Region 5?}
+STR_PETBOOTOK				{Petitboot был установлен.. Наслаждайтесь OtherOS}
+STR_PETBOOTERROR			{ОШИБКА: Не найден Petitboot..VFLASH обнаружен.\n\nРазместите файл с именем 'dtbimage.ps3.bin' на USB-устройстве и попытайтесь снова}
+STR_RESIZE5					{Переразметить VFLASH/NAND Region 5 для поддержки OtherOS?}
+STR_RESIZE5OK				{УСПЕШНО: Необходимо перезагрузить PS3, чтобы изменения вступили в силу}
+STR_RESIZE5ERROR			{ОШИБКА: Переразметка VFLASH/NAND Region 5 не завершена}
+STR_FLASHOK					{УСПЕШНО: Необходимо перезагрузить PS3, чтобы изменения вступили в силу}
+STR_FLASHERROR				{ОШИБКА!!!}
+STR_GAMEOSFLG				{Установить флаг загрузки GameOS?}
+STR_GAMEOSFLGOK				{Флаг загрузки уже установлен}
+STR_SYSINF					{Системная информация}
+STR_SYSINFDESC				{Отобразить информацию о системе PS3}
+STR_QUIT					{Выход}
+STR_QUITDESC1				{Закрыть}
+STR_QUITDESC2				{и вернуться к XMB}
+STR_RESTSYS					{Перезагрузка системы}
+STR_RESTSYSDESC1			{Закрыть}
+STR_RESTSYSDESC2			{и перезагрузить Playstation 3}
+STR_RESTSYS_SUB1			{Программно [только LV2]}
+STR_RESTSYS_SUB2			{Полностью [цикл Откл/Вкл]}
+STR_BOOTOOS					{Загрузка OtherOS}
+STR_BOOTOOSDESC				{Выбор LV1 патчей и перезагрузка в OtherOS}
+STR_BOOTOOS_SUB1			{Загрузка (LV1 патчи: Применить все)}
+STR_BOOTOOS_SUB2			{Загрузка (LV1 патчи: Применить текущие)}
+STR_TRNOFF					{Выключение}
+STR_TRNOFFDESC				{Выключение системы Playstation 3}
+STR_QA						{Переключение QA Flag}
+STR_QADESC					{Вкл/Отключить функционал QA Flag}
+STR_NOTAV					{Недоступно}
+STR_TOGREC					{Режим Recovery}
+STR_TOGRECDESC				{Вкл/Откл Recovery Mode при следующей загрузке}
+STR_TOGPM					{Режим Factory Service}
+STR_TOGPMDESC				{Вкл/Откл Factory Service Mode при следующей загрузке}
+STR_LOADLV2					{Загрузка LV2 Kernel}
+STR_LOADLV2DESC				{Загрузка lv2_kernel.self.[KERNEL_NAME] с USB или /dev_hdd0}
+STR_BUT						{Переназначение кнопок X/O}
+STR_BUTDESC					{Указать кнопки, используемые для Ввода/Запуска и Отмены/Возврата}
+STR_CIRCLE					{O - кнопка 'Запуск'}
+STR_CROSS					{X - кнопка 'Запуск'}
+STR_XREG					{Резерв/Восстановление xRegistry}
+STR_XREGDESC				{Создать резервную копию или Восстановить настройки PS3 из файла с USB}
+STR_BACKUP					{Резервная копия}
+STR_RESTORE					{Восстановление}
+STR_RESIZEVFLASH			{Переразметка VFLASH/NAND Regions}
+STR_RESIZEVFLASHDESC		{Переразметка VFLASH/NAND Regions 5 для поддержки OtherOS}
+STR_INSTPETBOOT				{Установка Petitboot}
+STR_INSTPETBOOTDESC			{Установка Petitboot в VFLASH/NAND Regions 5 с USB}
+STR_GAMEOSBOOTFLG			{Установка Флага загрузки GameOS}
+STR_GAMEOSBOOTFLGDESC		{Исправление ошибок загрузки PS2 игр, если установлена OtherOS}
+STR_PKG						{Создать папку \x22Packages\x22}
+STR_PKGDESC					{Создать папку /dev_hdd0/packages}
+STR_SAVLV1					{Экспорт памяти Hypervisor LV1}
+STR_SAVLV1DESC				{Сохранить LV1 память в файл}
+STR_SAVLV2					{Экспорт памяти GameOS LV2}
+STR_SAVLV2DESC				{Сохранить память LV2 в файл}
+STR_SAVFLASH				{Экспорт памяти Flash [NOR/NAND]}
+STR_SAVFLASHDESC			{Сохранить текущее состояние NOR/NAND Flash-памяти в /dev_usb000}
+STR_SAVEIDRK				{Экспорт 'eid root key'}
+STR_SAVEIDRKDESC			{Сохранить 'eid root key' в dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
+STR_PS3ID					{Изменить активный PS3ID}
+STR_PS3IDDESC				{Подмена IDPS в LV2 памяти}
+STR_USE						{Использовать}
+STR_SM						{Режим работы системы}
+STR_SMDESC					{Переключение между режимами Normal и Rebug}
+STR_XMBOM					{Режим в XMB}
+STR_XMBOMDESC				{Переключение между Retail и Debug режимами}
+STR_MENU					{Тип Debug Меню}
+STR_MENUDESC				{Переключение между CEX QA и DEX Debug типами меню}
+STR_TOGCFW					{Надстройки XMB CFW}
+STR_TOGCFWDESC				{Вкл/Откл XMB CFW надстроек v0.1a [MOD]}
+STR_TOGCOB					{Режим Cobra}
+STR_TOGCOBDESC				{Вкл/Откл функций Cobra при следующей загрузке}
+STR_TOGPS2					{PS2 Эмулятор}
+STR_TOGPS2DESC				{Переключение между встроенным PS2Emu и Cobra эмуляторами}
+STR_TOGWM					{webMAN}
+STR_TOGWMDESC				{Вкл/Откл webMAN при следующей загрузке}
+STR_NORBG					{Возможности Режимов Rebug недоступны}
+STR_NORBGDESC				{Установите CFW Rebug REX/D-REX для доступа к Режимам Rebug}
+STR_PATCHLV1				{Поддержка LV1 Peek/Poke}
+STR_PATCHLV1DESC			{Патч неиспользуемых LV1 syscalls 182 и 183}
+STR_LV2MEMPRO				{Защита LV2 памяти}
+STR_LV2MEMPRODESC			{Патч 'Отключения' при модификации LV2}
+STR_HTAB					{HTAB Mapping с защитой от записи}
+STR_HTABDESC				{Вкл/Откл защиту HTAB Mapping}
+STR_INDI					{Доступ ко всем сервисам INDI Info Manager}
+STR_INDIDESC				{Вкл/Откл INDI доступ}
+STR_EEPROM					{Режим записи Update Manager EEPROM}
+STR_EEPROMDESC				{Патч Update Manager для доступа к EEPROM}
+STR_DISPATCH				{Убрать патч Manager Access}
+STR_DISPATCHDESC			{Отмена патча Manager Access для всех сервисов}
+STR_ENCDEC					{Включить ENCDEC IOCTL Command 0x85}
+STR_ENCDECDESC				{Разрешить IOCTL Command 0x85}
+STR_SYSMAN					{System Manager Ability Mask от GameOS}
+STR_SYSMANDESC				{Разрешить доступ ко всем сервисам управления системой}
+STR_ALLPKG					{Распаковка PKG всех типов}
+STR_ALLPKGDESC				{Разрешить Update Manager распаковывать все типы PKG}
+STR_LPAR					{Доступ на запись репозиториев в любом LPAR}
+STR_LPARDESC				{Разрешить создавать, изменять и удалять записи репозиториев}
+STR_LV1SPE					{Доступ к LV1 для MFC_SR1 SPE Register}
+STR_LV1SPEDESC				{Разрешить полный доступ для SPE Register}
+STR_LV1DABR					{Доступ к LV1 для Data Break Points}
+STR_LV1DABRDESC				{Включить доступ к LV1 с lv1_set_dabr().}
+STR_LV1GART					{Доступ к LV1 для GPU GART Memory}
+STR_LV1GARTDESC				{Доступ к LV1 для использования 4KB страниц памяти IO}
+STR_LV1KEYS					{Доступ Storage Manager к ENCDEC ключам}
+STR_LV1KEYSDESC				{Разрешить Storage Manager очищать ENCDEC ключи}
+STR_LV1ACL					{Пропускать все ACL проверки}
+STR_LV1ACLDESC				{Включить пропуск ACL проверок для всех накопителей}
+STR_LV1GO					{Инициировать загрузчик GuestOS}
+STR_LV1GODESC				{Включить 'режим 1' GuestOS для GameOS}
+STR_SWPLV2K					{Замена LV2 Ядра}
+STR_SWPLV2KDESC				{Переключение между стандартным и Debug ядрами}
+STR_REWTID					{Перезапись Target ID в памяти Flash}
+STR_REWTIDDESC				{Конвертировать PS3 в CEX/DEX, если есть верный дамп памяти Flash и eid_root_key}
+STR_NOCEXDEX				{CEX/DEX функционал недоступен}
+STR_NOCEXDEXDESC			{Установите CFW Rebug версии REX для доступа к этим возможностям}
+STR_SELECT					{: Выбрать}
+STR_HOLDQUITREB				{: Зажать для Выхода или Перезагрузки}
+STR_HOLDQUIT				{: Зажать для Выхода}
+STR_FREEHDD					{Свободно на HDD}  
+STR_NUMFW					{Система PS3\xE2\x84\xA2: FW}
+STR_IP						{IP адрес}
+STR_QUITXMB					{Выйти в XMB?}
+STR_CHANGEIDPSOK1			{Успешно применены}
+STR_CHANGEIDPSOK2			{изменения в LV2 памяти.\n\nТекущий 'target ID':}
+STR_CHANGEIDPSERROR			{Ошибка при поиске IDPS}
+STR_SWP2DEXOK				{Ядро LV2 успешно изменено на DEX/Debug}
+STR_SWP2CEXOK				{Ядро LV2 успешно изменено на CEX/Retail}
+STR_SWPERROR				{Несовместимая версия CFW или иная ошибка}
+STR_NEEDRESTSYS				{Требуется перезагрузка системы. Нажмите 'OK'}
+STR_WEIDERROR1				{Ошибка при попытке доступа к памяти Flash}
+STR_WEIDERROR2				{Предоставленные файлы не совместимы с этой системой!}
+STR_WEIDRUSURE1				{Вы собираетесь обновить свой Region/Target ID на PS3!\n\nRegion/Target ID:}
+STR_WEIDRUSURE2				{УВЕРЕНЫ?}
+STR_WEIDRUSURE3				{Вы собираетесь изменить свой Region/Target ID на PS3!\nТекущий ID:}
+STR_WEIDRUSURE4				{Новый ID:}
+STR_WEIDRRUUSURE			{ВНИМАНИЕ:\n\nДанная операция ОПАСНА и должна производится ТОЛЬКО если вы УВЕРЕНЫ в своих действиях!\n\nУ В Е Р Е Н Ы ?}
+STR_WEIDOK1					{Регион Flash EID0 успешно перезаписан (192 байта).\n\nВыйдите в XMB, отключите и включите систему!}
+STR_WEIDOK2					{Регион Flash EID0 успешно перезаписан (192 байта).\n\nДля применения изменений необходимо выйти в XMB, отключить и включить систему!}
+STR_WEIDERROR3				{Ошибка записи Flash EID0!}
+STR_WEIDERROR4				{Ошибка доступа к памяти Flash!}
+STR_WTDMSG1					{Текущая CFW и режим}
+STR_WTDMSG2					{позволяются сохранить eid_root_key.\nВы можете сохранить его и конвертировать с DEX в CEX и наоборот через Toolbox.\nЕсли 'eid_root_key' расположен в /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, то будет предложен вариант выбора}
+STR_WTDMSG3					{если 'eid_root_key' расположен в /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, то будет предложен вариант выбора}
+STR_WTDMSG4					{Найден 'eid_root_key', произвести автоматическую конвертацию из}
+STR_WTDMSG5					{Обнаружен DEX\nСброс CEX изменит ID региона на USA(0x84)}
+STR_WTDMSG6					{Ошибка.\n\nПроверьте свой 'eid_root_key', он может быть повреждён}
+STR_WTDMSG7					{Необходимо предоставить следующий файл и повторить снова}
+STR_WTDMSG8					{Полная прошивка NOR отключена.\n\nНазовите ваш образ NOR-памяти следующим образом для включения ПРОШИВКИ ТОЛЬКО EID0 РАЗДЕЛА.\n\n[*.EID0.NORBIN] должен иметь размер 16Mb и принадлежать ЭТОЙ системе.\nБудет записано только 192 байта в память Flash [EID0]}
+STR_WTDMSG9					{Полная прошивка NAND отключена.\n\nНазовите ваш образ NAND-памяти следующим образом для включения ПРОШИВКИ ТОЛЬКО EID0 РАЗДЕЛА.\n\n[*.EID0.NANDBIN] должен иметь размер 239Mb или 256Mb и принадлежать ЭТОЙ системе.\nБудет записано только 192 байта в память Flash [EID0]}
+STR_MAINNORBG				{Система запущена не в Режиме Rebug!\n\nНекотоыре параметры будут недоступны}
+STR_MAINNOCOB				{Система запущена не в Режиме Rebug Cobra !\n\nПереключение Режима Cobra будет недоступно}
+STR_MAINNOFW				{Не удалось определить версию CFW, нажмите 'OK' для выхода}
+STR_MAINERRFLASH			{Нет доступа к памяти Flash, нажмите 'OK' для выхода}
+STR_SCRSHTSAVED				{Скриншот успешно сохранён:}
+STR_SAVXREG					{Сохранить '/dev_flash2/etc/xRegistry.sys' в '/dev_usb000'?}
+STR_SAVXREGOK				{Выполнено!\nxRegistry.sys сохранён в '/dev_usb000'}
+STR_SAVXREGERR1				{ОШИБКА!\n'xRegistry.sys' не был сохранён}
+STR_SAVXREGERR2				{ОШИБКА!\nНе обнаружен носитель dev_usb000}
+STR_SAVXREGERR3				{ОШИБКА: '/dev_flash2/etc/xRegistry.sys' не найден!}
+STR_RESXREG					{Восстановить 'xRegistry.sys' из '/dev_usb000'?}
+STR_RESXREGOK				{Выполнено!\n'xRegistry.sys' восстановлен из '/dev_usb000'}
+STR_RESXREGERR1				{ОШИБКА!\n'xRegistry.sys' не найден}
+STR_RESXREGERR2				{ОШИБКА: '/dev_usb000/xRegistry.sys' не найден!}
+STR_MAKPKGOK				{Папка '/dev_hdd0/packages' успешно создана!}
+STR_MAKPKGERR				{Не удалось создать папку '/dev_hdd0/packages'!}
+STR_LOADLV2KERR1			{Выбран не верный файл Ядра LV2!}
+STR_LOADLV2K				{Загрузить выбранное Ядро LV2 и перезагрузиться программно?}
+STR_LOADLV2KNOSPACE			{Недостаточно места в '/dev_flash'!}
+STR_LOADLV2KCHKLV1			{Проверка LV1, подождите...}
+STR_LOADLV2KERR2			{Ядро LV2: Операция не выполнена}
+STR_BOOTOOSMSG1				{Изменить загрузочную запись, включить все LV1 патчи и загрузить OtherOS?}
+STR_BOOTOOSMSG2				{Изменить загрузочную запись и загрузить OtherOS?}
+STR_BOOTOOSERR1				{OtherOS: Операция не выполнена}
+STR_SWPKERR					{Данная возможность недоступна в Режиме CEX.\n\nПерепрошейте NOR/NAND в DEX}
+STR_DMPFLSH					{Сохранить память Flash в файл?}
+STR_DMPFLSHERR				{Ошибка! Подключите USB-накопитель '/dev_usb000'!\n\nТребуется минимум 256Mb памяти}
+STR_EXPLVMSG1				{Сохранить память GameOS LV2 в файл?}
+STR_EXPLVMSG2				{Сохранить память HV LV1 в файл?}
+STR_EXPLVWAIT				{Подождите...}
+STR_EXPLVOK					{Память GameOS успешно сохранена в файл}
+STR_EXPLVERR				{Сохранение памяти GameOS не удалось!\n\nНевозможно создать файл}
+STR_EXPLVMSG3				{Сохранение памяти HyperVisor (LV1) в файл}
+STR_EXPLVMSG5				{Сохранение памяти GameOS в файл}
+STR_EXPLVMSG4				{Подождите, это может занять около 5 минут...}
+STR_EXPLVOK2				{Память Hypervisor успешно сохранена в файл}
+STR_EXPLVERR2				{Сохранение памяти Hypervisor не удалось!\n\nНевозможно создать файл}
+STR_MODNORM					{[Режим Normal] активирован.\n\nСистема перезагрузится автоматически при выходе}
+STR_TRYAGAIN				{ОШИБКА: ПОПРОБУЙТЕ СНОВА}
+STR_MODNORMALRD				{[Режим Normal] УЖЕ АКТИВИРОВАН!!}
+STR_MODREB					{[Режим Rebug] активирован.\n\nСистема перезагрузится автоматически при выходе}
+STR_MODREBALRD				{[Режим Rebug] УЖЕ АКТИВИРОВАН!!}
+STR_WMDIS					{WebMAN отключен. Система перезагрузится автоматически при выходе}
+STR_WMENA					{WebMAN включен, необходима перезагрузка.\n\n'Режим Cobra' должен быть Включен}
+STR_MODRET					{[Retail XMB] активирован.\n\nСистема перезагрузится автоматически при выходе}
+STR_MODRETERR1				{Используйте [DEBUG XMB]}
+STR_MODRETERR2				{Недоступно в [Режиме Normal]}
+STR_MODDEB					{[Debug XMB] активирован.\n\nСистема перезагрузится автоматически при выходе}
+STR_MODDEBERR1				{Используйте [RETAIL XMB]}
+STR_MODDEBERR2				{Недоступно в [Режиме Normal]}
+STR_MODDEBSQA				{[Debug Настройки: Меню CEX QA] активировано.\n\nСистема перезагрузится автоматически при выходе}
+STR_MODDEBSQAOK				{[Debug Настройки: Меню CEX QA] активировано}
+STR_MODDEBSQAERR1			{[Debug Настройки: Меню CEX QA] ОШИБКА}
+STR_MODDEBSQAERR2			{Используйте [Debug Настройки: Меню Debug]}
+STR_MODDEBSDEB				{[Debug Настройки: Меню Debug] активировано.\n\nСистема перезагрузится автоматически при выходе}
+STR_MODDEBSDEBOK			{[Debug Настройки: Меню Debug] активировано}
+STR_MODDEBSDEBERR1			{[Debug Настройки: Меню Debug] ОШИБКА}
+STR_MODDEBSDEBERR2			{Используйте [Debug Настройки: Меню CEX QA]}
+STR_MODCOBENA				{Режим Cobra включен}
+STR_MODCOBDIS				{Режим Cobra отключен}
+STR_ERRFLASH				{Ошибка в памяти Flash, переустановите CFW для исправления}
+STR_PS2ERR1					{Не найдены файлы PS2Emu на HDD или USB(dev_usb000).}
+STR_PS2CONT					{Продолжать копирование файлов PS2Emu из USB(dev_usb000)?}
+STR_PS2COP					{PS2Emu скопированы с USB!}
+STR_PS2SWPOK				{PS2Emu заменён!\nНеобходима перезагрузка}
+STR_XMBCFWDIS				{XMB CFW надстройки [MOD] отключены. Плагин будет выкгружен при следующей загрузке}
+STR_XMBCFWENA				{XMB CFW надстройки [MOD] включены. Они будут доступны в меню 'Сеть' в XMB}
+STR_FLASHSET				{Flag уже установлен}
+STR_1						{Сохранено:}
+STR_2						{Выполнено:}
+STR_3						{Mb в}
+STR_4						{мин}
+STR_5						{Mb/s}
+STR_READFLASHERROR1			{Ошибка доступа к данным!\n\nСчитано секторов: }
+STR_READFLASHERROR2			{\nВсего секторов: }
+STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
+STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}
