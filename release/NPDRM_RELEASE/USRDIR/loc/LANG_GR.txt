@@ -136,7 +136,7 @@ STR_SELECT					{: Επιλογή}
 STR_HOLDQUITREB				{: Κρατήστε πατημένο για ακύρωση και επανεκκίνηση}
 STR_HOLDQUIT				{: Κρατήστε πατημένο για ακύρωση}
 STR_FREEHDD					{Ελεύθερος χώρος στο σκληρό δίσκο}  
-STR_NUMFW                   {Système PS3\xE2\x84\xA2: Firmware}
+STR_NUMFW                   {PS3\xE2\x84\xA2 System: Firmware}
 STR_IP						{IP Address}
 STR_QUITXMB					{Έξοδος για XMB?}
 STR_CHANGEIDPSOK1			{Επιτυχής εφαρμογή}

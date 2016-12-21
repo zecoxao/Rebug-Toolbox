@@ -136,7 +136,7 @@ STR_SELECT				{: 選択}
 STR_HOLDQUITREB				{: 終了を保持し再起動}
 STR_HOLDQUIT				{: 終了を保持}
 STR_FREEHDD				{ハードディスクの空き容量}  
-STR_NUMFW                   		{システムPS3\xE2\x84\xA2:ファームウェア}
+STR_NUMFW                   		{PS3\xE2\x84\xA2 システム: ファームウェア}
 STR_IP					{IPアドレス}
 STR_QUITXMB				{XMBを終了しますか？}
 STR_CHANGEIDPSOK1			{正常に適用されました。}

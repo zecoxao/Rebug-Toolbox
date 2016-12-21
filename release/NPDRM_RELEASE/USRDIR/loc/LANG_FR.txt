@@ -136,7 +136,7 @@ STR_SELECT					{: Sélectionner}
 STR_HOLDQUITREB				{: Maintenir pour quitter et redémarrer}
 STR_HOLDQUIT				{: Maintenir pour quitter}
 STR_FREEHDD					{Espace libre disponible}
-STR_NUMFW                   {Système PS3\xE2\x84\xA2: Firmware}
+STR_NUMFW                   {PS3\xE2\x84\xA2 Système: Firmware}
 STR_IP						{Adresse IP}
 STR_QUITXMB					{Quitter vers le XMB?}
 STR_CHANGEIDPSOK1			{Appliquée avec succès}

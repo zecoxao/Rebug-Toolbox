@@ -1,5 +1,5 @@
-﻿STR_LANGUAGE                                        {中文}
-STR_LANGCODE                                        {\ X09}
+﻿STR_LANGUAGE                                        {中文 (简体）}
+STR_LANGCODE                                        {\X09}
 STR_LANG                                            {语言}
 STR_LANGDESC                                        {选择一种语言}
 STR_DISABLE                                         {禁用}
@@ -136,7 +136,7 @@ STR_SELECT                                          {：选择}
 STR_HOLDQUITREB                                     {：按住以退出并重启}
 STR_HOLDQUIT                                        {：按住以退出}
 STR_FREEHDD                                         {硬盘空间}
-STR_NUMFW                                           {SYSTEME PS3 \ XE2 \ X84 \ XA2：固件}
+STR_NUMFW                                           {PS3\xE2\x84\xA2 SYSTEM: 固件}
 STR_IP                                              {IP地址}
 STR_QUITXMB                                         {退出到XMB？}
 STR_CHANGEIDPSOK1                                   {产品成功应用于}

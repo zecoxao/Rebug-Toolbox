@@ -136,7 +136,7 @@ STR_SELECT					{: Выбрать}
 STR_HOLDQUITREB				{: Зажать для Выхода или Перезагрузки}
 STR_HOLDQUIT				{: Зажать для Выхода}
 STR_FREEHDD					{Свободно на HDD}  
-STR_NUMFW					{Система PS3\xE2\x84\xA2: FW}
+STR_NUMFW					{PS3\xE2\x84\xA2 Система: FW}
 STR_IP						{IP адрес}
 STR_QUITXMB					{Выйти в XMB?}
 STR_CHANGEIDPSOK1			{Успешно применены}
