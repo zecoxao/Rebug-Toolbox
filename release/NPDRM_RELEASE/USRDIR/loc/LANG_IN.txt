@@ -1,0 +1,245 @@
+﻿STR_LANGUAGE				{Indonesia}
+STR_LANGCODE				{\x13}
+STR_LANG					{Bahasa Indonesia}
+STR_LANGDESC				{Pilih Bahasa}
+STR_DISABLE					{Mati}
+STR_ENABLE					{Hidup}
+STR_NO						{Tidak}
+STR_SYSTEM					{System}
+STR_SELECTOR				{Pilihan}
+STR_LV1PATCH				{LV1 Patch}
+STR_DTC						{DEX/CEX}
+STR_UTLS					{Utility}
+STR_EIDRK					{Apakah anda yakin untuk mendump eid root key dan reboot?\n\neid_root_key akan di simpan di /dev_hdd0/game/RBGTLBOX2/USRDIR}
+STR_SCRSHOT					{Simpan screenshot di}
+STR_DONE					{selesai!}
+STR_SHTDWN					{Mematikan...}
+STR_TRYRESTART				{Mencoba untuk merestart...}
+STR_NOTFOUND				{Tidak di temukan!}
+STR_PETBOOTINST				{Apakah anda mau menginstall Petitboot Di VFLASH/NAND Region 5?}
+STR_PETBOOTOK				{Petitboot Sudah di install. Enjoy OtherOS.}
+STR_PETBOOTERROR			{ERROR: Petitboot tidak di temukan.. VFLASH Detected.\n\nMasukan file bernama [dtbimage.ps3.bin] di USB device dan coba lagi.}
+STR_RESIZE5					{Apakah anda mau me-resize VFLASH/NAND Region 5 untuk Mengizinkan OtherOS?}
+STR_RESIZE5OK				{SUKSES: PS3 Anda Mebutuhkan restart untuk perubahan.}
+STR_RESIZE5ERROR			{GAGAL: resizing VFLASH/NAND Region 5 Tidak Selesai.}
+STR_FLASHOK					{SUKSES: PS3 Anda Mebutuhkan restart untuk perubahan.}
+STR_FLASHERROR				{GAGAL!!!}
+STR_GAMEOSFLG				{Apakah anda mau menset GameOS boot flag?}
+STR_GAMEOSFLGOK				{Flag Sudah Terset.}
+STR_SYSINF					{System Informasi}
+STR_SYSINFDESC				{Informasi Display Tentang PS3™ system Anda.}
+STR_QUIT					{Keluar}
+STR_QUITDESC1				{Keluar}
+STR_QUITDESC2				{dan kembali ke XMB™}
+STR_RESTSYS					{Restart System}
+STR_RESTSYSDESC1			{Tutup}
+STR_RESTSYSDESC2			{dan restart PLAYSTATION® 3 system anda}
+STR_RESTSYS_SUB1			{Soft (Restart LV2 Saja)}
+STR_RESTSYS_SUB2			{Full (On/Off)}
+STR_BOOTOOS					{Boot OtherOS}
+STR_BOOTOOSDESC				{Pilih LV1 Patch dan restart ke OtherOS}
+STR_BOOTOOS_SUB1			{Boot (LV1 patch: Terapkan Semua)}
+STR_BOOTOOS_SUB2			{Boot (LV1 patch: Gunakan saat ini)}
+STR_TRNOFF					{Matikan System}
+STR_TRNOFFDESC				{Matikan PLAYSTATION® 3 system}
+STR_QA						{Toggle QA Flag}
+STR_QADESC					{Hidupkan atau Matikan fungsi QA flag.}
+STR_NOTAV					{Tidak tersedia}
+STR_TOGREC					{Toggle Recovery Mode}
+STR_TOGRECDESC				{Hidupkan Atau Matikan Recovery mode pada restart selanjutnya.}
+STR_TOGPM					{Toggle Product Mode}
+STR_TOGPMDESC				{Hidupkan atau matikan product mode(Factory Service Mode).}
+STR_LOADLV2					{Load LV2 Kernel}
+STR_LOADLV2DESC				{Load lv2_kernel.self.[KERNEL_NAME] Dari USB Atau /dev_hdd0.}
+STR_BUT						{penempatan tombol}
+STR_BUTDESC					{Set tombol mana yang mau di pakai untuk "Accept/Enter" dan "Batal/Kembali".}
+STR_CIRCLE					{Bulat(O) Adalah [Accept]}
+STR_CROSS					{Silang(X) Adalah [Accept]}
+STR_XREG					{Backup/Restore xRegistry}
+STR_XREGDESC				{Backup atau Restore PS3 system settings dari USB.}
+STR_BACKUP					{Backup}
+STR_RESTORE					{Restore}
+STR_RESIZEVFLASH			{Resize VFLASH/NAND Regions}
+STR_RESIZEVFLASHDESC		{Resize VFLASH/NAND Regions 5 untuk mengizinkan OtherOS.}
+STR_INSTPETBOOT				{Install petitboot}
+STR_INSTPETBOOTDESC			{Install Petitboot ke VFLASH/NAND Regions 5 Dari USB.}
+STR_GAMEOSBOOTFLG			{Set GameOS Boot Flag}
+STR_GAMEOSBOOTFLGDESC		{Membenarkan isu loading judul PS2 jika OtherOS Di install.}
+STR_PKG						{buat \x22Packages\x22 Folder}
+STR_PKGDESC					{buat /dev_hdd0/packages folder.}
+STR_SAVLV1					{Export Hypervisor LV1 Memory}
+STR_SAVLV1DESC				{Simpan LV1 memory Ke file.}
+STR_SAVLV2					{Export GameOS LV2 Memory}
+STR_SAVLV2DESC				{Simpan LV2 memory Ke file.}
+STR_SAVFLASH				{Export Flash ke File}
+STR_SAVFLASHDESC			{Backup NOR/NAND flash Anda Ke /dev_usb000.}
+STR_SAVEIDRK				{Dump eid root key}
+STR_SAVEIDRKDESC			{Dump eid root key di dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
+STR_PS3ID					{Ganti PS3ID Aktif}
+STR_PS3IDDESC				{Spoof IDPS Di LV2 memory.}
+STR_USE						{Gunakan}
+STR_SM						{System Mode}
+STR_SMDESC					{Ganti dari Normal dan REBUG mode.}
+STR_XMBOM					{XMB Operation Mode}
+STR_XMBOMDESC				{Ganti dari Retail dan Debug XMB.}
+STR_MENU					{Debug Menu Type}
+STR_MENUDESC				{Ganti dari CEX QA dan DEX Debug menu.}
+STR_TOGCFW					{Toggle XMB CFW settings}
+STR_TOGCFWDESC				{Hidupkan atau Matikan XMB CFW settings v0.1a (MOD)}
+STR_TOGCOB					{Toggle COBRA Mode}
+STR_TOGCOBDESC				{Hidupkan atau matikan COBRA Mode Pada restart selanjut nya.}
+STR_TOGPS2					{Toggle PS2 Emulator}
+STR_TOGPS2DESC				{PS2Emu swap untuk mengunakan original PS2 Emu file.}
+STR_TOGWM					{Toggle webMAN}
+STR_TOGWMDESC				{Hidupkan atau matikan webMAN pada restart selanjut nya.}
+STR_NORBG					{Fungsi REBUG Selector Tidak Tersedia}
+STR_NORBGDESC				{Silahkan install REBUG REX/D-REX Firmware untuk mengakses fungsi selector(seluruh fungsi nya).}
+STR_PATCHLV1				{LV1 Peek/Poke Support}
+STR_PATCHLV1DESC			{Patch LV1 syscalls 182 dan 183.}
+STR_LV2MEMPRO				{LV2 Memory Protection}
+STR_LV2MEMPRODESC			{Patch Shutdown di modifikasi LV2.}
+STR_HTAB					{HTAB Mapping Dengan Write Protection}
+STR_HTABDESC				{Hidupkan atau matikan protected HTAB mapping.}
+STR_INDI					{Akses Ke Seluruh INDI Info Manager Services}
+STR_INDIDESC				{Hidupkan Atau Matikan INDI access.}
+STR_EEPROM					{Update Manager EEPROM Write Access}
+STR_EEPROMDESC				{Patch Update Manager access to EEPROM.}
+STR_DISPATCH				{Dispatch Manager Access}
+STR_DISPATCHDESC			{Patch Dispatch Manager access to all services.}
+STR_ENCDEC					{Izinkan ENCDEC IOCTL Command 0x85}
+STR_ENCDECDESC				{Hidupkan IOCTL Command 0x85}
+STR_SYSMAN					{System Manager Ability Mask of GameOS}
+STR_SYSMANDESC				{Izinkan Akses Ke seluruh system manager services.}
+STR_ALLPKG					{Extract Seluruh Type PKG}
+STR_ALLPKGDESC				{Izinkan Update Manager Untuk Mengextract seluruh Type PKG.}
+STR_LPAR					{Full Akses untuk Repo Nodes Di seluruh LPAR}
+STR_LPARDESC				{Izinkan Membuat, Memodifikasi, Menghapus untuk repository nodes.}
+STR_LV1SPE					{LV1 Full Akses Ke MFC_SR1 SPE Register}
+STR_LV1SPEDESC				{Izinkan all-bit Akses Ke register.}
+STR_LV1DABR					{LV1 Akses untuk menset Data Break Point}
+STR_LV1DABRDESC				{Hidupkan LV1 Akses Dengan lv1_set_dabr().}
+STR_LV1GART					{LV1 Akses Ke GPU GART Memory}
+STR_LV1GARTDESC				{Izinkan LV1 Untuk Mengunakan 4KB IO page size.}
+STR_LV1KEYS					{Tempat Pengelola ENCDEC Keys Access}
+STR_LV1KEYSDESC				{Izinkan Tempat pengelola untuk membersihkan ENCDEC keys.}
+STR_LV1ACL					{Lewatkan Seluruh ACL Check}
+STR_LV1ACLDESC				{Hidupkan Lewatkan dari ACL checks untuk seluruh storage devices.}
+STR_LV1GO					{Initial GuestOS Loader}
+STR_LV1GODESC				{Hidupkan GuestOS mode 1 Untuk GameOS.}
+STR_SWPLV2K					{Swap LV2 Kernel}
+STR_SWPLV2KDESC				{Beralih dari retail dan debug kernel.}
+STR_REWTID					{Rewrite Target ID di Flash}
+STR_REWTIDDESC				{Convert PS3 ke cex/dex Jika flash dump/eid_root_key valid.}
+STR_NOCEXDEX				{Fungsi CEX/DEX Tidak Tersedia}
+STR_NOCEXDEXDESC			{Install REBUG EDISI REX untuk mengakses fungsi ini.}
+STR_SELECT					{: Pilih}
+STR_HOLDQUITREB				{: Tahan untuk Keluar dan Restart}
+STR_HOLDQUIT				{: Tahan untuk Keluar}
+STR_FREEHDD					{Sisa HDD}  
+STR_NUMFW                   {Sistem PS3\xE2\x84\xA2: Firmware}
+STR_IP						{IP Address}
+STR_QUITXMB					{Keluar Ke XMB?}
+STR_CHANGEIDPSOK1			{Berhasil di terapkan}
+STR_CHANGEIDPSOK2			{Ganti untuk LV2 memory.\n\nCurrent target ID set Ke}
+STR_CHANGEIDPSERROR			{Error Ditemukan saat mencari IDPS}
+STR_SWP2DEXOK				{LV2 Kernel Berhasil di ganti ke DEX/Debug.}
+STR_SWP2CEXOK				{LV2 Kernel Berhasil Di ganti ke CEX/Retail.}
+STR_SWPERROR				{versi firmware Tidak support atau ada error.}
+STR_NEEDRESTSYS				{System restart di perlukan. tekan OK untuk reboot}
+STR_WEIDERROR1				{Error Terjadi saat mengakses flash}
+STR_WEIDERROR2				{File yang Anda sediakan Tidak support dengan system Anda!}
+STR_WEIDRUSURE1				{anda sedang mengupdate PS3™ Region/Target ID!\n\nRegion/Target ID:}
+STR_WEIDRUSURE2				{ANDA YAKIN??}
+STR_WEIDRUSURE3				{Anda akan merubah PS3™ Region/Target ID!\nCurrent ID:}
+STR_WEIDRUSURE4				{ID Baru:}
+STR_WEIDRRUUSURE			{PERINGATAN:\n\nOperasi ini BERBAHAYA! dan harus dilakukan hanya jika Anda Yakin!\n\nANDA YAKIN?!}
+STR_WEIDOK1					{Flash EID0 region Sukses Ditimpa (192 bytes).\n\nSilahkan kembali ke XMB, Matikan dan Hidupkan system Anda!}
+STR_WEIDOK2					{Flash EID0 region Sukses Ditimpa (192 bytes).\n\nUntuk menerapkan pergantan region, Silahkan Kembali Ke XMB, Matikan dan Hidupkan system Anda!}
+STR_WEIDERROR3				{Error writing Untuk flash EID0!}
+STR_WEIDERROR4				{Error Mengakses FLASH device!}
+STR_WTDMSG1					{firmware dan mode sekarang}
+STR_WTDMSG2					{Mengizinkan Anda untuk mendump eid_root_key.\nAnda bisa mendump dan menconvert dari DEX ke CEX dan sebalik nya dengan toolbox ini.\nJika anda mempunyai root key di /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, maka Anda akan disambut dengan pilihan sekarang.}
+STR_WTDMSG3					{jika anda mempunyai root key di /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key maka Anda akan disambut dengan pilihan sekarang.}
+STR_WTDMSG4					{eid_root_key Ditemukan, apakah anda mau convert otomatis dari}
+STR_WTDMSG5					{Ditemukan DEX\nCEX menukar akan menganti region id ke USA(0x84)}
+STR_WTDMSG6					{Error di temukan.\n\nSilahakan verifikasi eid_root_key anda,key anda mungkin curropt atau bukan hasil dump anda}
+STR_WTDMSG7					{Silahkan ikuti file dan coba lagi}
+STR_WTDMSG8					{Flashing keseluruhan NOR dimatikan.\n\nRename NOR dump anda dengan benar untuk mengaktifkan HANYA FLASH EID0 SECTION.\n\n[*.EID0.NORBIN] Harus 16MB dan juga dari console anda.\nHanya 192 bytes yang hanya di "write" ke flash (EID0).}
+STR_WTDMSG9					{Flashing keseluruhan NAND dimatikan.\n\nRename NAND dump anda dengan benar untuk mengaktifkan HANYA FLASH EID0 SECTION.\n\n[*.EID0.NANDBIN] Harus 256MB dan juga dari console anda.\nHanya 192 bytes yang hanya di "write" ke flash (EID0).}
+STR_MAINNORBG				{sistem Anda tidak berjalan di compatible REBUG configuration!\n\nBeberapa opsi tidak akan tersedia.}
+STR_MAINNOCOB				{sistem Anda tidak berjalan di compatible REBUG COBRA configuration!\n\nToggling COBRA tidak akan tersedia.}
+STR_MAINNOFW				{Tidak bisa mendetect firmware version, tekan OK untuk keluar.}
+STR_MAINERRFLASH			{Tidak bisa Mengakses FLASH device, tekan OK untuk keluar.}
+STR_SCRSHTSAVED				{Screenshot successfully disimpan sebagai}
+STR_SAVXREG					{Apakah Anda mau membackup /dev_flash2/etc/xRegistry.sys ke /dev_usb000?}
+STR_SAVXREGOK				{Backup selesai!\nxRegistry.sys backed up ke /dev_usb000}
+STR_SAVXREGERR1				{ERROR!\nxRegistry.sys Tidak terbackup}
+STR_SAVXREGERR2				{ERROR!\nTidak ada storage device connected di dev_usb000}
+STR_SAVXREGERR3				{ERROR: /dev_flash2/etc/xRegistry.sys tidak di temukan!}
+STR_RESXREG					{apakah anda mau merestore xRegistry.sys dari /dev_usb000?}
+STR_RESXREGOK				{Restore selesai!\nxRegistry.sys restored dari /dev_usb000}
+STR_RESXREGERR1				{ERROR!\nxRegistry.sys tidak ter-restore!}
+STR_RESXREGERR2				{ERROR: /dev_usb000/xRegistry.sys tidak di temukan!}
+STR_MAKPKGOK				{Folder [/dev_hdd0/packages] di buat!.}
+STR_MAKPKGERR				{tidak bisa membuat [/dev_hdd0/packages] folder!}
+STR_LOADLV2KERR1			{file LV2 Kernel Invalid!}
+STR_LOADLV2K				{apakah anda ingin menload LV2 Kernel dan soft reboot?}
+STR_LOADLV2KNOSPACE			{Tidak ada ruang lagi di /dev_flash!}
+STR_LOADLV2KCHKLV1			{Checking LV1, tunggu sebentar...}
+STR_LOADLV2KERR2			{LV2 Kernel: Operasi gagal.}
+STR_BOOTOOSMSG1				{Apakah anda mau menganti "boot order", menghidupkan seluruh LV1 patch dan load OtherOS?}
+STR_BOOTOOSMSG2				{apakah anda mau menganti "boot order" dan load OtherOS?}
+STR_BOOTOOSERR1				{OtherOS: Operation Gagal.}
+STR_SWPKERR					{Fungsi ini Tidak tersedia di CEX mode.\n\nHarap flash DEX NOR/NAND.}
+STR_DMPFLSH					{Apakah anda ingin mengexport FLASH memory ke file?}
+STR_DMPFLSHERR				{Silahkan masukan USB drive (/dev_usb000)minimal free space 256MB dan coba lagi!}
+STR_EXPLVMSG1				{Apakah anda ingin mengexport GameOS LV2 memory ke file?}
+STR_EXPLVMSG2				{Apakah anda ingin mengexport HV LV1 memory ke file?}
+STR_EXPLVWAIT				{Tunggu sebentar...}
+STR_EXPLVOK					{GameOS memory export sukses ke file}
+STR_EXPLVERR				{GameOS memory export gagal!\n\Tidak bisa di buat}
+STR_EXPLVMSG3				{Exporting HyperVisor (LV1) memory ke file}	
+STR_EXPLVMSG5               {Exporting GameOS memory ke file}
+STR_EXPLVMSG4				{Tunggu sebentar, kemungkinan akan memakan waktu 5 menit...}
+STR_EXPLVOK2				{Hypervisor memory exported Sukses ke file}
+STR_EXPLVERR2				{Hypervisor memory export Gagal!\n\nTidak bisa di buat}
+STR_MODNORM					{[NORMAL MODE] Sekarang aktif.\n\nSystem akan otomatis reboot saat anda keluar.}
+STR_TRYAGAIN				{GAGAL: Harap coba lagi}
+STR_MODNORMALRD				{[NORMAL MODE] SUDAH TERSET!!}
+STR_MODREB					{[REBUG MODE] Sekarang aktif.\n\nSystem akan otomatis reboot saat anda keluar.}
+STR_MODREBALRD				{[REBUG MODE] SUDAH TERSET!!}
+STR_WMDIS					{WebMAN dinonaktifkan, System akan otomatis reboot saat anda keluar.}
+STR_WMENA					{WebMAN diaktifkan. webMAN akan di load saat restart selanjut nya.\n\nPastikan untuk menghidupkan COBRA setelah menghidupkan webMAN}
+STR_MODRET					{[RETAIL XMB] sekarang aktif.\n\nSystem akan otomatis restart saat anda keluar.}
+STR_MODRETERR1				{HARAP COBA [DEBUG XMB]}
+STR_MODRETERR2				{TIDAK TERSEDIA DI [NORMAL MODE]}
+STR_MODDEB					{[DEBUG XMB] sekarang aktif.\n\nSystem akan restart saat anda keluar.}
+STR_MODDEBERR1				{HARAP COBA [RETAIL XMB]}
+STR_MODDEBERR2				{TIDAK TERSEDIA DI [NORMAL MODE]}
+STR_MODDEBSQA				{[DEBUG SETTINGS: MENU CEX QA] sekarang aktif.\n\nSystem akan restart saat anda keluar.}
+STR_MODDEBSQAOK				{[DEBUG SETTINGS: MENU CEX QA] sekarang aktif.}
+STR_MODDEBSQAERR1			{[DEBUG SETTINGS: MENU CEX QA] GAGAL}
+STR_MODDEBSQAERR2			{HARAP COBA [DEBUG SETTINGS: MENU DEBUG]}
+STR_MODDEBSDEB				{[DEBUG SETTINGS: MENU DEBUG] sekarang aktif.\n\nSystem akan restart saat anda keluar.}
+STR_MODDEBSDEBOK			{[DEBUG SETTINGS: MENU DEBUG] sekarang aktif}
+STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] GAGAL}
+STR_MODDEBSDEBERR2			{HARAP COBA [DEBUG SETTINGS: MENU CEX QA]}
+STR_MODCOBENA				{COBRA Mode aktif.}
+STR_MODCOBDIS				{COBRA Mode di matikan.}
+STR_ERRFLASH				{Error di flash, reinstall firmware untuk menfix ini}
+STR_PS2ERR1					{PS2Emu file tidak di temukan di HDD atau USB(dev_usb000).}
+STR_PS2CONT					{Lanjutkan untuk mengcopy PS2Emu files dari USB(dev_usb000)?}
+STR_PS2COP					{PS2Emu files copied dari USB!}
+STR_PS2SWPOK				{PS2Emu swapped!\nReboot Untuk perubahan.}
+STR_XMBCFWDIS				{XMB CFW settings MOD Mati. plugin akan di unload pada restart selanjutnya.}
+STR_XMBCFWENA				{XMB CFW settings MOD Hidup. fitur akan tersedia di kolom Network di XMB.}
+STR_FLASHSET				{Flag sudah ditetapkan.}
+STR_1                       {Data tersimpan sebagai}:}
+STR_2                       {Memproses:}
+STR_3                       {MB di}
+STR_4                       {min}
+STR_5                       {MB/s}
+STR_READFLASHERROR1			{Error ditemukan saat mengakses data!\n\nSectors read: }
+STR_READFLASHERROR2			{\nTotal sectors: }
+STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
+STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}

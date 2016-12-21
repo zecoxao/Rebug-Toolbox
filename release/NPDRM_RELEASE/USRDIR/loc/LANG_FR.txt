@@ -1,0 +1,245 @@
+STR_LANGUAGE				{Français}
+STR_LANGCODE				{\x03}
+STR_LANG					{Langue}
+STR_LANGDESC				{Choisissez une langue}
+STR_DISABLE					{Inactif}
+STR_ENABLE					{Actif}
+STR_NO						{Non}
+STR_SYSTEM					{Système}
+STR_SELECTOR				{Sélecteur}
+STR_LV1PATCH				{Patches LV1}
+STR_DTC						{DEX/CEX}
+STR_UTLS					{Utilitaires}
+STR_EIDRK					{Voulez-vous sauvegarder votre eid_root_key et redémarrer?\n\nVotre eid_root_key sera créée dans /dev_hdd0/game/RBGTLBOX2/USRDIR}
+STR_SCRSHOT					{Enregistrement de la capture d'écran dans}
+STR_DONE					{Terminé!}
+STR_SHTDWN					{Éteindre...}
+STR_TRYRESTART				{Essayez de redémarrer ...}
+STR_NOTFOUND				{n'a pas été trouvé!}
+STR_PETBOOTINST				{Voulez-vous installer Petitboot sur la Region 5 du VFLASH/NAND?}
+STR_PETBOOTOK				{Petitboot a été installé.. Profitez de l'OtherOS.}
+STR_PETBOOTERROR			{ERREUR: Impossible de trouver le petitboot..VFLASH Détecté.\n\nPlacez un fichier nommé [dtbimage.ps3.bin] sur le périphérique USB et essayez à nouveau s'il vous plaît.}
+STR_RESIZE5					{Voulez-vous redimensionner la Region 5 du VFLASH/NAND pour autoriser l'OtherOS ? }
+STR_RESIZE5OK				{SUCCÈS: Votre PS3 a besoin de redémarrer pour que les modifications prennent effet.}
+STR_RESIZE5ERROR			{ÉCHOUÉ: le redimensionnement de la Région 5 du VFLASH/NAND n'est pas terminé.}
+STR_FLASHOK					{SUCCÈS: Votre PS3 a besoin de redémarrer pour que les modifications prennent effet.}
+STR_FLASHERROR				{ÉCHOUÉ!!!}
+STR_GAMEOSFLG				{Voulez-vous activer le GameOS boot flag?}
+STR_GAMEOSFLGOK				{Le Flag est déjà activé.}
+STR_SYSINF					{Information Système}
+STR_SYSINFDESC				{Afficher les informations de votre système PS3™.}
+STR_QUIT					{Quitter}
+STR_QUITDESC1				{Quitter la}
+STR_QUITDESC2				{ et revenir au XMB™}
+STR_RESTSYS					{Redémarrer le système}
+STR_RESTSYSDESC1			{Fermez la Rebug ToolBox}
+STR_RESTSYSDESC2			{ et redémarrez votre Système PLAYSTATION® 3}
+STR_RESTSYS_SUB1			{Soft (Redémarrage LV2 Uniquement)}
+STR_RESTSYS_SUB2			{Full (Redémarrage Complet)}
+STR_BOOTOOS					{Démarrage de l'OtherOS}
+STR_BOOTOOSDESC				{Sélectionne les correctifs LV1 et redémarre en OtherOS}
+STR_BOOTOOS_SUB1			{Démarrage (patches LV1: Appliquer tout)}
+STR_BOOTOOS_SUB2			{Démarrage (patches LV1: utilisation actuelle)}
+STR_TRNOFF					{Eteindre le système}
+STR_TRNOFFDESC				{Eteignez votre Système PLAYSTATION® 3}
+STR_QA						{Activer le QA Flag}
+STR_QADESC					{Active ou désactive les fonctions du QA flag.}
+STR_NOTAV					{Indisponible}
+STR_TOGREC					{Basculer en Mode Recovery}
+STR_TOGRECDESC				{Active ou désactive le mode recovery au prochain redémarrage.}
+STR_TOGPM					{Basculer en Product Mode}
+STR_TOGPMDESC				{Active ou désactive le product mode (FSM).}
+STR_LOADLV2					{Charger le LV2 Kernel}
+STR_LOADLV2DESC				{Charge le lv2_kernel.self.[KERNEL_NAME] à partir de l'USB ou de /dev_hdd0.}
+STR_BUT						{Affectation des boutons}
+STR_BUTDESC					{Définit les boutons utilisés pour Accepter/Entrée et Annuler/Retour.}
+STR_CIRCLE					{Rond pour [Valider]}
+STR_CROSS					{Croix pour [Valider]}
+STR_XREG					{Sauvegarde/Restaure le xRegistry}
+STR_XREGDESC				{Sauvegarde ou restaure les paramètres du système PS3 à partir de l'USB.}
+STR_BACKUP					{Sauvegarder}
+STR_RESTORE					{Restaurer}
+STR_RESIZEVFLASH			{Redimensionner la Regions VFLASH/NAND}
+STR_RESIZEVFLASHDESC		{Redimensionne la Régions 5 du VFLASH/NAND pour activer l'OtherOS.}
+STR_INSTPETBOOT				{Installer le petitboot}
+STR_INSTPETBOOTDESC			{Installe le Petitboot dans la Regions 5 du VFLASH/NAND à partir de l'USB.}
+STR_GAMEOSBOOTFLG			{Activer GameOS Boot Flag}
+STR_GAMEOSBOOTFLGDESC		{Fixe le problème de chargement des titres PS2 si l'OtherOS est installé.}
+STR_PKG						{Créer le Dossier \x22Packages\x22}
+STR_PKGDESC					{Crée le dossier /dev_hdd0/packages.}
+STR_SAVLV1					{Export de la mémoire Hypervisor LV1}
+STR_SAVLV1DESC				{Sauvegarde la mémoire LV1 dans un fichier.}
+STR_SAVLV2					{Export de la mémoire GameOS LV2}
+STR_SAVLV2DESC				{Sauvegarde la mémoire LV2 dans un fichier.}
+STR_SAVFLASH				{Export du Flash dans un ficher}
+STR_SAVFLASHDESC			{Sauvegarde votre flash NOR/NAND dans /dev_usb000.}
+STR_SAVEIDRK				{Sauvegarder l'eid root key}
+STR_SAVEIDRKDESC			{Sauvegarde votre eid root key dans dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
+STR_PS3ID					{Changer le PS3ID actuel}
+STR_PS3IDDESC				{Spoof l'IDPS dans la mémoire LV2.}
+STR_USE						{Utilise}
+STR_SM						{Mode du système}
+STR_SMDESC					{Bascule entre le mode Normal et REBUG.}
+STR_XMBOM					{Mode de fonctionnement du XMB}
+STR_XMBOMDESC				{Bascule entre le XMB, Retail et Debug.}
+STR_MENU					{Menu Debug Type}
+STR_MENUDESC				{Bascule entre le menu CEX QA et Debug DEX.}
+STR_TOGCFW					{Activer les paramètres XMB CFW}
+STR_TOGCFWDESC				{Active ou désactive les paramètres XMB CFW v0.1a ( MOD )}
+STR_TOGCOB					{Activer le mode COBRA}
+STR_TOGCOBDESC				{Active ou désactive le mode COBRA au prochain démarrage.}
+STR_TOGPS2					{Bascule de l'émulateur PS2}
+STR_TOGPS2DESC				{Change le PS2Emu pour utiliser les fichiers PS2Emu originaux.}
+STR_TOGWM					{Activer webMAN MOD}
+STR_TOGWMDESC				{Active ou désactive webMAN MOD au prochain démarrage.}
+STR_NORBG					{Le sélecteur de fonctions REBUG n'est pas disponible}
+STR_NORBGDESC				{S'il vous plaît installez un Firmware REBUG REX/D-REX pour accéder aux sélecteurs de fonctions.}
+STR_PATCHLV1				{Support LV1 Peek/Poke}
+STR_PATCHLV1DESC			{Patch les syscalls 182 et 183 inutilisés dans le LV1.}
+STR_LV2MEMPRO				{Protection de Mémoire LV2}
+STR_LV2MEMPRODESC			{Patch les modifications dans le LV2 jusqu'à l'arrêt du système.}
+STR_HTAB					{Cartographie HTAB avec protection en écriture}
+STR_HTABDESC				{Active ou désactive la protection de cartographie hashed page table.}
+STR_INDI					{Accès à toutes les informations INDI du gestionnaire de services.}
+STR_INDIDESC				{Active ou désactive l'accès aux informations INDI.}
+STR_EEPROM					{Activer l'accès en écriture à l'EEPROM via le gestionnaire de mise à jour.}
+STR_EEPROMDESC				{Patch le gestionnaire d'accès à l'EEPROM.}
+STR_DISPATCH				{Exécuter le gestionnaire d'accès.}
+STR_DISPATCHDESC			{Patch l'execution du gestionnaire d'accès à tous les services.}
+STR_ENCDEC					{Autoriser la commande 0x85 d'encodage & décodage IOCTL. }
+STR_ENCDECDESC				{Active la commande 0x85 IOCTL}
+STR_SYSMAN					{Masquer les fonctionnalités du GameOS depuis le gestionnaire système.}
+STR_SYSMANDESC				{Autorise l'accès à tous les services du gestionnaire système.}
+STR_ALLPKG					{Extraire tous les types de PKG.}
+STR_ALLPKGDESC				{Autorise le gestionnaire de mise à jour à extraire tous les types de PKG.}
+STR_LPAR					{Accès complet du Repo Nodes à toute la Partition logique}
+STR_LPARDESC				{Permet de créer, modifier, supprimer au repository nodes.}
+STR_LV1SPE					{Accès complet du LV1 au registre SPE MFC_SR1.}
+STR_LV1SPEDESC				{Autorise l'accès à tous les bits du registre.}
+STR_LV1DABR					{Accès du LV1 pour activer l'arrêt des données en cours.}
+STR_LV1DABRDESC				{Active l'accès du LV1 avec lv1_set_dabr().}
+STR_LV1GART					{Accès du LV1 à la mémoire graphique GART.}
+STR_LV1GARTDESC				{Autorise le LV1 à utiliser 4KB IO de taille de page.}
+STR_LV1KEYS					{Encoder & Décoder les clés d'accès du Gestionnaire de stockage.}
+STR_LV1KEYSDESC				{Autorise le gestionnaire de stockage à effacer les clés Encodage & Décodage.}
+STR_LV1ACL					{Sauter tous les contrôles ACL}
+STR_LV1ACLDESC				{Active le saut de tous les contrôles ACL pour tous les périphériques de stockage.}
+STR_LV1GO					{Chargement initial du mode invité de l'OS.}
+STR_LV1GODESC				{Active le mode invité de l'OS 1 pour le GameOS.}
+STR_SWPLV2K					{Bascule le LV2 Kernel}
+STR_SWPLV2KDESC				{Basculer entre les kernels retail et debug.}
+STR_REWTID					{Réécrit l'ID cible dans le Flash}
+STR_REWTIDDESC				{Convertit la PS3 en cex/dex si une sauvegarde du flash/eid_root_key valide est fourni.}
+STR_NOCEXDEX				{Fonctions CEX/DEX non disponibles }
+STR_NOCEXDEXDESC			{Installez REBUG REX EDITION pour accéder à ces fonctions.}
+STR_SELECT					{: Sélectionner}
+STR_HOLDQUITREB				{: Maintenir pour quitter et redémarrer}
+STR_HOLDQUIT				{: Maintenir pour quitter}
+STR_FREEHDD					{Espace libre disponible}
+STR_NUMFW                   {Système PS3\xE2\x84\xA2: Firmware}
+STR_IP						{Adresse IP}
+STR_QUITXMB					{Quitter vers le XMB?}
+STR_CHANGEIDPSOK1			{Appliquée avec succès}
+STR_CHANGEIDPSOK2			{changements dans la mémoire LV2.\n\nID cible fixée a}
+STR_CHANGEIDPSERROR			{Une erreur est survenue lors de la recherche d'IDPS:}
+STR_SWP2DEXOK				{LV2 Kernel changé avec succès en DEX/Debug.}
+STR_SWP2CEXOK				{LV2 Kernel changé avec succès en CEX/Retail.}
+STR_SWPERROR				{Le fichier que vous avez fourni n'est pas compatible avec votre système!}
+STR_NEEDRESTSYS				{Un redémarrage du système est nécessaire. Appuyez sur OK pour redémarrer}
+STR_WEIDERROR1				{Une erreur est survenue lors de l'accès au secteur flash;}
+STR_WEIDERROR2				{Le fichier que vous avez fourni n'est pas compatible avec votre système!}
+STR_WEIDRUSURE1				{Vous êtes sur le point de mettre à jour votre PS3™ Region/ID cible\n\nRegion/ID cible:}
+STR_WEIDRUSURE2				{ÊTES-VOUS SÛR ?}
+STR_WEIDRUSURE3				{Vous êtes sur le point de changer votre PS3™ de Region/ID cible!\nID actuel:}
+STR_WEIDRUSURE4				{ID cible:}
+STR_WEIDRRUUSURE			{ATTENTION:\n\nCette opération est dangereuse et doit être effectuée uniquement si vous êtes CONFIANT!\n\nÊ T E S  V O U S  S U R ?}
+STR_WEIDOK1					{Flash EID0 écrasé avec succès (192 bytes).\n\nRetournez sur le XMB, éteignez et rallumez votre système s'il vous plaît !}
+STR_WEIDOK2					{Flash EID0 écrasé avec succès (192 bytes).\n\nPour appliquer le changement de région, retournez sur le XMB, éteignez et rallumez votre système s'il vous plaît !}
+STR_WEIDERROR3				{Erreur d'écriture dans le flash EID0!}
+STR_WEIDERROR4				{Erreur d'accès au FLASH!}
+STR_WTDMSG1					{Votre firmware et le mode actuel}
+STR_WTDMSG2					{vous permettent de sauvegarder votre eid_root_key.\n\nVous pouvez sauvegarder et convertir de DEX vers CEX et vice versa avec la toolbox.\n\nSi vous avez votre eid root key placé dans /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, vous serez amené à faire un choix.}
+STR_WTDMSG3					{Si vous avez votre eid root key placé dans /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, vous serez amené à faire un choix.}
+STR_WTDMSG4					{eid_root_key trouvé, voulez-vous la conversion automatique de}
+STR_WTDMSG5					{DEX Trouvé\nbasculer en CEX changera la region id en USA(0x84)}
+STR_WTDMSG6					{Erreur survenue.\n\nVérifiez votre eid_root_key s'il vous plaît, elle peut avoir été corrompu}
+STR_WTDMSG7					{Fournissez le fichier suivant et essayez à nouveau s'il vous plaît}
+STR_WTDMSG8					{Le flash de l'ensemble de la NOR est désactivé.\n\nNommez votre dump NAND correctement pour permettre de flasher SEULEMENT LA  SECTION EID0.\n\n[*.EID0.NORBIN] doit faire 16MB et doit venir de VOTRE console.\n Seulement 192 bytes seront écrits dans le flash ( EID0 ).}
+STR_WTDMSG9					{Le flash de l'ensemble de la NAND est désactivé.\n\nNommez votre dump NAND correctement pour permettre de flasher SEULEMENT LA SECTION EID0.\n\n[*.EID0.NANDBIN] doit faire 239MB ou 256MB et doit venir de VOTRE console.\n Seulement 192 bytes seront écrits dans le flash ( EID0 ).}
+STR_MAINNORBG				{Votre système ne fonctionne pas sur une configuration compatible avec REBUG!\n\nCertaines options ne seront pas disponibles.}
+STR_MAINNOCOB				{Votre système ne fonctionne pas sur une configuration compatible avec REBUG COBRA!\n\nLe basculement en mode COBRA ne sera pas disponible.}
+STR_MAINNOFW				{Impossible de détecter la version du firmware, appuyez sur OK pour quitter.}
+STR_MAINERRFLASH			{Vous ne pouvez pas accéder au périphérique de FLASH , appuyez sur OK pour quitter.}
+STR_SCRSHTSAVED				{Capture d'écran sauvegardé avec succès dans:}
+STR_SAVXREG					{Voulez-vous sauvegarder /dev_flash2/etc/xRegistry.sys dans /dev_usb000?}
+STR_SAVXREGOK				{Sauvegarde terminée!xRegistry.sys sauvegardé dans /dev_usb000}
+STR_SAVXREGERR1				{ERREUR!xRegistry.sys n'a pas été sauvegardé}
+STR_SAVXREGERR2				{ERREUR!Il n'y a pas de support de stockage connecté à dev_usb000}
+STR_SAVXREGERR3				{ERREUR: /dev_flash2/etc/xRegistry.sys n'a pas été trouvé!}
+STR_RESXREG					{Voulez-vous restaurer xRegistry.sys à partir de /dev_usb000?}
+STR_RESXREGOK				{Restoration achevée!\nxRegistry.sys restauré à partir de /dev_usb000}
+STR_RESXREGERR1				{ERREUR!\nxRegistry.sys n'a pas été restauré}
+STR_RESXREGERR2				{ERREUR: /dev_usb000/xRegistry.sys n'a pas été trouvé!}
+STR_MAKPKGOK				{Dossier [/dev_hdd0/packages] créé avec succès.}
+STR_MAKPKGERR				{Ne peut pas créer le dossier [/dev_hdd0/packages] !}
+STR_LOADLV2KERR1			{Fichier LV2 Kernel invalide sélectionné !}
+STR_LOADLV2K				{Voulez-vous charger le LV2 kernel sélectionné et faire un soft reboot?}
+STR_LOADLV2KNOSPACE			{Il n'y a pas assez d'espace libre dans /dev_flash!}
+STR_LOADLV2KCHKLV1			{Vérification LV1, patientez s'il vous plaît...}
+STR_LOADLV2KERR2			{LV2 Kernel: L'opération a échoué.}
+STR_BOOTOOSMSG1				{Voulez-vous changer l'ordre de démarrage, activer tous les correctifs LV1 et charger l'OtherOS ?}
+STR_BOOTOOSMSG2				{Voulez-vous changer l'ordre de démarrage et charger l'OtherOS ?}
+STR_BOOTOOSERR1				{OtherOS: L'opération a échoué.}
+STR_SWPKERR					{Cette fonction n'est pas disponible en mode CEX.\n\nS'il vous plaît, convertissez votre NOR/NAND en DEX avant.}
+STR_DMPFLSH					{Voulez-vous exporter la mémoire FLASH dans un fichier?}
+STR_DMPFLSHERR				{insérez une clé USB sur (/dev_usb000) avec au moins 256MB de libre s'il vous plaît et essayez à nouveau!}
+STR_EXPLVMSG1				{Voulez-vous exporter la mémoire GameOS LV2 dans un fichier ?}
+STR_EXPLVMSG2				{Voulez-vous exporter la mémoire de HV LV1 dans un fichier ?}
+STR_EXPLVWAIT				{Patientez s'il vous plaît...}
+STR_EXPLVOK					{Mémoire GameOS exporté avec succès dans un fichier}
+STR_EXPLVERR				{L'exportation de la mémoire GameOS a échoué!\n\nNe peut pas créer:}
+STR_EXPLVMSG3				{Exportation de la mémoire HyperVisor (LV1) dans}
+STR_EXPLVMSG5               {Exportation de la mémoire GameOS dans}
+STR_EXPLVMSG4				{Patientez s'il vous plaît, cela peut prendre environ 5 minutes...}
+STR_EXPLVOK2				{La mémoire Hypervisor a été exporté avec succès}
+STR_EXPLVERR2				{l'exportation de la mémoire Hypervisor a échoué!\n\nNe peut pas créer}
+STR_MODNORM					{Le [MODE NORMAL] est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_TRYAGAIN				{ÉCHOUÉ: VEUILLEZ RÉESSAYER}
+STR_MODNORMALRD				{Le [MODE NORMAL] est déja actif!!}
+STR_MODREB					{Le [MODE REBUG] est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_MODREBALRD				{ÉCHOUÉ: VEUILLEZ RÉESSAYER}
+STR_WMDIS					{WEBMAN est désactivé, le système redémarrera automatiquement lorsque vous quitterez.}
+STR_WMENA					{WEBMAN MOD est activé. WEBMAN MOD sera chargé au prochain démarrage.\n\nAssurez-vous d'activer le Mode COBRA après l'activation de WEBMAN}
+STR_MODRET					{Le [XMB RETAIL] est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_MODRETERR1				{S'IL VOUS PLAIT ESSAYEZ LE [XMB DEBUG]}
+STR_MODRETERR2				{INDISPONIBLE EN [NORMAL MODE]}
+STR_MODDEB					{Le [XMB DEBUG] est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_MODDEBERR1				{S'IL VOUS PLAIT ESSAYEZ LE [XMB RETAIL]}
+STR_MODDEBERR2				{INDISPONIBLE EN [MODE NORMAL]}
+STR_MODDEBSQA				{[PARAMÈTRES DEBUG: MENU CEX QA] Est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_MODDEBSQAOK				{[PARAMÈTRES DEBUG: MENU CEX QA] Est maintenant actif.}
+STR_MODDEBSQAERR1			{[PARAMÈTRES DEBUG: MENU CEX QA] ÉCHOUÉ}
+STR_MODDEBSQAERR2			{ESSAYEZ [PARAMÈTRES DEBUG: MENU DEBUG]}
+STR_MODDEBSDEB				{[PARAMÈTRES DEBUG: MENU DEBUG] Est maintenant actif.\n\nLe système assurera le redémarrage automatique lorsque vous quitterez.}
+STR_MODDEBSDEBOK			{[PARAMÈTRES DEBUG: MENU DEBUG] Est maintenant actif.}
+STR_MODDEBSDEBERR1			{[PARAMÈTRES DEBUG: MENU DEBUG] ÉCHOUÉ}
+STR_MODDEBSDEBERR2			{ESSAYEZ [PARAMÈTRES DEBUG: MENU CEX QA]}
+STR_MODCOBENA				{Mode COBRA activé.}
+STR_MODCOBDIS				{Mode COBRA désactivé.}
+STR_ERRFLASH				{Erreur dans le flash, réinstallez le firmware pour résoudre ce problème}
+STR_PS2ERR1					{Aucun fichier PS2Emu trouvé sur le disque dur ou l'USB (dev_usb000).}
+STR_PS2CONT					{Continuer et copier les fichiers PS2Emu depuis l'USB (dev_usb000)?}
+STR_PS2COP					{Fichiers PS2Emu copiés à partir de l'USB!}
+STR_PS2SWPOK				{PS2Emu changé!\nRedémarrer pour que les modifications prennent effet.}
+STR_XMBCFWDIS				{XMB CFW setting MOD est désactivé. Le plugin sera déchargé au prochain démarrage.}
+STR_XMBCFWENA				{XMB CFW setting MOD est activé. La fonctionnalité sera disponible via la colonne Réseau sur le XMB.}
+STR_FLASHSET				{Flag est déja actif.}
+STR_1                       {Données sauvegardées dans:}
+STR_2                       {Traité:}
+STR_3                       {MB en}
+STR_4                       {min}
+STR_5                       {MB/s}
+STR_READFLASHERROR1			{Error occurred while accessing data!\n\nSectors read: }
+STR_READFLASHERROR2			{\nTotal sectors: }
+STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
+STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}

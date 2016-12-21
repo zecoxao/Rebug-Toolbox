@@ -1,0 +1,245 @@
+STR_LANGUAGE				{日本語}
+STR_LANGCODE				{\x08}
+STR_LANG				{言語}
+STR_LANGDESC				{言語を選択}
+STR_DISABLE				{無効}
+STR_ENABLE				{有効}
+STR_NO					{いいえ}
+STR_SYSTEM				{システム}
+STR_SELECTOR				{セレクター}
+STR_LV1PATCH				{LV1パッチ}
+STR_DTC					{DEX/CEX}
+STR_UTLS				{ユーティリティ}
+STR_EIDRK				{Eidのルートキーをダンプし、再起動しますか？\n\n /Dev_hdd0/game/RBGTLBOX2/USRDIRに[eid_root_key]が作成されます。}
+STR_SCRSHOT				{スクリーンショットを保存}
+STR_DONE				{完了！}
+STR_SHTDWN				{シャットダウン...}
+STR_TRYRESTART				{再起動しようとしています...}
+STR_NOTFOUND				{見つかりませんでした！}
+STR_PETBOOTINST				{VFLASH/NAND領域5にPetitbootをインストールしますか？}
+STR_PETBOOTOK				{Petitbootがインストールされました。OtherOSをお楽しみください。}
+STR_PETBOOTERROR			{エラー：Petitbootを見つけることができません。VFLASHが検出されました。\n\n USBデバイスに[dtbimage.ps3.bin]という名前のファイルを配置して、もう一度やり直してください。}
+STR_RESIZE5				{VFLASH/NAND領域5のサイズ変更をOtherOSに許可しますか？}
+STR_RESIZE5OK				{成功：変更を有効にするためにPS3を再起動する必要があります。}
+STR_RESIZE5ERROR			{失敗：VFLASH/NAND領域5のサイズ変更は完了しませんでした。}
+STR_FLASHOK				{成功：変更を有効にするためにPS3を再起動する必要があります。}
+STR_FLASHERROR				{失敗しました！！！}
+STR_GAMEOSFLG				{GameOSブートフラグを設定しますか？}
+STR_GAMEOSFLGOK				{既にフラグが設定されます。}
+STR_SYSINF				{システム情報}
+STR_SYSINFDESC				{PS3についてのシステム情報を表示しますか？}
+STR_QUIT				{終了}
+STR_QUITDESC1				{終了}
+STR_QUITDESC2				{XMB画面に戻りますか？}
+STR_RESTSYS				{システムを再起動します}
+STR_RESTSYSDESC1			{閉じる}
+STR_RESTSYSDESC2			{PS3を再起動}
+STR_RESTSYS_SUB1			{ソフト(LV2のみ再起動)}
+STR_RESTSYS_SUB2			{完全(オン/オフ切り替え)}
+STR_BOOTOOS				{OtherOS起動}
+STR_BOOTOOSDESC				{LV1パッチを選択して、OtherOSを再起動}
+STR_BOOTOOS_SUB1			{起動 (LV1パッチ:すべて適用)}
+STR_BOOTOOS_SUB2			{起動 (LV1パッチ:現在使用中)}
+STR_TRNOFF				{システムを無効にする}
+STR_TRNOFFDESC				{PS3をシャットダウンします}
+STR_QA					{QAフラグを切り替えます}
+STR_QADESC				{QAフラグ機能を有効または無効する}
+STR_NOTAV				{利用できません。}
+STR_TOGREC				{回復モードの切り替え}
+STR_TOGRECDESC				{次の再起動時に回復モードを有効または無効にします。}
+STR_TOGPM				{プロダクトモードの切り替え}
+STR_TOGPMDESC				{プロダクトモード(FSM)を有効または無効にします。}
+STR_LOADLV2				{LV2カーネルのロード}
+STR_LOADLV2DESC				{Lv2_kernel.selfをロードします。USBまたは/dev_hdd0より[KERNEL_NAME]}
+STR_BUT					{ボタンの割り当て}
+STR_BUTDESC				{「はい/進む」と「いいえ/戻る」のボタンのセットが使用されます。}
+STR_CIRCLE				{○は [はい]}
+STR_CROSS				{×は [はい]}
+STR_XREG				{xRegistryのバックアップ/復元}
+STR_XREGDESC				{USBメモリからPS3のシステム設定をバックアップまたは復元}
+STR_BACKUP				{パックアップ}
+STR_RESTORE				{復元}
+STR_RESIZEVFLASH			{VFLASH/NAND領域のサイズを変更します。}
+STR_RESIZEVFLASHDESC			{VFLASH/NAND領域5のサイズ変更をOtherOSに許可します。}
+STR_INSTPETBOOT				{Petitbootをインストールします。}
+STR_INSTPETBOOTDESC			{USBからVFLASH/NAND領域5にPetitbootをインストールします。}
+STR_GAMEOSBOOTFLG			{GameOSブートフラグを設定します。}
+STR_GAMEOSBOOTFLGDESC			{OtherOSがインストールされている場合、PS2のタイトルをロードする問題を修正します。}
+STR_PKG					{\x22Packages\x22フォルダーを作成します。}
+STR_PKGDESC				{/dev_hdd0/packagesフォルダーを作成します。}
+STR_SAVLV1				{ハイパーバイザーのLV1メモリをエクスポートします。}
+STR_SAVLV1DESC				{LV1のメモリをファイルに保存します。}
+STR_SAVLV2				{GameOSのLV2メモリをエクスポートします。}
+STR_SAVLV2DESC				{LV2メモリをファイルに保存します。}
+STR_SAVFLASH				{フラッシュメモリをファイルにエクスポートします。}
+STR_SAVFLASHDESC			{/Dev_usb000に現在のNOR/NANDフラッシュをバックアップします。}
+STR_SAVEIDRK				{Eidルートキーをダンプします。}
+STR_SAVEIDRKDESC			{Dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_keyのEidルートキーをダンプします。}
+STR_PS3ID				{アクティブなPS3IDを変更します。}
+STR_PS3IDDESC				{LV2メモリでIDPSを偽装}
+STR_USE					{使用}
+STR_SM					{システムモード}
+STR_SMDESC				{ノーマルとREBUGモードを切り替える}
+STR_XMBOM				{XMB操作モード}
+STR_XMBOMDESC				{製品版とデバッグ版のXMBを切り替える}
+STR_MENU				{デバッグメニューの種類}
+STR_MENUDESC				{CEX QAとDEXデバッグメニューの切り替え}
+STR_TOGCFW				{CFWのXMB設定を切り替える}
+STR_TOGCFWDESC				{CFW設定v0.1a(MOD)XMBを有効または無効にする}
+STR_TOGCOB				{COBRAモードに切り替える}
+STR_TOGCOBDESC				{次回再起動時にCOBRAモードを有効または無効にします。}
+STR_TOGPS2				{PS2エミュレーターに切り替える}
+STR_TOGPS2DESC				{PS2EmuスワップはオリジナルのPS2Emuファイルを使用します。}
+STR_TOGWM				{webMANに切り替える}
+STR_TOGWMDESC				{次回再起動時にwebMANの統合を有効または無効にします。}
+STR_NORBG				{REBUGセレクターの機能は使用できません。}
+STR_NORBGDESC				{セレクター機能にアクセスするためREBUG REX/D-REファームウェアをインストールしてください。}
+STR_PATCHLV1				{LV1 Peek/Poke Support}
+STR_PATCHLV1DESC			{未使用の182と183のLV1システムコールにパッチを適用します。}
+STR_LV2MEMPRO				{LV2メモリの保護}
+STR_LV2MEMPRODESC			{LV2の変更にパッチシャットダウン}
+STR_HTAB				{HTABマッピングの書き込み保護}
+STR_HTABDESC				{HTABマッピングの保護を有効または無効にする。}
+STR_INDI				{すべての個人情報管理サービスへのアクセス}
+STR_INDIDESC				{INDIアクセスの有効化または無効化}
+STR_EEPROM				{EEPROMの書き込みアクセス権を更新します。}
+STR_EEPROMDESC				{パッチを更新しEEPROMにアクセスします。}
+STR_DISPATCH				{ディスパッチマネージャのアクセス}
+STR_DISPATCHDESC			{ディスパッチマネージャにパッチを適用し、すべてのサービスにアクセスします。}
+STR_ENCDEC				{ENCDEC IOCTLコマンド0x85を許可します。}
+STR_ENCDECDESC				{IOCTLコマンド0x85を有効にします。}
+STR_SYSMAN				{GameOSのシステムマネージャー機能をマスクします。}
+STR_SYSMANDESC				{すべてのシステムマネージャーサービスにアクセス許可}
+STR_ALLPKG				{すべてのパッケージタイプを抽出します。}
+STR_ALLPKGDESC				{すべてのパッケージタイプを抽出する更新マネージャーを許可します。}
+STR_LPAR				{レポ内の任意のLPARへのフルアクセス}
+STR_LPARDESC				{許可を作成、修正したり、リポジトリ ノードを削除}
+STR_LV1SPE				{LV1 MFC_SR1 SPEレジスタへのフルアクセス}
+STR_LV1SPEDESC				{すべてビットレジスタへのアクセスを許可}
+STR_LV1DABR				{LV1アクセスデータのブレークポイントを設定}
+STR_LV1DABRDESC				{Lv1_set_dabr()でLV1のアクセスを有効}
+STR_LV1GART				{LV1 GPU GARTメモリにアクセス}
+STR_LV1GARTDESC				{LV1 IOページサイズが4KBを使用するを許可}
+STR_LV1KEYS				{ENCDECキーへのストレージマネージャーアクセス}
+STR_LV1KEYSDESC				{ENCDECキーの消去をストレージマネージャーに許可}
+STR_LV1ACL				{すべてのACLチェックをスキップ}
+STR_LV1ACLDESC				{すべてのストレージデバイスでACLのチェックのスキップを有効}
+STR_LV1GO				{初期のGuestOSローダー}
+STR_LV1GODESC				{GameOSのGuestOSモード1を有効にする}
+STR_SWPLV2K				{LV2カーネルの入れ替え}
+STR_SWPLV2KDESC				{製品版とデバッグ版カーネルを切り替え}
+STR_REWTID				{フラッシュでターゲットIDを書き換える}
+STR_REWTIDDESC				{有効なフラッシュ「dump/eid_root_key」が提供されている場合、PS3をcex/dexに変換}
+STR_NOCEXDEX				{CEX/DEX機能は使用できません}
+STR_NOCEXDEXDESC			{これらの機能にアクセスするREBUG REX版をインストールします。}
+STR_SELECT				{: 選択}
+STR_HOLDQUITREB				{: 終了を保持し再起動}
+STR_HOLDQUIT				{: 終了を保持}
+STR_FREEHDD				{ハードディスクの空き容量}  
+STR_NUMFW                   		{システムPS3\xE2\x84\xA2:ファームウェア}
+STR_IP					{IPアドレス}
+STR_QUITXMB				{XMBを終了しますか？}
+STR_CHANGEIDPSOK1			{正常に適用されました。}
+STR_CHANGEIDPSOK2			{LV2メモリに変更します。\n\n 現在のターゲットIDに設定}
+STR_CHANGEIDPSERROR			{IDPSの検索中にエラーが発生しました。}
+STR_SWP2DEXOK				{LV2のカーネルはDEX/Debugに変更されました。}
+STR_SWP2CEXOK				{LV2カーネルはCEX/Retailに変更されました。}
+STR_SWPERROR				{互換性のないファームウェアバージョンまたはエラーが発生しました。}
+STR_NEEDRESTSYS				{システムの再起動が必要です。OKを押して再起動します。}
+STR_WEIDERROR1				{フラッシュへのアクセス中にエラーが発生しました。}
+STR_WEIDERROR2				{指定したファイルは、お使いのシステムと互換性がありあせん！}
+STR_WEIDRUSURE1				{PS3を更新しようとしていますか？Region/Target ID!\n\n Region/Target ID:}
+STR_WEIDRUSURE2				{間違いありませんか？}
+STR_WEIDRUSURE3				{PS3を更新しようとしていますか？Region/Target ID!\n\n Current ID:}
+STR_WEIDRUSURE4				{新しいID:}
+STR_WEIDRRUUSURE			{警告：\n\n この操作は非常に危険です。自信を持っている場合にのみ行う必要があります！\n\n 本当に間違いありませんか？}
+STR_WEIDOK1				{EID0領域(192バイト)のフラッシュを正常に上書きします。\n\n XMBからシステムを終了して電源を切り、電源を入れ直して下さい！}
+STR_WEIDOK2				{EID0領域(192バイト)のフラッシュを正常に上書きします。\n\n 領域の変更を適用するにはXMBからシステムを終了して電源を切り、電源を入れ直して下さい！}
+STR_WEIDERROR3				{EID0フラッシュへの書き込みエラーです。}
+STR_WEIDERROR4				{フラッシュデバイスのアクセスエラー!}
+STR_WTDMSG1				{ファームウェアと現在のモード}
+STR_WTDMSG2				{eid_root_keyをダンプすることができます。\nダンプ後はツールボックスを使用しDEXからCEXへ変換と同様に逆の変換もできます。\n あなたのルートキーがあれば、/Dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_keyは今すぐ選択できるでしょう。}
+STR_WTDMSG3				{もし現在あなたがルートキーを持っているなら、/Dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_keyは今すぐ選択できるでしょう。}
+STR_WTDMSG4				{Eid_root_keyを発見して自動変換}
+STR_WTDMSG5				{該当のDEXを入れ替え\n CEXを発見することで、USA(0x84)地域IDを変更します}
+STR_WTDMSG6				{エラーが発生しました。\n\n あなたのeid_root_keyを確認してください。あなたのキーが破損している可能性があります。または他のキー}
+STR_WTDMSG7				{次のファイルを指定して、もう一度やり直してください。}
+STR_WTDMSG8				{全体のNORフラッシュは無効です。\n\n フラッシングのみを有効にし、正しいNORダンプEID0セクションの名前にします。\n\n [*.EID0.NORBIN]にする必要があります。16MBある本体から192バイトだけがフラッシュ(EID0)に書き込まれます。}
+STR_WTDMSG9				{全体のNANDフラッシュは無効です。\n\n フラッシングのみを有効にし、正しいNANDダンプEID0セクションの名前します。\n\n [*.EID0.NANDBIN]にする必要があります。239MBまたは256MBある本体から192バイトだけがフラッシュ(EID0)に書き込まれます。}
+STR_MAINNORBG				{お使いのシステムは、互換性のあるREBUG構成で実行されていません！\n\n いくつかのオプションは利用できません。}
+STR_MAINNOCOB				{お使いのシステムは、互換性のあるREBUG COBRA構成で実行されていません！\n\n COBRAの切り替えは使用できなくなります。}
+STR_MAINNOFW				{検出できないファームウェアのバージョンです。[OK]を押して終了します。}
+STR_MAINERRFLASH			{デバイスにアクセスできないフラッシュです。[OK]を押して終了します。}
+STR_SCRSHTSAVED				{スクリーンショットが正常に保存されました。}
+STR_SAVXREG				{/Dev_usb000に/dev_flash2/etc/xRegistry.sysをバックアップしますか？}
+STR_SAVXREGOK				{バックアップが完了しました！xRegistry.sysは/dev_usb000にバックアップされました。}
+STR_SAVXREGERR1				{エラー！\n\n xRegistry.sysはバックアップされません。}
+STR_SAVXREGERR2				{エラー！\n\n Dev_usb000に接続されているのはストレージデバイスでありません。}
+STR_SAVXREGERR3				{エラー：/dev_flash2/etc/xRegistry.sysが見つかりませんでした！}
+STR_RESXREG				{/Dev_usb000からxRegistry.sysを復元しますか？}
+STR_RESXREGOK				{復元完了！xRegistry.sys/dev_usb000から復元しました。}
+STR_RESXREGERR1				{エラー！\n\n xRegistry.sysは復元されませんでした。}
+STR_RESXREGERR2				{エラー：/dev_usb000/xRegistry.sysが見つかりませんでした！}
+STR_MAKPKGOK				{[/dev_hdd0/packages]フォルダーを正常に作成しました。}
+STR_MAKPKGERR				{[/Dev_hdd0/packages]フォルダーを作成できません!}
+STR_LOADLV2KERR1			{選択されたLV2カーネルファイルは無効です！}
+STR_LOADLV2K				{選択されたLV2カーネルをロードしてソフトリブートしますか？}
+STR_LOADLV2KNOSPACE			{/Dev_flashに十分な空き領域がありません！}
+STR_LOADLV2KCHKLV1			{LV1のチェック中です。お待ちください...}
+STR_LOADLV2KERR2			{LV2カーネル：操作に失敗しました。}
+STR_BOOTOOSMSG1				{起動順序を変更し、すべてのLV1修正プログラムを有効にしてOtherOSをロードしますか？}
+STR_BOOTOOSMSG2				{起動順序を変更し、OtherOSをロードしますか？}
+STR_BOOTOOSERR1				{OtherOS：操作に失敗しました。}
+STR_SWPKERR				{この機能はCEXモードで利用できません。\n\n 最初にDEX NOR/NANDをフラッシュして下さい。}
+STR_DMPFLSH				{フラッシュメモリをファイルにエクスポートしますか？}
+STR_DMPFLSHERR				{USBドライブを挿入してください。(/dev_usb000)少なくとも256MBの空き容量が必要です。もう一度試してください！}
+STR_EXPLVMSG1				{GameOS LV2メモリをファイルにエクスポートしますか？}
+STR_EXPLVMSG2				{HV LV1メモリをファイルにエクスポートしますか？}
+STR_EXPLVWAIT				{お待ちください...}
+STR_EXPLVOK				{GameOSメモリは正常にファイルへエクスポートされました。}
+STR_EXPLVERR				{GameOSメモリはエクスポートに失敗しました！\n\n 作成できません。}
+STR_EXPLVMSG3				{ハイパーバイザ(LV1)メモリをファイルにエクスポートします。}	
+STR_EXPLVMSG5               		{GameOSメモリをファイルにエクスポートします。}
+STR_EXPLVMSG4				{お待ち下さい。これは約5分程度かかることがあります。}
+STR_EXPLVOK2				{ハイパーバイザのメモリは正常にファイルへエクスポートされました。}
+STR_EXPLVERR2				{ハイパーバイザーメモリのエクスポートに失敗しました！\n\n 作成できません。}
+STR_MODNORM				{[通常モード]はアクティブになりました。\n\n システムが自動的に再起動を終了するとき}
+STR_TRYAGAIN				{失敗しました：もう一度やり直してください。}
+STR_MODNORMALRD				{既に[通常モード]に設定されています！}
+STR_MODREB				{システムが自動的に再起動を終了するとき[REBUGモード]はアクティブになりました。}
+STR_MODREBALRD				{既に[REBUGモード]に設定されています！}
+STR_WMDIS				{WebMANは無効になりました。\n\n システムが自動的に再起動を終了するとき}
+STR_WMENA				{WebMANは有効です。WebMANは次回の起動時に読み込まれます。\n\n WebMANの有効後にCOBRA有効にすることを確認します。}
+STR_MODRET				{[RETAIL XMB]がアクティブになりました。\n\n システムが自動的に再起動を終了するとき}
+STR_MODRETERR1				{[DEBUG XMB]をお試しください。}
+STR_MODRETERR2				{[通常モード]では使用できません。}
+STR_MODDEB				{[DEBUG XMB]がアクティブになりました。\n\n システムが自動的に再起動を終了するとき}
+STR_MODDEBERR1				{[RETAIL XMB]をお試しください。}
+STR_MODDEBERR2				{[通常モード]では使用できません。}
+STR_MODDEBSQA				{[DEBUG設定：MENU CEX QA]がアクティブになりました。\n\n システムが自動的に再起動を終了するとき}
+STR_MODDEBSQAOK				{[DEBUG設定：MENU CEX QA]がアクティブになりました。}
+STR_MODDEBSQAERR1			{[DEBUG設定：MENU CEX QA]が失敗しました。}
+STR_MODDEBSQAERR2			{[DEBUG設定：MENU DEBUG]を試す。}
+STR_MODDEBSDEB				{[DEBUG設定：MENU DEBUG]がアクティブになりました。\n\n システムが自動的に再起動を終了するとき}
+STR_MODDEBSDEBOK			{[DEBUG設定：MENU DEBUG]がアクティブになりました。}
+STR_MODDEBSDEBERR1			{[DEBUG設定：MENU DEBUG]が失敗しました。}
+STR_MODDEBSDEBERR2			{[DEBUG設定：MENU CEX QA]を試す。}
+STR_MODCOBENA				{COBRAモードを有効にします。}
+STR_MODCOBDIS				{COBRAモードを無効にします。}
+STR_ERRFLASH				{フラッシュにエラー！この問題を解決するためファームウェアを再インストールします。}
+STR_PS2ERR1				{PS2EmuファイルがHDDまたはUSB(dev_usb000)で見つかりません。}
+STR_PS2CONT				{USB(dev_usb000)からPS2Emuファイルのコピーを続けますか？}
+STR_PS2COP				{PS2EmuファイルをUSBからコピー！}
+STR_PS2SWPOK				{PS2Emu入れ替え！\n 変更を有効にするため再起動します。}
+STR_XMBCFWDIS				{XMB CFWの設定MODは無効です。プラグインは次のブート時にアンロードされます。}
+STR_XMBCFWENA				{XMB CFWの設定MODは有効です。機能はXMB上のネットワーク経由で利用可能になります。}
+STR_FLASHSET				{既にフラグが設定されます。}
+STR_1                       		{データとして保存：}
+STR_2                       		{処理：}
+STR_3                       		{MB in}
+STR_4                       		{min}
+STR_5                       		{MB/s}
+STR_READFLASHERROR1			{データへのアクセス中にエラーが発生しました！\n\n セクターを読みます：}
+STR_READFLASHERROR2			{\n 総セクター数：}
+STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
+STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}

@@ -122,6 +122,779 @@ u64 SYSCALL_TABLE			= SYSCALL_TABLE_355;
 #define SYSCALL8_OPCODE_GET_VERSION   0x7000
 #define SYSCALL8_OPCODE_GET_VERSION2   0x7001
 
+
+// LANGUAGE 
+
+static char STR_LANGUAGE[130][128]={{0}};
+static char STR_LANGCODE[130][2]={{0}};
+int lang_N;
+u8 lang=0;
+char lang_path[130][128];
+
+char STR_LANG[50] = "Language";
+char STR_LANGDESC[50] = "Choose a language";
+char STR_DISABLE[50] = "Disabled";
+char STR_ENABLE[50] = "Enabled";
+char STR_NO[50] = "No";
+char STR_SYSTEM[50] = "System";
+char STR_SELECTOR[50] = "Selector";
+char STR_LV1PATCH[50] = "LV1 Patches";
+char STR_DTC[50] = "DEX/CEX";
+char STR_UTLS[50] = "Utilities";
+char STR_EIDRK[150] = "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR";
+char STR_SCRSHOT[130] = "Saving screenshot to";
+char STR_DONE[50] = "Done!";
+char STR_SHTDWN[130] = "Shutting down...";
+char STR_TRYRESTART[130] = "Trying to restart...";
+char STR_NOTFOUND[50] = "was not found!";
+char STR_PETBOOTINST[130] = "Do you want to install Petitboot on VFLASH/NAND Region 5?";
+char STR_PETBOOTOK[130] = "Petitboot has been installed.. Enjoy OtherOS.";
+char STR_PETBOOTERROR[150] = "ERROR: Could not find Petitboot..VFLASH Detected.\n\nPlease put file named [dtbimage.ps3.bin] on USB device and try again.";
+char STR_RESIZE5[130] = "Do you want to resize VFLASH/NAND Region 5 to allow OtherOS?";
+char STR_RESIZE5OK[130] = "SUCCESS: Your PS3 needs to reboot for changes to take effect.";
+char STR_RESIZE5ERROR[130] = "FAILED: resizing VFLASH/NAND Region 5 is not completed.";
+char STR_FLASHOK[130] = "SUCCESS: Your PS3 needs to reboot for changes to take effect.";
+char STR_FLASHERROR[50] = "FAILED!!!";
+char STR_GAMEOSFLG[130] = "Do you want to set GameOS boot flag?";
+char STR_GAMEOSFLGOK[130] = "Flag is already set.";
+char STR_SYSINF[130] = "System information";
+char STR_SYSINFDESC[130] = "Display information about your PS3\xE2\x84\xA2 system.";
+char STR_QUIT[50] = "Quit";
+char STR_QUITDESC1[50] = "Quit";
+char STR_QUITDESC2[150] = "and return to XMB\xE2\x84\xA2 screen";
+char STR_RESTSYS[50] = "Restart System";
+char STR_RESTSYSDESC1[50] = "Close";
+char STR_RESTSYSDESC2[130] = "and restart your PLAYSTATION\xC2\xAE\x33 System";
+char STR_RESTSYS_SUB1[130] = "Soft (LV2 Reboot Only)";
+char STR_RESTSYS_SUB2[130] = "Full (On/Off Cycle)";
+char STR_BOOTOOS[50] = "Boot OtherOS";
+char STR_BOOTOOSDESC[130] = "Select LV1 patches and reboot into OtherOS";
+char STR_BOOTOOS_SUB1[130] = "Boot (LV1 patches: Apply All)";
+char STR_BOOTOOS_SUB2[130] = "Boot (LV1 patches: Use current)";
+char STR_TRNOFF[50] = "Turn Off System";
+char STR_TRNOFFDESC[130] = "Shutdown your PLAYSTATION\xC2\xAE\x33 System";
+char STR_QA[50] = "Toggle QA Flag";
+char STR_QADESC[130] = "Enable or disable QA flag functions.";
+char STR_NOTAV[50] = "Not Available";
+char STR_TOGREC[130] = "Toggle Recovery Mode";
+char STR_TOGRECDESC[130] = "Enable or disable recovery mode on next reboot.";
+char STR_TOGPM[130] = "Toggle Product Mode";
+char STR_TOGPMDESC[130] = "Enable or disable product mode (FSM).";
+char STR_LOADLV2[130] = "Load LV2 Kernel";
+char STR_LOADLV2DESC[130] = "Load lv2_kernel.self.[KERNEL_NAME] from USB or /dev_hdd0.";
+char STR_BUT[130] = "Button Assignment";
+char STR_BUTDESC[130] = "Sets which buttons are used for Accept/Enter and Cancel/Back.";
+char STR_CIRCLE[50] = "Circle is [Accept]";
+char STR_CROSS[50] = "Cross is [Accept]";
+char STR_XREG[130] = "Backup/Restore xRegistry";
+char STR_XREGDESC[130] = "Backup or Restore the PS3 system settings from USB.";
+char STR_BACKUP[50] = "Backup";
+char STR_RESTORE[50] = "Restore";
+char STR_RESIZEVFLASH[130] = "Resize VFLASH/NAND Regions";
+char STR_RESIZEVFLASHDESC[130] = "Resize VFLASH/NAND Regions 5 to allow OtherOS.";
+char STR_INSTPETBOOT[50] = "Install petitboot";
+char STR_INSTPETBOOTDESC[130] = "Install Petitboot to VFLASH/NAND Regions 5 from USB.";
+char STR_GAMEOSBOOTFLG[130] = "Set GameOS Boot Flag";
+char STR_GAMEOSBOOTFLGDESC[130] = "fixes issue loading PS2 titles if OtherOS is installed.";
+char STR_PKG[130] = "Create \x22Packages\x22 Folder";
+char STR_PKGDESC[130] = "Create /dev_hdd0/packages folder.";
+char STR_SAVLV1[130] = "Export Hypervisor LV1 Memory";
+char STR_SAVLV1DESC[130] = "Save LV1 memory to a file.";
+char STR_SAVLV2[130] = "Export GameOS LV2 Memory";
+char STR_SAVLV2DESC[130] = "Save LV2 memory to a file.";
+char STR_SAVFLASH[130] = "Export Flash to File";
+char STR_SAVFLASHDESC[130] = "Backup your current NOR/NAND flash to /dev_usb000.";
+char STR_SAVEIDRK[50] = "Dump eid root key";
+char STR_SAVEIDRKDESC[130] = "Dump eid root key at dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.";
+char STR_PS3ID[50] = "Change Active PS3ID";
+char STR_PS3IDDESC[130] = "Spoof IDPS in LV2 memory.";
+char STR_USE[50] = "Use";
+char STR_SM[50] = "System Mode";
+char STR_SMDESC[130] = "Switch between Normal and REBUG modes.";
+char STR_XMBOM[50] = "XMB Operation Mode";
+char STR_XMBOMDESC[130] = "Switch between Retail and Debug XMB.";
+char STR_MENU[50] = "Debug Menu Type";
+char STR_MENUDESC[130] = "Switch between CEX QA and DEX Debug menu.";
+char STR_TOGCFW[130] = "Toggle XMB CFW settings";
+char STR_TOGCFWDESC[130] = "Enable or Disable XMB CFW settings v0.1a (MOD)";
+char STR_TOGCOB[50] = "Toggle COBRA Mode";
+char STR_TOGCOBDESC[130] = "Enable or disable COBRA Mode on next reboot.";
+char STR_TOGPS2[50] = "Toggle PS2 Emulator";
+char STR_TOGPS2DESC[130] = "PS2Emu swap to use Original PS2 Emu files.";
+char STR_TOGWM[50] = "Toggle webMAN";
+char STR_TOGWMDESC[130] = "Enable or disable integrated webMAN on next reboot.";
+char STR_NORBG[130] = "REBUG Selector Functions Not Available";
+char STR_NORBGDESC[130] = "Please install REBUG REX/D-REX Firmware to access the Selector Functions.";
+char STR_PATCHLV1[130] = "LV1 Peek/Poke Support";
+char STR_PATCHLV1DESC[130] = "Patch unused LV1 syscalls 182 and 183.";
+char STR_LV2MEMPRO[130] = "LV2 Memory Protection";
+char STR_LV2MEMPRODESC[130] = "Patch Shutdown on LV2 modification.";
+char STR_HTAB[130] = "HTAB Mapping With Write Protection";
+char STR_HTABDESC[130] = "Enable or Disable protected HTAB mapping.";
+char STR_INDI[130] = "Access to all INDI Info Manager Services";
+char STR_INDIDESC[130] = "Enable or Disable INDI access.";
+char STR_EEPROM[130] = "Update Manager EEPROM Write Access";
+char STR_EEPROMDESC[130] = "Patch Update Manager access to EEPROM.";
+char STR_DISPATCH[130] = "Dispatch Manager Access";
+char STR_DISPATCHDESC[130] = "Patch Dispatch Manager access to all services.";
+char STR_ENCDEC[130] = "Allow ENCDEC IOCTL Command 0x85";
+char STR_ENCDECDESC[130] = "Enable IOCTL Command 0x85";
+char STR_SYSMAN[130] = "System Manager Ability Mask of GameOS";
+char STR_SYSMANDESC[130] = "Allow access to all system manager services.";
+char STR_ALLPKG[130] = "Extract all PKG Types";
+char STR_ALLPKGDESC[130] = "Allow Update Manager to extract all PKG types.";
+char STR_LPAR[130] = "Full Access for Repo Nodes in Any LPAR";
+char STR_LPARDESC[130] = "Allow create, modify, delete for repository nodes.";
+char STR_LV1SPE[130] = "LV1 Full Access to MFC_SR1 SPE Register";
+char STR_LV1SPEDESC[130] = "Allow all-bit access to the register.";
+char STR_LV1DABR[130] = "LV1 Access to set Data Break Points";
+char STR_LV1DABRDESC[130] = "Enable LV1 access with lv1_set_dabr().";
+char STR_LV1GART[130] = "LV1 Access to GPU GART Memory";
+char STR_LV1GARTDESC[130] = "Allow LV1 to use 4KB IO page size.";
+char STR_LV1KEYS[130] = "Storage Manager ENCDEC Keys Access";
+char STR_LV1KEYSDESC[130] = "Allow Storage Manager to clear ENCDEC keys.";
+char STR_LV1ACL[130] = "Skip all ACL Checks";
+char STR_LV1ACLDESC[130] = "Enable skipping of ACL checks for all storage devices.";
+char STR_LV1GO[130] = "Initial GuestOS Loader";
+char STR_LV1GODESC[130] = "Enable GuestOS mode 1 for GameOS.";
+char STR_SWPLV2K[50] = "Swap LV2 Kernel";
+char STR_SWPLV2KDESC[130] = "Switch between retail and debug kernels.";
+char STR_REWTID[130] = "Rewrite Target ID in Flash";
+char STR_REWTIDDESC[130] = "Convert PS3 to cex/dex if valid flash dump/eid_root_key is provided.";
+char STR_NOCEXDEX[130] = "CEX/DEX Functions Not Available";
+char STR_NOCEXDEXDESC[130] = "Install REBUG REX EDITION to access these functions.";
+char STR_SELECT[50] = ": Select";
+char STR_HOLDQUITREB[130] = ": Hold to Quit and Reboot";
+char STR_HOLDQUIT[50] = ": Hold to Quit";
+char STR_FREEHDD[130] = "Free HDD space";
+char STR_NUMFW[50] = "PS3\xE2\x84\xA2 System: Firmware";
+char STR_IP[50] = "IP Address";
+char STR_QUITXMB[50] = "Quit to XMB?";
+char STR_CHANGEIDPSOK1[130] = "Successfully applied";
+char STR_CHANGEIDPSOK2[130] = "changes to LV2 memory.\n\nCurrent target ID set to";
+char STR_CHANGEIDPSERROR[130] = "Error occurred while searching for IDPS";
+char STR_SWP2DEXOK[130] = "LV2 Kernel successfully changed to DEX/Debug.";
+char STR_SWP2CEXOK[130] = "LV2 Kernel successfully changed to CEX/Retail.";
+char STR_SWPERROR[130] = "Incompatible firmware version or an error has occurred.";
+char STR_NEEDRESTSYS[130] = "System restart is required. Press OK to reboot";
+char STR_WEIDERROR1[130] = "Error occured while accessing flash";
+char STR_WEIDERROR2[100] = "The file you provided is not compatible with your system!";
+char STR_WEIDRUSURE1[130] = "You are about to update your PS3\xE2\x84\xA2 Region/Target ID!\n\nRegion/Target ID: ";
+char STR_WEIDRUSURE2[25] = "ARE YOU SURE?";
+char STR_WEIDRUSURE3[100] = "You are about to change your PS3\xE2\x84\xA2 Region/Target ID!\n\nCurrent ID:";
+char STR_WEIDRUSURE4[50] = "New ID:";
+char STR_WEIDRRUUSURE[200] = "WARNING:\n\nThis operation is DANGEROUS and should be carried out ONLY if you are CONFIDENT!\n\nA R E   Y O U   S U R E ?";
+char STR_WEIDOK1[200] = "Flash EID0 region successfully overwritten (192 bytes).\n\nPlease quit to XMB, turn-off and turn-on your system!";
+char STR_WEIDOK2[200] = "Flash EID0 region successfully overwritten (192 bytes).\n\nTo apply region change, please quit to XMB, turn-off and turn-on your system!";
+char STR_WEIDERROR3[130] = "Error writing to flash EID0!";
+char STR_WEIDERROR4[130] = "Error accessing FLASH device!";
+char STR_WTDMSG1[130] = "Your firmware and current mode";
+char STR_WTDMSG2[300] = "allows you to dump eid_root_key.\nYou can dump it and convert from DEX to CEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.";
+char STR_WTDMSG3[130] = "if you have your root key at /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key than you will be greeted with a choice now.";
+char STR_WTDMSG4[130] = "Found eid_root_key, do you want automatic conversion from";
+char STR_WTDMSG5[130] = "Found true DEX\nCEX swap would change region id to USA(0x84)";
+char STR_WTDMSG6[130] = "Error occurred.\n\nPlease verify your eid_root_key, Your key may have been corrupted or someone else's";
+char STR_WTDMSG7[130] = "Please provide the following file and try again";
+char STR_WTDMSG8[300] = "Flashing the whole NOR is disabled.\n\nName your NOR dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\nInput [*.EID0.NORBIN] must be 16MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).";
+char STR_WTDMSG9[300] = "Flashing the whole NAND is disabled.\n\nName your NAND dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\nInput [*.EID0.NANDBIN] must be 239MB or 256MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).";
+char STR_MAINNORBG[130] = "Your system is not running on compatible REBUG configuration!\n\nSome options will not be available.";
+char STR_MAINNOCOB[130] = "Your system is not running on compatible REBUG COBRA configuration!\n\nToggling COBRA will not be available.";
+char STR_MAINNOFW[130] = "Cannot detect firmware version, press OK to exit.";
+char STR_MAINERRFLASH[130] = "Cannot access FLASH device, press OK to exit.";
+char STR_SCRSHTSAVED[130] = "Screenshot successfully saved as";
+char STR_SAVXREG[130] = "Do you want to backup /dev_flash2/etc/xRegistry.sys to /dev_usb000?";
+char STR_SAVXREGOK[130] = "Backup complete!\nxRegistry.sys backed up to /dev_usb000";
+char STR_SAVXREGERR1[130] = "ERROR!\nxRegistry.sys was not backed up";
+char STR_SAVXREGERR2[130] = "ERROR!\nThere is not a storage device connected to dev_usb000";
+char STR_SAVXREGERR3[130] = "ERROR: /dev_flash2/etc/xRegistry.sys was not found!";
+char STR_RESXREG[130] = "Do you want to restore xRegistry.sys from /dev_usb000?";
+char STR_RESXREGOK[130] = "Restore complete!\nxRegistry.sys restored from /dev_usb000";
+char STR_RESXREGERR1[130] = "ERROR!\nxRegistry.sys was not restored";
+char STR_RESXREGERR2[130] = "ERROR: /dev_usb000/xRegistry.sys was not found!";
+char STR_MAKPKGOK[130] = "Folder [/dev_hdd0/packages] created successfully.";
+char STR_MAKPKGERR[130] = "Cannot create [/dev_hdd0/packages] folder!";
+char STR_LOADLV2KERR1[130] = "Invalid LV2 Kernel file selected!";
+char STR_LOADLV2K[130] = "Do you want to load the selected LV2 kernel and soft reboot?";
+char STR_LOADLV2KNOSPACE[130] = "There is not enough free space in /dev_flash!";
+char STR_LOADLV2KCHKLV1[130] = "Checking LV1, please wait...";
+char STR_LOADLV2KERR2[130] = "LV2 Kernel: Operation failed.";
+char STR_BOOTOOSMSG1[130] = "Do you want to change the boot order, enable all LV1 patches and load OtherOS?";
+char STR_BOOTOOSMSG2[130] = "Do you want to change the boot order and load OtherOS?";
+char STR_BOOTOOSERR1[130] = "OtherOS: Operation failed.";
+char STR_SWPKERR[130] = "This function is not available in CEX mode.\n\nPlease flash a DEX NOR/NAND first.";
+char STR_DMPFLSH[130] = "Do you want to export FLASH memory to a file?";
+char STR_DMPFLSHERR[130] = "Please insert a USB drive (/dev_usb000) with at least 256MB free and try again!";
+char STR_EXPLVMSG1[130] = "Do you want to export GameOS LV2 memory to a file?";
+char STR_EXPLVMSG2[130] = "Do you want to export HV LV1 memory to a file?";
+char STR_EXPLVWAIT[30] = "Please wait...";
+char STR_EXPLVOK[130] = "GameOS memory exported successfully to file";
+char STR_EXPLVERR[130] = "GameOS memory export failed!\n\nCannot create";
+char STR_EXPLVMSG3[130] = "Exporting HyperVisor (LV1) memory to file";
+char STR_EXPLVMSG5[130] = "Exporting GameOS memory to file";
+char STR_EXPLVMSG4[130] = "Please wait, it may take about 5 minutes...";
+char STR_EXPLVOK2[130] = "Hypervisor memory exported successfully to file";
+char STR_EXPLVERR2[130] = "Hypervisor memory export failed!\n\nCannot create";
+char STR_MODNORM[130] = "[NORMAL MODE] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_TRYAGAIN[130] = "FAILED: PLEASE TRY AGAIN";
+char STR_MODNORMALRD[130] = "[NORMAL MODE] IS ALREADY SET!!";
+char STR_MODREB[130] = "[REBUG MODE] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_MODREBALRD[130] = "[REBUG MODE] IS ALREADY SET!";
+char STR_WMDIS[130] = "WebMAN is disabled, System will auto-reboot when you quit.";
+char STR_WMENA[130] = "WebMAN is enabled. webMAN will be loaded on next boot.\n\nMake sure to enable COBRA after enabling webMAN";
+char STR_MODRET[130] = "[RETAIL XMB] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_MODRETERR1[130] = "PLEASE TRY [DEBUG XMB]";
+char STR_MODRETERR2[130] = "UNAVAILABLE IN [NORMAL MODE]";
+char STR_MODDEB[130] = "[DEBUG XMB] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_MODDEBERR1[130] = "PLEASE TRY [RETAIL XMB]";
+char STR_MODDEBERR2[130] = "UNAVAILABLE IN [NORMAL MODE]";
+char STR_MODDEBSQA[130] = "[DEBUG SETTINGS: MENU CEX QA] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_MODDEBSQAOK[130] = "[DEBUG SETTINGS: MENU CEX QA] is now active.";
+char STR_MODDEBSQAERR1[130] = "[DEBUG SETTINGS: MENU CEX QA] FAILED";
+char STR_MODDEBSQAERR2[130] = "TRY [DEBUG SETTINGS: MENU DEBUG]";
+char STR_MODDEBSDEB[130] = "[DEBUG SETTINGS: MENU DEBUG] is now active.\n\nSystem will auto-reboot when you quit.";
+char STR_MODDEBSDEBOK[130] = "[DEBUG SETTINGS: MENU DEBUG] is now active.";
+char STR_MODDEBSDEBERR1[130] = "[DEBUG SETTINGS: MENU DEBUG] FAILED";
+char STR_MODDEBSDEBERR2[130] = "TRY [DEBUG SETTINGS: MENU CEX QA]";
+char STR_MODCOBENA[50] = "COBRA Mode enabled.";
+char STR_MODCOBDIS[50] = "COBRA Mode disabled.";
+char STR_ERRFLASH[130] = "Error in flash, reinstall firmware to fix this";
+char STR_PS2ERR1[130] = "No PS2Emu files found on HDD or USB(dev_usb000).";
+char STR_PS2CONT[130] = "Continue to copy PS2Emu files from USB(dev_usb000)?";
+char STR_PS2COP[130] = "PS2Emu files copied from USB!";
+char STR_PS2SWPOK[130] = "PS2Emu swapped!\nReboot for changes to take effect.";
+char STR_XMBCFWDIS[130] = "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.";
+char STR_XMBCFWENA[130] = "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.";
+char STR_FLASHSET[130] = "Flag is already set.";
+char STR_1[50] = "Data saved as:";
+char STR_2[50] = "Processed";
+char STR_3[50] = "MB in";
+char STR_4[50] = "min";
+char STR_5[50] = "MB/s";
+char STR_READFLASHERROR1[130] = "Error occurred while accessing data!\n\nSectors read: ";
+char STR_READFLASHERROR2[30] = "\nTotal sectors: ";
+char STR_TOGHOSTINF[130] = "Toggle Host Information on XMB [DEX]";
+char STR_TOGHOSTINFDESC[130] = "Enable or Disable Host Information on XMB";
+
+int lang_pos, fh;
+int exist(char *path);
+
+uint32_t get_xreg_value(char *key, u32 default_value)
+{
+	int reg = -1;
+	u32 reg_value = default_value;
+	u16 off_string, len_data, len_string;
+	u64 read, pos, off_val_data;
+	CellFsStat stat;
+	char string[256];
+
+	if(cellFsOpen("/dev_flash2/etc/xRegistry.sys", CELL_FS_O_RDONLY, &reg, NULL, 0) != CELL_FS_SUCCEEDED || reg == -1)
+	{
+		return reg_value;
+	}
+
+	cellFsStat("/dev_flash2/etc/xRegistry.sys", &stat);
+
+	u64 entry_name = 0x10000;
+
+	while(true)
+	{
+	//// Data entries ////
+		//unk
+		entry_name += 2;
+
+		//relative entry offset
+		cellFsLseek(reg, entry_name, 0, &pos);
+		cellFsRead(reg, &off_string, 2, &read);
+		entry_name += 4;
+
+		//data lenght
+		cellFsLseek(reg, entry_name, 0, &pos);
+		cellFsRead(reg, &len_data, 2, &read);
+		entry_name += 3;
+
+		//data
+		off_val_data = entry_name;
+		entry_name += len_data + 1;
+
+	//// String Entries ////
+		off_string += 0x12;
+
+		//string length
+		cellFsLseek(reg, off_string, 0, &pos);
+		cellFsRead(reg, &len_string, 2, &read);
+		off_string += 3;
+
+		//string
+		memset(string, 0, sizeof(string));
+		cellFsLseek(reg, off_string, 0, &pos);
+		cellFsRead(reg, string, len_string, &read);
+
+		//Find language
+		if(strcmp(string, key) == 0)
+		{
+			cellFsLseek(reg, off_val_data, 0, &pos);
+			cellFsRead(reg, &reg_value, 4, &read);
+			break;
+		}
+
+		if(off_string == 0xCCDD || entry_name >= stat.st_size) break;
+	}
+
+	cellFsClose(reg);
+
+	return reg_value;
+}
+
+static bool language(const char *file_str, char *default_str)
+{
+	uint64_t siz = 0;
+	uint8_t i;
+	int f=0;
+	char temp[1];
+
+	bool do_retry=true;
+
+	if (fh) f=fh; //file is already open
+    else
+    {
+		if (cellFsOpen(lang_path[lang], CELL_FS_O_RDONLY, &f, NULL, 0) != CELL_FS_SUCCEEDED) return false;
+
+		fh = f;
+
+ retry:
+		cellFsLseek(f, lang_pos, CELL_FS_SEEK_SET, &siz);
+	}
+
+	do {
+		cellFsRead(f, (void *)&temp, 0x01, &siz);
+		lang_pos++;
+		for(i=0; i < strlen(file_str); i++)
+		{
+			if (temp[0] != file_str[i]) break;
+			else if (i==strlen(file_str)-1)
+			{
+				while(siz && temp[0] != '{') {
+					cellFsRead(f, (void *)&temp, 0x01, &siz);
+					lang_pos++;
+				}
+				
+				int str_len = 0;
+				while(siz) {
+					cellFsRead(f, (void *)&temp, 0x01, &siz);
+					lang_pos++;
+					if (temp[0] == '}') {
+						default_str[str_len] = NULL;
+						return true;
+					}
+					
+					
+					if (temp[0] == 92) { 
+						cellFsRead(f, (void *)&temp, 0x01, &siz);
+						lang_pos++;
+						if (temp[0] == 'n') {
+							default_str[str_len] = '\n';
+							str_len++;
+						} 
+						else if (temp[0] == 'r') {
+							default_str[str_len] = '\r';
+							str_len++;
+						} 
+						else if (temp[0] == 'x') {
+							cellFsRead(f, (void *)&temp, 0x01, &siz);
+							lang_pos++;
+							uint8_t val=0, val_u=0;
+							sscanf(temp, "%hhX", &val);
+							val = val*0x10;
+							cellFsRead(f, (void *)&temp, 0x01, &siz);
+							lang_pos++;
+							sscanf(temp, "%hhX", &val_u);
+							val += val_u;
+							default_str[str_len] = val;
+							str_len++;
+						}
+						else {
+							default_str[str_len] = 92;
+							str_len++;
+							default_str[str_len] = temp[0];
+							str_len++;
+						}
+						
+					} else {
+						default_str[str_len] = temp[0];
+						str_len++;
+					}
+					
+				}
+			}
+			else
+			{
+				cellFsRead(f, (void *)&temp, 0x01, &siz);
+				lang_pos++;
+			}
+		}
+	} while(siz != 0);
+
+	if(do_retry) {do_retry=false; lang_pos=0; goto retry;}
+
+	return true;
+}
+
+void get_all_language()
+{
+	char LOCPath[128];
+	char TXTPath[128];
+	int fd;
+	
+	
+	strcpy(STR_LANGUAGE[0], "English") ;
+	sprintf(LOCPath, "/dev_hdd0/game/%s/USRDIR/loc", STR_APP_ID);
+	
+	if(cellFsOpendir(LOCPath, &fd) == CELL_FS_SUCCEEDED) {
+		
+		CellFsDirent entry; u64 read_e;
+	
+		while(cellFsReaddir(fd, &entry, &read_e) == 0 && read_e > 0) {
+			
+			sprintf(TXTPath, "%s/%s", LOCPath, entry.d_name);
+			
+			lang_pos=fh=0;
+			
+			if(cellFsOpen(TXTPath, CELL_FS_O_RDONLY, &fh, NULL, 0) == CELL_FS_SUCCEEDED) {
+				if( language("STR_LANGUAGE", STR_LANGUAGE[lang_N]) == true) {
+					language("STR_LANGCODE", STR_LANGCODE[lang_N]);
+					strcpy(lang_path[lang_N], TXTPath);
+					lang_N++;
+				}
+				cellFsClose(fh);
+			}
+		}
+		cellFsClosedir(fd);
+	}
+
+}
+
+/*
+	0x0=German
+	0x1=English (US)
+	0x2=Spanish
+	0x3=French
+	0x4=Italian
+	0x5=Dutch
+	0x6=Portuguese (Por)
+	0x7=Russian
+	0x8=Japanese
+	0x9=Korean
+	0xA=Chinese (traditional)
+	0xB=Chinese (simplified)
+	0xC=Finnish
+	0xD=Swedish
+	0xE=Danish
+	0xF=Norwegian
+	0x10=Polish
+	0x11=Portuguese (Bra)
+	0x12=English (UK)
+*/
+
+void load_activ()
+{
+	FILE *fp;
+	char activ[128];
+	char data[130]={0};
+	int i;
+	
+	sprintf(activ, "/dev_hdd0/game/%s/USRDIR/loc/activ.txt", STR_APP_ID);
+	
+	fp = fopen(activ, "r");
+	
+	if( fp != NULL ) {
+		fgets(data, 128, fp);
+		fclose(fp);
+		for(i=0; i < lang_N ;i++) {
+			if( strcmp(data, STR_LANGUAGE[i]) == 0) {
+				lang = i;
+				return;
+			}
+		}
+	} 
+	else {
+		uint32_t lang_xreg = get_xreg_value((char*)"/setting/system/language", 1);
+		
+		for(i=0; i < lang_N ;i++) {
+			if((u8) STR_LANGCODE[i][0] == lang_xreg) {
+				lang = i;
+				return;
+			}
+		}
+	}
+	
+	lang = 0;
+	
+}
+
+void save_activ()
+{
+	FILE *fp;
+	char activ[128];
+	sprintf(activ, "/dev_hdd0/game/%s/USRDIR/loc/activ.txt", STR_APP_ID);
+	fp = fopen(activ, "w");
+	if(fp==NULL) return;
+	fputs(STR_LANGUAGE[lang], fp);
+	fclose(fp);
+}
+
+static void update_language(void)
+{
+	
+	lang_pos=fh=0;
+	
+	if( language("STR_DISABLE", STR_DISABLE) == false ) return ;
+	
+	language("STR_ENABLE", STR_ENABLE);
+	language("STR_NO", STR_NO);
+	language("STR_SYSTEM", STR_SYSTEM);
+	language("STR_SELECTOR", STR_SELECTOR);
+	language("STR_LV1PATCH", STR_LV1PATCH);
+	language("STR_DTC", STR_DTC);
+	language("STR_UTLS", STR_UTLS);
+	language("STR_EIDRK", STR_EIDRK);
+	language("STR_SCRSHOT", STR_SCRSHOT);
+	language("STR_DONE", STR_DONE);
+	language("STR_SHTDWN", STR_SHTDWN);
+	language("STR_TRYRESTART", STR_TRYRESTART);
+	language("STR_NOTFOUND", STR_NOTFOUND);
+	language("STR_PETBOOTINST", STR_PETBOOTINST);
+	language("STR_PETBOOTOK", STR_PETBOOTOK);
+	language("STR_PETBOOTERROR", STR_PETBOOTERROR);
+	language("STR_RESIZE5", STR_RESIZE5);
+	language("STR_RESIZE5OK", STR_RESIZE5OK);
+	language("STR_RESIZE5ERROR", STR_RESIZE5ERROR);
+	language("STR_FLASHOK", STR_FLASHOK);
+	language("STR_FLASHERROR", STR_FLASHERROR);
+	language("STR_GAMEOSFLG", STR_GAMEOSFLG);
+	language("STR_GAMEOSFLGOK", STR_GAMEOSFLGOK);
+	language("STR_SYSINF", STR_SYSINF);
+	language("STR_SYSINFDESC", STR_SYSINFDESC);
+	language("STR_QUIT", STR_QUIT);
+	language("STR_QUITDESC1", STR_QUITDESC1);
+	language("STR_QUITDESC2", STR_QUITDESC2);
+	language("STR_RESTSYS", STR_RESTSYS);
+	language("STR_RESTSYSDESC1", STR_RESTSYSDESC1);
+	language("STR_RESTSYSDESC2", STR_RESTSYSDESC2);
+	language("STR_RESTSYS_SUB1", STR_RESTSYS_SUB1);
+	language("STR_RESTSYS_SUB2", STR_RESTSYS_SUB2);
+	language("STR_BOOTOOS", STR_BOOTOOS);
+	language("STR_BOOTOOSDESC", STR_BOOTOOSDESC);
+	language("STR_BOOTOOS_SUB1", STR_BOOTOOS_SUB1);
+	language("STR_BOOTOOS_SUB2", STR_BOOTOOS_SUB2);
+	language("STR_TRNOFF", STR_TRNOFF);
+	language("STR_TRNOFFDESC", STR_TRNOFFDESC);
+	language("STR_QA", STR_QA);
+	language("STR_QADESC", STR_QADESC);
+	language("STR_NOTAV", STR_NOTAV);
+	language("STR_TOGREC", STR_TOGREC);
+	language("STR_TOGRECDESC", STR_TOGRECDESC);
+	language("STR_TOGPM", STR_TOGPM);
+	language("STR_TOGPMDESC", STR_TOGPMDESC);
+	language("STR_LOADLV2", STR_LOADLV2);
+	language("STR_LOADLV2DESC", STR_LOADLV2DESC);
+	language("STR_BUT", STR_BUT);
+	language("STR_BUTDESC", STR_BUTDESC); 
+	language("STR_CIRCLE", STR_CIRCLE);
+	language("STR_CROSS", STR_CROSS);
+	language("STR_XREG", STR_XREG);
+	language("STR_XREGDESC", STR_XREGDESC);
+	language("STR_BACKUP", STR_BACKUP);
+	language("STR_RESTORE", STR_RESTORE);
+	language("STR_RESIZEVFLASH", STR_RESIZEVFLASH);
+	language("STR_RESIZEVFLASHDESC", STR_RESIZEVFLASHDESC);
+	language("STR_INSTPETBOOT", STR_INSTPETBOOT);
+	language("STR_INSTPETBOOTDESC", STR_INSTPETBOOTDESC);
+	language("STR_GAMEOSBOOTFLG", STR_GAMEOSBOOTFLG);
+	language("STR_GAMEOSBOOTFLGDESC", STR_GAMEOSBOOTFLGDESC);
+	language("STR_PKG", STR_PKG);
+	language("STR_PKGDESC", STR_PKGDESC);
+	language("STR_SAVLV1", STR_SAVLV1);
+	language("STR_SAVLV1DESC", STR_SAVLV1DESC);
+	language("STR_SAVLV2", STR_SAVLV2);
+	language("STR_SAVLV2DESC", STR_SAVLV2DESC);
+	language("STR_SAVFLASH", STR_SAVFLASH);
+	language("STR_SAVFLASHDESC", STR_SAVFLASHDESC);
+	language("STR_SAVEIDRK", STR_SAVEIDRK);
+	language("STR_SAVEIDRKDESC", STR_SAVEIDRKDESC);
+	language("STR_PS3ID", STR_PS3ID);
+	language("STR_PS3IDDESC", STR_PS3IDDESC);
+	language("STR_USE", STR_USE);
+	language("STR_SM", STR_SM);
+	language("STR_SMDESC", STR_SMDESC);
+	language("STR_XMBOMDESC", STR_XMBOMDESC);
+	language("STR_MENU", STR_MENU);
+	language("STR_MENUDESC", STR_MENUDESC);
+	language("STR_TOGCFW", STR_TOGCFW);
+	language("STR_TOGCFWDESC", STR_TOGCFWDESC);
+	language("STR_TOGCOB", STR_TOGCOB);
+	language("STR_TOGCOBDESC", STR_TOGCOBDESC);
+	language("STR_TOGPS2", STR_TOGPS2);
+	language("STR_TOGPS2DESC", STR_TOGPS2DESC);
+	language("STR_TOGWM", STR_TOGWM);
+	language("STR_TOGWMDESC", STR_TOGWMDESC);
+	language("STR_NORBG", STR_NORBG);
+	language("STR_NORBGDESC", STR_NORBGDESC); 
+	language("STR_PATCHLV1", STR_PATCHLV1); 
+	language("STR_PATCHLV1DESC", STR_PATCHLV1DESC); 
+	language("STR_LV2MEMPRO", STR_LV2MEMPRO); 
+	language("STR_LV2MEMPRODESC", STR_LV2MEMPRODESC); 
+	language("STR_HTAB", STR_HTAB); 
+	language("STR_HTABDESC", STR_HTABDESC); 
+	language("STR_INDI", STR_INDI);
+	language("STR_INDIDESC", STR_INDIDESC);
+	language("STR_EEPROM", STR_EEPROM);
+	language("STR_EEPROMDESC", STR_EEPROMDESC);
+	language("STR_DISPATCH", STR_DISPATCH);
+	language("STR_DISPATCHDESC", STR_DISPATCHDESC);
+	language("STR_ENCDEC", STR_ENCDEC);
+	language("STR_ENCDECDESC", STR_ENCDECDESC);
+	language("STR_SYSMAN", STR_SYSMAN);
+	language("STR_SYSMANDESC", STR_SYSMANDESC);
+	language("STR_ALLPKG", STR_ALLPKG);
+	language("STR_ALLPKGDESC", STR_ALLPKGDESC);
+	language("STR_LPAR", STR_LPAR);
+	language("STR_LPARDESC", STR_LPARDESC);
+	language("STR_LV1SPE", STR_LV1SPE);
+	language("STR_LV1SPEDESC", STR_LV1SPEDESC);
+	language("STR_LV1DABR", STR_LV1DABR);
+	language("STR_LV1DABRDESC", STR_LV1DABRDESC);
+	language("STR_LV1GART", STR_LV1GART);
+	language("STR_LV1GARTDESC", STR_LV1GARTDESC);
+	language("STR_LV1KEYS", STR_LV1KEYS);
+	language("STR_LV1KEYSDESC", STR_LV1KEYSDESC);
+	language("STR_LV1ACL", STR_LV1ACL);
+	language("STR_LV1ACLDESC", STR_LV1ACLDESC);
+	language("STR_LV1GO", STR_LV1GO);
+	language("STR_LV1GODESC", STR_LV1GODESC);
+	language("STR_SWPLV2K", STR_SWPLV2K);
+	language("STR_SWPLV2KDESC", STR_SWPLV2KDESC);
+	language("STR_REWTID", STR_REWTID);
+	language("STR_REWTIDDESC", STR_REWTIDDESC);
+	language("STR_NOCEXDEX", STR_NOCEXDEX);
+	language("STR_NOCEXDEXDESC", STR_NOCEXDEXDESC);
+	language("STR_SELECT", STR_SELECT);
+	language("STR_HOLDQUITREB", STR_HOLDQUITREB);
+	language("STR_HOLDQUIT", STR_HOLDQUIT);
+	language("STR_FREEHDD", STR_FREEHDD);
+	language("STR_NUMFW", STR_NUMFW);
+	language("STR_IP", STR_IP);
+	language("STR_QUITXMB", STR_QUITXMB);
+	language("STR_CHANGEIDPSOK1", STR_CHANGEIDPSOK1);
+	language("STR_CHANGEIDPSOK2", STR_CHANGEIDPSOK2);
+	language("STR_CHANGEIDPSERROR", STR_CHANGEIDPSERROR);
+	language("STR_SWP2DEXOK", STR_SWP2DEXOK);
+	language("STR_SWP2CEXOK", STR_SWP2CEXOK);
+	language("STR_SWPERROR", STR_SWPERROR);
+	language("STR_NEEDRESTSYS", STR_NEEDRESTSYS);
+	language("STR_WEIDERROR1", STR_WEIDERROR1);
+	language("STR_WEIDERROR2", STR_WEIDERROR2);
+	language("STR_WEIDRUSURE1", STR_WEIDRUSURE1);
+	language("STR_WEIDRUSURE2", STR_WEIDRUSURE2);
+	language("STR_WEIDRUSURE3", STR_WEIDRUSURE3);
+	language("STR_WEIDRUSURE4", STR_WEIDRUSURE4);
+	language("STR_WEIDRRUUSURE", STR_WEIDRRUUSURE);
+	language("STR_WEIDOK1", STR_WEIDOK1);
+	language("STR_WEIDOK2", STR_WEIDOK2);
+	language("STR_WEIDERROR3", STR_WEIDERROR3);
+	language("STR_WEIDERROR4", STR_WEIDERROR4);
+	language("STR_WTDMSG1", STR_WTDMSG1);
+	language("STR_WTDMSG2", STR_WTDMSG2);
+	language("STR_WTDMSG3", STR_WTDMSG3);
+	language("STR_WTDMSG4", STR_WTDMSG4);
+	language("STR_WTDMSG5", STR_WTDMSG5);
+	language("STR_WTDMSG6", STR_WTDMSG6);
+	language("STR_WTDMSG7", STR_WTDMSG7);
+	language("STR_WTDMSG8", STR_WTDMSG8);
+	language("STR_WTDMSG9", STR_WTDMSG9);
+	language("STR_MAINNORBG", STR_MAINNORBG);
+	language("STR_MAINNOCOB", STR_MAINNOCOB);
+	language("STR_MAINNOFW", STR_MAINNOFW);
+	language("STR_MAINERRFLASH", STR_MAINERRFLASH);
+	language("STR_SCRSHTSAVED", STR_SCRSHTSAVED);
+	language("STR_SAVXREG", STR_SAVXREG);
+	language("STR_SAVXREGOK", STR_SAVXREGOK);
+	language("STR_SAVXREGERR1", STR_SAVXREGERR1);
+	language("STR_SAVXREGERR2", STR_SAVXREGERR2);
+	language("STR_SAVXREGERR3", STR_SAVXREGERR3);
+	language("STR_RESXREG", STR_RESXREG);
+	language("STR_RESXREGOK", STR_RESXREGOK);
+	language("STR_RESXREGERR1", STR_RESXREGERR1);
+	language("STR_RESXREGERR2", STR_RESXREGERR2);
+	language("STR_MAKPKGOK", STR_MAKPKGOK);
+	language("STR_MAKPKGERR", STR_MAKPKGERR);
+	language("STR_LOADLV2KERR1", STR_LOADLV2KERR1);
+	language("STR_LOADLV2K", STR_LOADLV2K);
+	language("STR_LOADLV2KNOSPACE", STR_LOADLV2KNOSPACE);
+	language("STR_LOADLV2KCHKLV1", STR_LOADLV2KCHKLV1);
+	language("STR_LOADLV2KERR2", STR_LOADLV2KERR2);
+	language("STR_BOOTOOSMSG1", STR_BOOTOOSMSG1);
+	language("STR_BOOTOOSMSG2", STR_BOOTOOSMSG2);
+	language("STR_BOOTOOSERR1", STR_BOOTOOSERR1);
+	language("STR_SWPKERR", STR_SWPKERR);
+	language("STR_DMPFLSH", STR_DMPFLSH);
+	language("STR_DMPFLSHERR", STR_DMPFLSHERR);
+	language("STR_EXPLVMSG1", STR_EXPLVMSG1);
+	language("STR_EXPLVMSG2", STR_EXPLVMSG2);
+	language("STR_EXPLVWAIT", STR_EXPLVWAIT);
+	language("STR_EXPLVOK", STR_EXPLVOK);
+	language("STR_EXPLVERR", STR_EXPLVERR);
+	language("STR_EXPLVMSG3", STR_EXPLVMSG3);
+	language("STR_EXPLVMSG5", STR_EXPLVMSG5);
+	language("STR_EXPLVMSG4", STR_EXPLVMSG4);
+	language("STR_EXPLVOK2", STR_EXPLVOK2);
+	language("STR_EXPLVERR2", STR_EXPLVERR2);
+	language("STR_MODNORM", STR_MODNORM);
+	language("STR_TRYAGAIN", STR_TRYAGAIN);
+	language("STR_MODNORMALRD", STR_MODNORMALRD);
+	language("STR_MODREB", STR_MODREB);
+	language("STR_MODREBALRD", STR_MODREBALRD);
+	language("STR_WMDIS", STR_WMDIS);
+	language("STR_WMENA", STR_WMENA);
+	language("STR_MODRET", STR_MODRET);
+	language("STR_MODRETERR1", STR_MODRETERR1);
+	language("STR_MODRETERR2", STR_MODRETERR2);
+	language("STR_MODDEB", STR_MODDEB);
+	language("STR_MODDEBERR1", STR_MODDEBERR1);
+	language("STR_MODDEBERR2", STR_MODDEBERR2);
+	language("STR_MODDEBSQA", STR_MODDEBSQA);
+	language("STR_MODDEBSQAOK", STR_MODDEBSQAOK);
+	language("STR_MODDEBSQAERR1", STR_MODDEBSQAERR1);
+	language("STR_MODDEBSQAERR2", STR_MODDEBSQAERR2);
+	language("STR_MODDEBSDEB", STR_MODDEBSDEB);
+	language("STR_MODDEBSDEBOK", STR_MODDEBSDEBOK);
+	language("STR_MODDEBSDEBERR1", STR_MODDEBSDEBERR1);
+	language("STR_MODDEBSDEBERR2", STR_MODDEBSDEBERR2);
+	language("STR_MODCOBENA", STR_MODCOBENA);
+	language("STR_MODCOBDIS", STR_MODCOBDIS);
+	language("STR_ERRFLASH", STR_ERRFLASH);
+	language("STR_PS2ERR1", STR_PS2ERR1);
+	language("STR_PS2CONT", STR_PS2CONT);
+	language("STR_PS2COP", STR_PS2COP);
+	language("STR_PS2SWPOK", STR_PS2SWPOK);
+	language("STR_XMBCFWDIS", STR_XMBCFWDIS);
+	language("STR_XMBCFWENA", STR_XMBCFWENA);
+	language("STR_FLASHSET", STR_FLASHSET);
+	language("STR_LANG", STR_LANG);
+	language("STR_LANGDESC", STR_LANGDESC);
+    language("STR_1", STR_1);
+	language("STR_2", STR_2);
+	language("STR_3", STR_3);
+	language("STR_4", STR_4);
+	language("STR_5", STR_5);
+	language("STR_READFLASHERROR1", STR_READFLASHERROR1);
+	language("STR_READFLASHERROR2", STR_READFLASHERROR2);
+	language("STR_TOGHOSTINF", STR_TOGHOSTINF);
+	language("STR_TOGHOSTINFDESC", STR_TOGHOSTINFDESC);
+	
+	if(fh) {cellFsClose(fh); lang_pos=fh=0;}
+}
+
+
 static int sys_get_version(uint32_t *version)
 {
  system_call_2(8, SYSCALL8_OPCODE_GET_VERSION, (uint64_t)(uint32_t)version);
@@ -449,8 +1222,8 @@ static SampleRenderWork RenderWork;
 
 int legend_y=760, legend_h=96, last_selected, rnd;
 
-char current_version[9]=STR_APP_VER;
-char current_version_NULL[10];
+char current_version[25]=STR_APP_VER;
+char current_version_NULL[30];
 
 u16 dox_width=256;
 u16 dox_height=256;
@@ -898,8 +1671,6 @@ uint8_t xDZa=30, yDZa=30;
 float offY=0.0f, BoffY=0.0f, offX=0.0f, incZ=0.7f, BoffX=0.0f, slideX=0.0f;
 
 static void *host_addr;
-
-int exist(char *path);
 
 int load_texture(u8 *data, char *name, uint16_t dw);
 
@@ -2047,7 +2818,7 @@ void dump_root_key()
     if(!exist((char*)rkdumper)) return;
 
     dialog_ret=0;
-    cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+    cellMsgDialogOpen2( type_dialog_yes_no, STR_EIDRK, dialog_fun1, (void*)0x0000aaaa, NULL );
     wait_dialog();
 
     if(dialog_ret==1)
@@ -2233,7 +3004,7 @@ CellConsoleInputProcessorResult _cellConsoleSS
 		sprintf(video_mem, "%s/%04d%02d%02d-%02d%02d%02d-SCREENSHOT.RAW", app_usrdir, timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 	else
 		sprintf(video_mem, "/dev_hdd0/%04d%02d%02d-%02d%02d%02d-SCREENSHOT.RAW", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
-	sprintf(scm, "\nSaving screenshot to: [%s]...\n", video_mem);
+	sprintf(scm, "\n%s: [%s]...\n", STR_SCRSHTSAVED, video_mem);
     cellConsolePrintf(uiConnection, scm);
 	FILE *fpA;
 	remove(video_mem);
@@ -2243,7 +3014,8 @@ CellConsoleInputProcessorResult _cellConsoleSS
 		fwrite((uint8_t*)(color_base_addr)+c_pos+1, 3, 1, fpA);
 	}
 	fclose(fpA);
-    cellConsolePrintf(uiConnection, "Done!\n\n> ");
+	sprintf(scm, "%s\n\n> ", STR_DONE);
+    cellConsolePrintf(uiConnection, scm);
 
 
     return CELL_CONSOLE_INPUT_PROCESSED;
@@ -2256,8 +3028,11 @@ CellConsoleInputProcessorResult _cellConsoleRESTART
 				int iContinuation) {
 
 	(void) pvDummy; (void) iContinuation; (void)uiConnection; (void)iContinuation; (void) pcInput;
-    cellConsolePrintf(uiConnection, "\nShutting down...\n");
-	cellConsolePrintf(uiConnection, "Trying to restart...\n");
+	char str[128];
+	sprintf(str, "\n%s\n", STR_SHTDWN);
+    cellConsolePrintf(uiConnection, str);
+	sprintf(str, "%s\n", STR_TRYRESTART);
+	cellConsolePrintf(uiConnection, str);
 	restart_request=1;
 
     return CELL_CONSOLE_INPUT_PROCESSED;
@@ -4095,7 +4870,7 @@ void install_petiboot()
 	if(!found)
 	{
 	 cellMsgDialogAbort();
-	 if(is_nor()) sprintf(_path, PETITBOOT_FILENAME " was not found!"); else sprintf(_path, PETITBOOT_FILENAME2 " was not found!");
+	 if(is_nor()) sprintf(_path, PETITBOOT_FILENAME " %s", STR_NOTFOUND); else sprintf(_path, PETITBOOT_FILENAME2 " %s", STR_NOTFOUND);
 	 dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, (const char*) _path, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 	 return;
 	}
@@ -4113,7 +4888,7 @@ void install_petiboot()
 
 	dev_handle = 0;
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Do you want to install Petitboot on VFLASH/NAND Region 5?", dialog_fun1, (void*)0x0000aaaa, NULL );
+	cellMsgDialogOpen2( type_dialog_yes_no, STR_PETBOOTINST, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog();
 	if(dialog_ret!=1)  return;
 
@@ -4200,7 +4975,7 @@ void install_petiboot()
 	if(fp) fclose(fp);
 
 	lv2_storage_close(dev_handle);
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Petitboot has been installed.. Enjoy OtherOS.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_PETBOOTOK, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 	return;
 
 done:
@@ -4209,7 +4984,7 @@ done:
 
 	lv2_storage_close(dev_handle);
 
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "ERROR: Could not find Petitboot..VFLASH Detected.\n\nPlease put file named [dtbimage.ps3.bin] on USB device and try again.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_PETBOOTERROR, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 
 	return;
 
@@ -4275,7 +5050,7 @@ static void setup_vflash(void){
 	dev_handle = 0;
 
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Do you want to resize VFLASH/NAND Region 5 to allow OtherOS?", dialog_fun1, (void*)0x0000aaaa, NULL );
+	cellMsgDialogOpen2( type_dialog_yes_no, STR_RESIZE5, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog();
         if(dialog_ret!=1)  {lv2_storage_close(dev_handle); return;}
 
@@ -4323,7 +5098,7 @@ static void setup_vflash(void){
 
 	lv2_storage_close(dev_handle);
 
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "SUCCESS: Your PS3 needs to reboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_RESIZE5OK, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 
 	return;
 
@@ -4331,7 +5106,7 @@ done:
 
 	lv2_storage_close(dev_handle);
 
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "FAILED: resizing VFLASH/NAND Region 5 is not completed.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_RESIZE5ERROR, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 
 	return;
 }
@@ -4397,7 +5172,7 @@ static void setup_flash(void)
 
 	lv2_storage_close(dev_handle);
 
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "SUCCESS: Your PS3 needs to reboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_FLASHOK, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 
 	return;
 
@@ -4405,7 +5180,7 @@ done:
 
 	lv2_storage_close(dev_handle);
 
-	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "FAILED!!!", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_FLASHERROR, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 
 	return;
 }
@@ -4962,7 +5737,7 @@ void set_gameos_flag()
 	dev_handle = 0;
 
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Do you want to set GameOS boot flag?", dialog_fun1, (void*)0x0000aaaa, NULL );
+	cellMsgDialogOpen2( type_dialog_yes_no, STR_GAMEOSFLG, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog();
 	if(dialog_ret!=1)
 		goto done;
@@ -5014,7 +5789,7 @@ void set_gameos_flag()
 	else
 	{
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_ok, (const char*) "Flag is already set.", dialog_fun2, (void*)0x0000aaab, NULL );
+	cellMsgDialogOpen2( type_dialog_ok, STR_GAMEOSFLGOK, dialog_fun2, (void*)0x0000aaab, NULL );
 	wait_dialog_simple();
 	goto done;
 	}
@@ -5286,36 +6061,49 @@ void shutdown_syscall()
 system_call_4(379,0x1100,0,0,0);
 }
 
-#define	STR_XC2_DISABLE	"Disabled"
-#define	STR_XC2_ENABLE	"Enabled"
-
 void add_home_column()
 {
+		char str[128];
+		
 		sprintf(xmb[1].name, "%s", xmb_columns[1]); xmb[1].first=0; xmb[1].size=0;
 
-		add_xmb_member(xmb[1].member, &xmb[1].size, (char*)"System Information", (char*)"Display information about your PS3\xE2\x84\xA2 system.",
+		add_xmb_member(xmb[1].member, &xmb[1].size, STR_SYSINF, STR_SYSINFDESC,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_info, 128, 128);
-		add_xmb_member(xmb[1].member, &xmb[1].size, (char*)"Quit", (char*)"Quit " STR_APP_NAME " and return to XMB\xE2\x84\xA2 screen",
+		
+		sprintf(str, "%s %s %s", STR_QUITDESC1, STR_APP_NAME, STR_QUITDESC2);
+		add_xmb_member(xmb[1].member, &xmb[1].size, STR_QUIT, str,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_quit, 128, 128);
 
 		u8 col=1;
-
-		add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Restart System", (char*)"Close " STR_APP_NAME " and restart your PLAYSTATION\xC2\xAE\x33 System",	(char*)"reboot");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"No",									(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Soft (LV2 Reboot Only)",				(char*)"1");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Full (On/Off Cycle)",					(char*)"2");
+		
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_LANG, STR_LANGDESC, (char*) "lang");
+		char nb[2];
+		int i;
+		for(i=0; i < lang_N ; i++) {
+			sprintf(nb, "%d", i);
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_LANGUAGE[i],			nb);
+		}
+		xmb[col].member[xmb[col].size-1].option_selected=lang;
+		xmb[col].member[xmb[col].size-1].icon=xmb[0].data;
+		
+		
+		sprintf(str, "%s %s %s", STR_RESTSYSDESC1, STR_APP_NAME, STR_RESTSYSDESC2);
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_RESTSYS, str, (char*) "Reboot");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB1,			(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB2,			(char*)"2");
 		xmb[col].member[xmb[col].size-1].option_selected=reboot;
 		xmb[col].member[xmb[col].size-1].icon=xmb[0].data;
 
 
-		add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Boot OtherOS", (char*)"Select LV1 patches and reboot into OtherOS",	(char*)"otheros");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"No",				(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Boot (LV1 patches: Apply All)",				(char*)"1");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Boot (LV1 patches: Use current)",				(char*)"2");
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_BOOTOOS, STR_BOOTOOSDESC, (char*)"otheros");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO			 ,				(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB1,				(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB2,				(char*)"2");
 		xmb[col].member[xmb[col].size-1].option_selected=otheros;
 		xmb[col].member[xmb[col].size-1].icon=xmb[4].data;
 
-		add_xmb_member(xmb[1].member, &xmb[1].size, (char*)"Turn Off System", (char*)"Shutdown your PLAYSTATION\xC2\xAE\x33 System",
+		add_xmb_member(xmb[1].member, &xmb[1].size, STR_TRNOFF, STR_TRNOFFDESC,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_off, 128, 128);
 }
 
@@ -5374,7 +6162,7 @@ void parse_settings()
 			else if(!strcmp(oini, "xmb_mode"))			xmb_mode		=val;
 			else if(!strcmp(oini, "menu_mode"))			menu_mode		=val;
 			else if(!strcmp(oini, "cobra_mode"))		cobra_mode		=val;
-			else if(!strcmp(oini, "swap_emu"))			swap_emu		=val;
+			else if(!strcmp(oini, "swap_emu"))		swap_emu		=val;
 			else if(!strcmp(oini, "webman_mode"))		webman_mode		=val;
 			else if(!strcmp(oini, "cfw_settings"))		cfw_settings		=val;
 			else if(!strcmp(oini, "wmlp"))				wmlp		=val;
@@ -5413,6 +6201,8 @@ void parse_settings()
 			else if(!strcmp(oini, "util_xReg"))         util_xReg       =val;
 
 			else if(!strcmp(oini, "lv2_kernel"))		lv2_kernel		=val;
+			
+			else if(!strcmp(oini, "lang"))				lang		=val;
 		}
 	}
 }
@@ -5441,30 +6231,30 @@ void add_utilities()
 	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle QA Flag", (char*)"Enable or disable QA flag functions.",	(char*)"util_qa");
 	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 	{
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=read_qa_flag();//util_qa;
 	}
 	else
 	{
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Not Available",			(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NOTAV,			(char*)"0");
 		xmb[col].member[xmb[col].size-1].option_selected=0;
 	}
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Recovery Mode", (char*)"Enable or disable recovery mode on next reboot.",	(char*)"util_recovery");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGREC, STR_TOGRECDESC,	(char*)"util_recovery");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=read_recover_mode_flag();//util_recovery;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
 
 	if(c_firmware==3.55f)
 	{
-        add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Product Mode", (char*)"Enable or disable product mode (FSM).",	(char*)"util_prodmode");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+        add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPM, STR_TOGPMDESC,	(char*)"util_prodmode");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=read_product_mode_flag();//util_prodmode;
 		xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 	}
@@ -5475,8 +6265,8 @@ void add_utilities()
 		change_lv1_dm(old_lv1_dm);
 	}
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Load LV2 Kernel", (char*)"Load lv2_kernel.self.[KERNEL_NAME] from USB or /dev_hdd0.",	(char*)"lv2_kernel");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"No",			(char*)"0");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LOADLV2, STR_LOADLV2,	(char*)"lv2_kernel");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 
 	lv2_kernels=1;
 	scan_for_lv2_kernels((char*)"/dev_flash");
@@ -5497,57 +6287,57 @@ void add_utilities()
 	xmb[col].member[xmb[col].size-1].option_selected=lv2_kernel;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Button Assignment", (char*)"Sets which buttons are used for Accept/Enter and Cancel/Back.", (char*)"confirm_with_x");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Circle is [Accept]",	(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Cross is [Accept]",	(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_BUT, STR_BUTDESC, (char*)"confirm_with_x");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_CIRCLE,	(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_CROSS ,	(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=confirm_with_x;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Backup/Restore xRegistry", (char*)"Backup or Restore the PS3 system settings from USB.",	(char*)"util_xReg");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"No",	(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Backup",	(char*)"1");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Restore",	(char*)"2");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_XREG, STR_XREGDESC,	(char*)"util_xReg");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,	(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BACKUP,	(char*)"1");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTORE,	(char*)"2");
 	xmb[col].member[xmb[col].size-1].option_selected=util_xReg;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Resize VFLASH/NAND Regions", (char*)"Resize VFLASH/NAND Regions 5 to allow OtherOS.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_RESIZEVFLASH, STR_RESIZEVFLASHDESC ,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Install petitboot", (char*)"Install Petitboot to VFLASH/NAND Regions 5 from USB.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_INSTPETBOOT, STR_INSTPETBOOTDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Set GameOS Boot Flag", (char*)"fixes issue loading PS2 titles if OtherOS is installed.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_GAMEOSBOOTFLG, STR_GAMEOSBOOTFLGDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Create \x22Packages\x22 Folder", (char*)"Create /dev_hdd0/packages folder.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_PKG, STR_PKGDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Export Hypervisor LV1 Memory", (char*)"Save LV1 memory to a file.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVLV1, STR_SAVLV1DESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Export GameOS LV2 Memory", (char*)"Save LV2 memory to a file.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVLV2, STR_SAVLV2DESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Export Flash to File", (char*)"Backup your current NOR/NAND flash to /dev_usb000.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVFLASH, STR_SAVFLASHDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
 
 	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 	{
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Dump eid root key", (char*)"Dump eid root key at dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVEIDRK, STR_SAVEIDRKDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 	}
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Change Active PS3ID", (char*)"Spoof IDPS in LV2 memory.",	(char*)"util_idps");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"No",			(char*)"0");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_PS3ID, STR_PS3IDDESC,	(char*)"util_idps");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 	char tid[8];
 	u8 cid=get_idps(0);//EID0 TargetID
 	if(cid)
 	{
-		sprintf(tid, "Use EID0: %02X (%s)", cid, (cid==0x82?((char*)"DEX"):((char*)"CEX")));
+		sprintf(tid, "%s EID0: %02X (%s)", STR_USE, cid, (cid==0x82?((char*)"DEX"):((char*)"CEX")));
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)tid,			(char*)"1");
 		cid=get_idps(5);//EID5 TargetID
-		sprintf(tid, "Use EID5: %02X (%s)", cid, (cid==0x82?((char*)"DEX"):((char*)"CEX")));
+		sprintf(tid, "%s EID5: %02X (%s)", STR_USE, cid, (cid==0x82?((char*)"DEX"):((char*)"CEX")));
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)tid,			(char*)"2");
 
 		/*add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Use IDPS: 0x82 (DEX)",			(char*)"3");
@@ -5588,7 +6378,7 @@ void add_settings_column()
 
 	if(rex_compatible)
 	{
-		add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"System Mode", (char*)"Switch between Normal and REBUG modes.",	(char*)"rebug_mode");
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_SM, STR_SMDESC,	(char*)"rebug_mode");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Normal",				(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"REBUG",				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=rebug_mode;
@@ -5596,14 +6386,14 @@ void add_settings_column()
 
 		if(rebug_mode)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"XMB Operation Mode", (char*)"Switch between Retail and Debug XMB.",	(char*)"xmb_mode");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_XMBOM, STR_XMBOMDESC,	(char*)"xmb_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Retail",		(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Debug",		(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=xmb_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
 
-		add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Debug Menu Type", (char*)"Switch between CEX QA and DEX Debug menu.",	(char*)"menu_mode");
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_MENU, STR_MENUDESC,	(char*)"menu_mode");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"CEX QA",				(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"DEX",				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=menu_mode;
@@ -5611,9 +6401,9 @@ void add_settings_column()
 
 		if((c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle XMB CFW settings", (char*)"Enable or Disable XMB CFW settings v0.1a (MOD)",	(char*)"cfw_settings");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCFW, STR_TOGCFWDESC,	(char*)"cfw_settings");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,		(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,			(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cfw_settings;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
@@ -5626,12 +6416,12 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=wmlp;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}*/		
-
+		
 		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle Host Information on XMB [DEX]", (char*)"Enable or Disable Host Information on XMB",	(char*)"xmb_plugin");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,		(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)STR_TOGHOSTINF, (char*)STR_TOGHOSTINFDESC,	(char*)"xmb_plugin");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,		(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,			(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=xmb_plugin;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
@@ -5639,13 +6429,13 @@ void add_settings_column()
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
 		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCOB, STR_TOGCOBDESC,	(char*)"cobra_mode");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cobra_mode; //cobra_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 Emulator ", (char*)"PS2Emu swap to use Original PS2 Emu files.",	(char*)"swap_emu");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"COBRA",				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=swap_emu; //ps2_swap;
@@ -5654,9 +6444,9 @@ void add_settings_column()
 
 		if(exist((char*)"/dev_flash/vsh/module/webftp_server.sprx") || exist((char*)"/dev_flash/vsh/module/webftp_server.sprx.bak"))
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle webMAN", (char*)"Enable or disable integrated webMAN on next reboot.",	(char*)"webman_mode");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGWM, STR_TOGWMDESC,	(char*)"webman_mode");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
@@ -5669,8 +6459,8 @@ void add_settings_column()
 		/*if(!dex_mode || dex_mode==2)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Write Access to /dev_flash", (char*)"Mount /dev_flash as /dev_blind with write permissions.",	(char*)"mount_dev_blind");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,				(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,					(char*)"1");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,				(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,					(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=mount_dev_blind;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_folder;
 		}*/
@@ -5682,13 +6472,13 @@ void add_settings_column()
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
 		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && cobra_compatible)
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle COBRA Mode", (char*)"Enable or disable COBRA Mode on next reboot.",	(char*)"cobra_mode");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCOB, STR_TOGCOBDESC,	(char*)"cobra_mode");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cobra_mode; //cobra_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 Emulator ", (char*)"PS2Emu swap to use Original PS2 Emu files.",	(char*)"swap_emu");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"COBRA",				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=swap_emu; //ps2_swap;
@@ -5697,15 +6487,15 @@ void add_settings_column()
 
 		if(exist((char*)"/dev_flash/vsh/module/webftp_server.sprx") || exist((char*)"/dev_flash/vsh/module/webftp_server.sprx.bak"))
 		{
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle webMAN", (char*)"Enable or disable integrated webMAN on next reboot.",	(char*)"webman_mode");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGWM, STR_TOGWMDESC,	(char*)"webman_mode");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
 	}
 	else
-		add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"REBUG Selector Functions Not Available", (char*)"Please install REBUG REX/D-REX Firmware to access the Selector Functions.",
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_NORBG, STR_NORBGDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
 //	LV1 Patches
@@ -5716,9 +6506,9 @@ void add_settings_column()
 	xmb[col].first=0;
 	xmb[col].size=0;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"LV1 Peek/Poke Support", (char*)"Patch unused LV1 syscalls 182 and 183.",	(char*)"lv1_pp");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_PATCHLV1, STR_PATCHLV1DESC,	(char*)"lv1_pp");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_pp;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
@@ -5726,100 +6516,100 @@ void add_settings_column()
 	if(c_firmware==4.21f)
 	{
 		add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Integriry Check", (char*)"Patch System Manager integriry check.",	(char*)"lv1_sm");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=lv1_sm;
 		xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 	}
 */
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"LV2 Memory Protection", (char*)"Patch Shutdown on LV2 modification.",	(char*)"lv1_lv2");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV2MEMPRO, STR_LV2MEMPRODESC,	(char*)"lv1_lv2");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_lv2;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"HTAB Mapping With Write Protection", (char*)"Enable or Disable protected HTAB mapping.",	(char*)"lv1_htab");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_HTAB, STR_HTABDESC,	(char*)"lv1_htab");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_htab;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Access to all INDI Info Manager Services", (char*)"Enable or Disable INDI access.",	(char*)"lv1_indi");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_INDI, STR_INDIDESC,	(char*)"lv1_indi");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_indi;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Update Manager EEPROM Write Access", (char*)"Patch Update Manager access to EEPROM.",	(char*)"lv1_um");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_EEPROM, STR_EEPROMDESC,	(char*)"lv1_um");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_um;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Dispatch Manager Access", (char*)"Patch Dispatch Manager access to all services.",	(char*)"lv1_dm");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_DISPATCH, STR_DISPATCHDESC,	(char*)"lv1_dm");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_dm;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Allow ENCDEC IOCTL Command 0x85", (char*)"Enable IOCTL Command 0x85",	(char*)"lv1_enc");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_ENCDEC, STR_ENCDECDESC,	(char*)"lv1_enc");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_enc;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"System Manager Ability Mask of GameOS", (char*)"Allow access to all system manager services.",	(char*)"lv1_smgo");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_SYSMAN, STR_SYSMANDESC,	(char*)"lv1_smgo");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_smgo;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Extract all PKG Types", (char*)"Allow Update Manager to extract all PKG types.",	(char*)"lv1_pkg");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_ALLPKG, STR_ALLPKGDESC,	(char*)"lv1_pkg");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_pkg;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Full Access for Repo Nodes in Any LPAR", (char*)"Allow create, modify, delete for repository nodes.",	(char*)"lv1_lpar");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LPAR, STR_LPARDESC,	(char*)"lv1_lpar");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_lpar;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"LV1 Full Access to MFC_SR1 SPE Register", (char*)"Allow all-bit access to the register.",	(char*)"lv1_spe");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1SPE, STR_LV1SPEDESC,	(char*)"lv1_spe");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_spe;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"LV1 Access to set Data Break Points", (char*)"Enable LV1 access with lv1_set_dabr().",	(char*)"lv1_dabr");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1DABR, STR_LV1DABRDESC,	(char*)"lv1_dabr");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_dabr;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"LV1 Access to GPU GART Memory", (char*)"Allow LV1 to use 4KB IO page size. ",	(char*)"lv1_gart");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1GART, STR_LV1GARTDESC,	(char*)"lv1_gart");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_gart;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Storage Manager ENCDEC Keys Access", (char*)"Allow Storage Manager to clear ENCDEC keys.",	(char*)"lv1_keys");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1KEYS, STR_LV1KEYSDESC,	(char*)"lv1_keys");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_keys;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Skip all ACL Checks", (char*)"Enable skipping of ACL checks for all storage devices.",	(char*)"lv1_acl");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1ACL, STR_LV1ACLDESC,	(char*)"lv1_acl");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_acl;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-    add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Initial GuestOS Loader", (char*)"Enable GuestOS mode 1 for GameOS.",	(char*)"lv1_go");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_DISABLE,			(char*)"0");
-	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,				(char*)"1");
+    add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1GO, STR_LV1GODESC,	(char*)"lv1_go");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
+	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_go;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
@@ -5833,18 +6623,18 @@ void add_settings_column()
 	first=xmb[col].first;
 	xmb[col].first=0;
 	xmb[col].size=0;
-   if(rex_compatible)
+    if(rex_compatible)
 	{
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Swap LV2 Kernel", (char*)"Switch between retail and debug kernels.",
-			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_SWPLV2K, STR_SWPLV2KDESC,
+				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Rewrite Target ID in Flash", (char*)"Convert PS3 to cex/dex if valid flash dump/eid_root_key is provided.",
-			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_REWTID, STR_REWTIDDESC,
+				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-	if(first<xmb[col].size) xmb[col].first=first; else xmb[col].first=0;
+		if(first<xmb[col].size) xmb[col].first=first; else xmb[col].first=0;
     }
 	else
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"CEX/DEX Functions Not Available", (char*)"Install REBUG REX EDITION to access these functions.",
+	add_xmb_member(xmb[col].member, &xmb[col].size, STR_NOCEXDEX, STR_NOCEXDEXDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 }
 
@@ -6053,13 +6843,13 @@ void draw_xmb_legend(const int _xmb_icon)
 		for(int fsr=0; fsr<84000; fsr+=4) *(uint32_t*) ((uint8_t*)(text_MSG)+fsr)=0x22222280;
 
 		put_texture_with_alpha_gen( text_MSG, text_DOX+(dox_cross_x	*4 + dox_cross_y	* dox_width*4), dox_cross_w,	dox_cross_h,	dox_width, 300, 8, 1);
-		print_label_ex( 0.17f, 0.08f, 0.6f, 0xffd0d0d0, (char*) ": Select", 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
+		print_label_ex( 0.17f, 0.08f, 0.6f, 0xffd0d0d0, STR_SELECT, 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
 
 		put_texture_with_alpha_gen( text_MSG, text_DOX+(dox_circle_x	*4 + dox_circle_y	* dox_width*4), dox_circle_w,	dox_circle_h,	dox_width, 300, 8, 35);
 		if(auto_reboot)
-			print_label_ex( 0.17f, 0.55f, 0.6f, 0xffd0d0d0, (char*) ": Hold to Quit and Reboot", 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
+			print_label_ex( 0.17f, 0.55f, 0.6f, 0xffd0d0d0, STR_HOLDQUITREB, 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
 		else
-			print_label_ex( 0.17f, 0.55f, 0.6f, 0xffd0d0d0, (char*) ": Hold to Quit", 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
+			print_label_ex( 0.17f, 0.55f, 0.6f, 0xffd0d0d0, STR_HOLDQUIT, 1.00f, 0.0f, _menu_font, 6.40f, 18.0f, 0);
 
 		flush_ttf(text_MSG, 300, 70);
 	}
@@ -6391,10 +7181,10 @@ void show_sysinfo()
 			sprintf(line7, "%s: %i.%02X", cobra_name, (cobra_version>>8), (cobra_version & 0xFF));
 
 		if(cobra_version==0) strcpy(line7, "\0");
-		sprintf(line0, "PS3\xE2\x84\xA2 System: Firmware");
+		sprintf(line0, STR_NUMFW);
 
 		u64 freeSpace = get_free_drive_space((char*)"/dev_hdd0");
-		sprintf(line5, (char*) "Free HDD space: %.2f GB", (double)(freeSpace/1073741824.00f));
+		sprintf(line5, (char*) "%s: %.2f GB", STR_FREEHDD, (double)(freeSpace/1073741824.00f));
 
 		strncpy(line4, current_version, 8); line4[8]=0;
 		get_eid();
@@ -6428,13 +7218,13 @@ void show_sysinfo()
 		net_avail=cellNetCtlGetInfo(16, &net_info);
 		if(net_avail<0)
 		{
-			sprintf(line3, "%s: [%s]", (char*) "IP Address", (char*) "Not Available");
+			sprintf(line3, "%s: [%s]", STR_IP, STR_NOTAV);
 		}
 		else
-			sprintf(line3, "%s: %s", (char*) "IP Address", net_info.ip_address);
+			sprintf(line3, "%s: %s", STR_IP, net_info.ip_address);
 
 		//sprintf(line3, "%08X | %08X", idps0, idps1);
-		sprintf(sys_info, "%s %s: %s\n\n%s\n%s\n%s\n%s\n%s", (char*) STR_APP_NAME, (char*) "Version", line4, line2, line3, line1, line5, line7);
+		sprintf(sys_info, "%s %s: %s\n\n%s\n%s\n%s\n%s\n%s", (char*) STR_APP_NAME"-MULTI", (char*) "\nVersion", line4, line2, line3, line1, line5, line7);
 		dialog_ret=0; cellMsgDialogOpen2( type_dialog_back, sys_info, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
 		dialog_ret=0;
 }
@@ -6449,7 +7239,7 @@ void exit_app()
 void quit_app()
 {
 		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Quit to XMB?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_QUITXMB, dialog_fun1, (void*)0x0000aaaa, NULL );
 		wait_dialog();
 
 		if(dialog_ret==1)
@@ -6667,13 +7457,10 @@ void read_flash(u64 device, u32 _flags, char *iso_path)
 				}
 
 				sprintf(_iso_path, "%s", iso_path);
-				sprintf(filename, (const char*)"Data saved as:\n\n%s\n\nProcessed %.0f MB in %i:%02i min (%.2f MB/s)", _iso_path,
-				(double) (disc_size/1048576),
-				(seconds/60), seconds % 60,
-				(double)(((sectors_written*disc_info.sector_size)/seconds)/1048576.f));
+				sprintf(filename, (const char*) "%s\n\n%s\n\n%s %.0f %s %i:%02i %s (%.2f %s)", STR_1, _iso_path, STR_2, (double) (disc_size/1048576), STR_3, (seconds/60), seconds % 60, STR_4, (double)(((sectors_written*disc_info.sector_size)/seconds)/1048576.f), STR_5);
 			}
 			else
-				sprintf(filename, (const char*)"Error occurred while accessing data!\n\nSectors read: %lu\nTotal sectors: %lu", sectors_written, disc_info.total_sectors);
+				sprintf(filename, (const char*)"%s%lu%s%lu", STR_READFLASHERROR1, sectors_written, STR_READFLASHERROR2, disc_info.total_sectors);
 
 			cellMsgDialogAbort();
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, filename, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
@@ -6799,9 +7586,9 @@ void set_idps(u8 _val) //0=EID5, 1=EID0, 2=EID5, 3..13=0x82..0x8E
 
 	char msg[512];
 	if(found)
-		sprintf(msg, "Successfully applied %i changes to LV2 memory.\n\nCurrent target ID set to 0x%02X.", found, newID);
+		sprintf(msg, "%s %i %s 0x%02X.", STR_CHANGEIDPSOK1, STR_CHANGEIDPSOK2, found, newID);
 	else
-		sprintf(msg, "Error occurred while searching for IDPS: %08X-%08X-%08X-%08X", idps0>>32, idps0, idps1>>32, idps1);
+		sprintf(msg, "%s: %08X-%08X-%08X-%08X", idps0>>32, idps0, idps1>>32, idps1);
 
 	cellMsgDialogAbort();
 	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, msg, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
@@ -7003,12 +7790,12 @@ void search_flash(u8 _mode, u8 _progr) // 0=CEX->DEX, 1=DEX->CEX
 		if(ros)
 		{
 			if(!_mode)
-				sprintf(msg, "LV2 Kernel successfully changed to DEX/Debug.");
+				sprintf(msg, STR_SWP2DEXOK);
 			else
-				sprintf(msg, "LV2 Kernel successfully changed to CEX/Retail.");
+				sprintf(msg, STR_SWP2CEXOK);
 		}
 		else
-			sprintf(msg, (const char*)"Incompatible firmware version or an error has occurred.");
+			sprintf(msg, STR_SWPERROR);
 
 		if(ros || _progr)
 		{
@@ -7020,7 +7807,7 @@ void search_flash(u8 _mode, u8 _progr) // 0=CEX->DEX, 1=DEX->CEX
 		if(ros && !rr)
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "System restart is required. Press OK to reboot.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_NEEDRESTSYS, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			//lv2_sm_shutdown(0x8201, NULL, 0);
 			system_call_4(379,0x1200,0,0,0);
@@ -7030,7 +7817,7 @@ void search_flash(u8 _mode, u8 _progr) // 0=CEX->DEX, 1=DEX->CEX
 	else
 	{
 		cellMsgDialogAbort();
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, (const char*) "Error accessing FLASH device!", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_NEEDRESTSYS, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 	}
 
 	cellMsgDialogAbort();
@@ -7135,9 +7922,9 @@ void write_eid(u64 device, u32 _flags, char *iso_path)
 						)
 					{
 						if( rr || !readlen)
-							sprintf(eid_info, "Error occured while accessing flash sector#%i!", start_flash_sector);
+							sprintf(eid_info, "%s : sector#%i!", STR_WEIDERROR1, start_flash_sector);
 						else
-							sprintf(eid_info, "The file you provided is not compatible with your system!");
+							sprintf(eid_info, STR_WEIDERROR2);
 						cellMsgDialogOpen2( type_dialog_ok, eid_info, dialog_fun2, (void*)0x0000aaab, NULL );
 						wait_dialog_simple();
 						cellMsgDialogAbort();
@@ -7147,9 +7934,9 @@ void write_eid(u64 device, u32 _flags, char *iso_path)
 					else
 					{
 						if(read_buffer[0x75]==read_buffer2[0x75])
-							sprintf(eid_info, "You are about to update your PS3\xE2\x84\xA2 Region/Target ID!\n\nRegion/Target ID: 0x%02X\n\nARE YOU SURE?", read_buffer2[0x75]);
+							sprintf(eid_info, "%s 0x%02X\n\n%s", STR_WEIDRUSURE1, read_buffer2[0x75], STR_WEIDRUSURE2);
 						else
-							sprintf(eid_info, "You are about to change your PS3\xE2\x84\xA2 Region/Target ID!\n\nCurrent ID: 0x%02X\nNew ID: 0x%02X\n\nARE YOU SURE?", read_buffer2[0x75], read_buffer[0x75]);
+							sprintf(eid_info, "%s 0x%02X\n%s 0x%02X\n\n%s", STR_WEIDRUSURE3, read_buffer2[0x75], STR_WEIDRUSURE4, read_buffer[0x75], STR_WEIDRUSURE2);
 						cellMsgDialogOpen2( type_dialog_yes_no, (const char*) eid_info, dialog_fun1, (void*)0x0000aaaa, NULL );
 						wait_dialog_simple();
 						cellMsgDialogAbort();
@@ -7157,7 +7944,7 @@ void write_eid(u64 device, u32 _flags, char *iso_path)
 						if(dialog_ret==1)
 						{
 							dialog_ret=0;
-							sprintf(eid_info, "WARNING:\n\nThis operation is DANGEROUS and should be carried out ONLY if you are CONFIDENT!\n\nA R E   Y O U   S U R E ?");
+							sprintf(eid_info, STR_WEIDRRUUSURE);
 							cellMsgDialogOpen2( type_dialog_yes_no, (const char*) eid_info, dialog_fun1, (void*)0x0000aaaa, NULL );
 							wait_dialog_simple();
 							cellMsgDialogAbort();
@@ -7200,15 +7987,15 @@ void write_eid(u64 device, u32 _flags, char *iso_path)
 			check_kernel=1;
 
 			if(read_buffer[0x75]==0x82)
-				sprintf(msg, "Flash EID0 region successfully overwritten (192 bytes).\n\nPlease quit to XMB, turn-off and turn-on your system!");
+				sprintf(msg, STR_WEIDOK1);
 			else
 			if(read_buffer2x==0x82)
-				sprintf(msg, "Flash EID0 region successfully overwritten (192 bytes).\n\nPlease quit to XMB, turn-off and turn-on  your system!");
+				sprintf(msg, STR_WEIDOK1);
 			else
-				sprintf(msg, "Flash EID0 region successfully overwritten (192 bytes).\n\nTo apply region change, please quit to XMB, turn-off and turn-on your system!");
+				sprintf(msg, STR_WEIDOK2);
 		}
 		else
-			sprintf(msg, (const char*)"Error writing to flash EID0!");
+			sprintf(msg, STR_WEIDERROR3);
 
 		cellMsgDialogAbort();
 		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, msg, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
@@ -7219,7 +8006,7 @@ void write_eid(u64 device, u32 _flags, char *iso_path)
 	else
 	{
 		cellMsgDialogAbort();
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, (const char*) "Error accessing FLASH device!", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_WEIDERROR4, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
 	}
 
 leave_flash:
@@ -7273,18 +8060,18 @@ void write_to_device()
         if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && dex_mode)
         {
             char message[512];
-            sprintf(message, "Your firmware and current mode(%2.2f and DEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from DEX to CEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
+            sprintf(message, "%s (%2.2f DEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
             cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
         }
         else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f) && !dex_mode)
         {
             char message[512];
-            sprintf(message, "Your firmware and current mode(%2.2f and CEX kernel) allows you to dump eid_root_key.\nYou can dump it and convert from CEX to DEX and vice versa with this toolbox.\nIf you have your root key placed in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, then you will be greeted with a choice now.", c_firmware);
+            sprintf(message, "%s (%2.2f CEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
             cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
         }
         else
         {
-            cellMsgDialogOpen2( type_dialog_ok, "if you have your root key at /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key than you will be greeted with a choice now.", dialog_fun2, (void*)0x0000aaab, NULL );
+            cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG3, dialog_fun2, (void*)0x0000aaab, NULL );
         }
         dialog_ret=0; wait_dialog_simple();
     }
@@ -7292,11 +8079,17 @@ void write_to_device()
     {
         dialog_ret=0;
         u8 cid=get_idps(0);//EID0 TargetID
-        if(cid!=0x82)
-            cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Found eid_root_key, do you want automatic conversion from CEX to DEX ?", dialog_fun1, (void*)0x0000aaaa, NULL );
-        else
-            cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Found eid_root_key, do you want automatic conversion from DEX to CEX ?", dialog_fun1, (void*)0x0000aaaa, NULL );
-
+		char str[128];
+		
+        if(cid!=0x82) {
+			sprintf(str, "%s CEX to DEX ?", STR_WTDMSG4);
+			cellMsgDialogOpen2( type_dialog_yes_no, str, dialog_fun1, (void*)0x0000aaaa, NULL );
+		}   
+        else {
+			sprintf(str, "%s DEX to CEX ?", STR_WTDMSG4);
+			cellMsgDialogOpen2( type_dialog_yes_no, str, dialog_fun1, (void*)0x0000aaaa, NULL );
+		}
+            
         wait_dialog_simple();
 
         if(dialog_ret==1)
@@ -7306,7 +8099,8 @@ void write_to_device()
             if(eid5_idps==0x82)
             {
                 dialog_ret=0;
-                cellMsgDialogOpen2( type_dialog_yes_no, "Found true DEX\nCEX swap would change region id to USA(0x84)", dialog_fun1, (void*)0x0000aaab, NULL );
+				
+                cellMsgDialogOpen2( type_dialog_yes_no, STR_WTDMSG5, dialog_fun1, (void*)0x0000aaab, NULL );
                 wait_dialog_simple();
                 if(dialog_ret!=1) return;
 
@@ -7350,7 +8144,7 @@ void write_to_device()
             if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex"))
             {
                 dialog_ret=0;
-                cellMsgDialogOpen2( type_dialog_ok, (const char*) "Error occurred.\n\nPlease verify your eid_root_key, Your key may have been corrupted or someone else's", dialog_fun2, (void*)0x0000aaab, NULL );
+                cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG6, dialog_fun2, (void*)0x0000aaab, NULL );
                 wait_dialog_simple();
                 remove("/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex");
             }
@@ -7382,15 +8176,15 @@ void write_to_device()
     cellMsgDialogAbort();
     dialog_ret=0;
     char msg[512];
-    sprintf(msg, "Please provide the following file and try again:\n\n%s", iso_path);
+    sprintf(msg, STR_WTDMSG7, ":\n\n%s", iso_path);
     cellMsgDialogOpen2( type_dialog_ok, (const char*) msg, dialog_fun2, (void*)0x0000aaab, NULL );
     wait_dialog_simple();
 
     dialog_ret=0;
     if(is_nor())
-        cellMsgDialogOpen2( type_dialog_ok, (const char*) "Flashing the whole NOR is disabled.\n\nName your NOR dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\nInput [*.EID0.NORBIN] must be 16MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).", dialog_fun2, (void*)0x0000aaab, NULL );
+        cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG8, dialog_fun2, (void*)0x0000aaab, NULL );
     else
-        cellMsgDialogOpen2( type_dialog_ok, (const char*) "Flashing the whole NAND is disabled.\n\nName your NAND dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\nInput [*.EID0.NANDBIN] must be 239MB or 256MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).", dialog_fun2, (void*)0x0000aaab, NULL );
+        cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG9, dialog_fun2, (void*)0x0000aaab, NULL );
     wait_dialog_simple();
     return;
 }
@@ -7462,7 +8256,7 @@ int main(int argc, char **argv)
 	//if(!exist((char*)"/dev_flash/vsh/etc/index.dat.nrm") && !exist((char*)"/dev_flash/vsh/etc/index.dat.swp"))
 	if(!exist((char*)"/dev_flash/rebug/packages"))
 	{
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Your system is not running on compatible REBUG configuration!\n\nSome options will not be available.", dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
+		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNORBG, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
 		rebug_compatible=0;
 	}
 	if(!exist((char*)"/dev_flash/vsh/etc/index.dat.nrm") && !exist((char*)"/dev_flash/vsh/etc/index.dat.swp"))
@@ -7474,7 +8268,7 @@ int main(int argc, char **argv)
 	{
 		if(!exist((char*)"/dev_flash/rebug/cobra/stage2.cex.bak") /*&& !exist((char*)"/dev_flash/rebug/cobra/stage2.dex.bak")*/)
 		{
-			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Your system is not running on compatible REBUG COBRA configuration!\n\nToggling COBRA will not be available.", dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
+			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNOCOB, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
 			cobra_compatible=0;
 		}
 	}
@@ -7491,6 +8285,11 @@ int main(int argc, char **argv)
 
 	}
 */
+
+	/* LANGUAGE */
+	get_all_language();
+	load_activ();
+	update_language();
 
 	// allocate buffers for images (one big buffer = 79MB)
 
@@ -7612,11 +8411,11 @@ int main(int argc, char **argv)
 
 
 	sprintf(xmb_columns[0], STR_APP_NAME);
-	sprintf(xmb_columns[1], "System");
-	sprintf(xmb_columns[2], "Selector");
-	sprintf(xmb_columns[3], "LV1 Patches");
-	sprintf(xmb_columns[4], "DEX/CEX");
-	sprintf(xmb_columns[5], "Utilities");
+	sprintf(xmb_columns[1], STR_SYSTEM);
+	sprintf(xmb_columns[2], STR_SELECTOR);
+	sprintf(xmb_columns[3], STR_LV1PATCH);
+	sprintf(xmb_columns[4], STR_DTC);
+	sprintf(xmb_columns[5], STR_UTLS);
 	sprintf(xmb_columns[6], "Empty");
 	sprintf(xmb_columns[7], "Empty");
 	sprintf(xmb_columns[8], "Empty");
@@ -7705,7 +8504,7 @@ int main(int argc, char **argv)
 	else
 	if(c_firmware == 0)
     {
-    dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Cannot detect firmware version, press OK to exit.", dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+    dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNOFW, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
     exit(0);
     }
 	/*else
@@ -7956,7 +8755,7 @@ int main(int argc, char **argv)
 
 	if(!exist((char*)"/dev_rebug"))
 	{
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, "Cannot access FLASH device, press OK to exit.", dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
+		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINERRFLASH, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog_simple();
 		exit(0);
 	}
 
@@ -8008,7 +8807,6 @@ int main(int argc, char **argv)
 //	mip_texture( xmb_icon_star_small, xmb_icon_star, 128, 128, -4);
 
 	/* main GUI loop */
-
 	main_ftp(0); //start the FTP server
 
 	while(1)
@@ -8050,7 +8848,7 @@ force_reload:
 			remove(video_mem);
 			sprintf(video_mem, "%s", string1);
 		}
-		sprintf(string1, "Screenshot successfully saved as:\n\n[%s]", video_mem);
+		sprintf(string1, "%s:\n\n[%s]", STR_SCRSHTSAVED, video_mem);
 		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog();
 	}
 
@@ -8099,7 +8897,7 @@ force_reload:
 			if(xmb[xmb_icon].first==1) {unload_modules(); exit_app();}	// quit to XMB
 			//if(xmb[xmb_icon].first==2) {shutdown_system(0x11); }		// restart PS3
 			//if(xmb[xmb_icon].first==3) {boot_otherOS(); }				// boot OtherOS
-			if(xmb[xmb_icon].first==4) {shutdown_system(0x10);}			// shutdown PS3
+			if(xmb[xmb_icon].first==5) {shutdown_system(0x10);}			// shutdown PS3
 		}
 		if(xmb_icon==4) // DEX/CEX
 		{
@@ -8418,7 +9216,7 @@ void set_xReg()
 	if(util_xReg==1)
        {
 		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to backup /dev_flash2/etc/xRegistry.sys to /dev_usb000?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_SAVXREG, dialog_fun1, (void*)0x0000aaaa, NULL );
 		wait_dialog_simple();
 		if(dialog_ret!=1) return;
 
@@ -8431,18 +9229,18 @@ void set_xReg()
 				file_copy((char*)"/dev_flash2/etc/xRegistry.sys",(char*)"/dev_usb000/xRegistry.sys",0);
 
 				if(exist((char*)"/dev_usb000/xRegistry.sys"))
-					cellMsgDialogOpen2( type_dialog_ok, (const char*) "Backup complete!\nxRegistry.sys backed up to /dev_usb000", dialog_fun1, (void*)0x0000aaaa, NULL );
+					cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGOK, dialog_fun1, (void*)0x0000aaaa, NULL );
 			    	else
-					cellMsgDialogOpen2( type_dialog_ok, (const char*) "ERROR!\nxRegistry.sys was not backed up", dialog_fun1, (void*)0x0000aaaa, NULL );
+					cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR1, dialog_fun1, (void*)0x0000aaaa, NULL );
 		 	}
 		 	else
-	     	cellMsgDialogOpen2( type_dialog_ok, (const char*) "ERROR!\nThere is not a storage device connected to dev_usb000", dialog_fun1, (void*)0x0000aaaa, NULL );
+	     	cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR2, dialog_fun1, (void*)0x0000aaaa, NULL );
 		 	wait_dialog_simple();
      	}
 	        else
  	        {
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "ERROR: /dev_flash2/etc/xRegistry.sys was not found!", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR3, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 	        }
       }
@@ -8451,7 +9249,7 @@ void set_xReg()
 		if (util_xReg==2)
 		{
 		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to restore xRegistry.sys from /dev_usb000?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_RESXREG, dialog_fun1, (void*)0x0000aaaa, NULL );
 		wait_dialog_simple();
 		if(dialog_ret!=1) return;
 
@@ -8464,11 +9262,11 @@ void set_xReg()
 
 			dialog_ret=0;
 			if(exist((char*)"/dev_flash2/etc/xRegistry.sys"))
-				cellMsgDialogOpen2( type_dialog_ok, (const char*) "Restore complete!\nxRegistry.sys restored from /dev_usb000", dialog_fun1, (void*)0x0000aaaa, NULL );
+				cellMsgDialogOpen2( type_dialog_ok, STR_RESXREGOK, dialog_fun1, (void*)0x0000aaaa, NULL );
 			else
 			{
 				rename("/dev_flash2/etc/xRegistry.sys.bak", "/dev_flash2/etc/xRegistry.sys");
-				cellMsgDialogOpen2( type_dialog_ok, (const char*) "ERROR!\nxRegistry.sys was not restored", dialog_fun1, (void*)0x0000aaaa, NULL );
+				cellMsgDialogOpen2( type_dialog_ok, STR_RESXREGERR1, dialog_fun1, (void*)0x0000aaaa, NULL );
 			}
 
 			wait_dialog_simple();
@@ -8476,7 +9274,7 @@ void set_xReg()
 		else
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "ERROR: /dev_usb000/xRegistry.sys was not found!", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_RESXREGERR2, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 		}
 
@@ -8491,9 +9289,9 @@ void create_packages()
 	mkdir((char*)"/dev_hdd0/packages", S_IRWXO | S_IRWXU | S_IRWXG | S_IFDIR);
 	dialog_ret=0;
 	if(exist((char*)"/dev_hdd0/packages"))
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) "Folder [/dev_hdd0/packages] created successfully.", dialog_fun2, (void*)0x0000aaab, NULL );
+		cellMsgDialogOpen2( type_dialog_ok, STR_MAKPKGOK, dialog_fun2, (void*)0x0000aaab, NULL );
 	else
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) "Cannot create [/dev_hdd0/packages] folder!", dialog_fun2, (void*)0x0000aaab, NULL );
+		cellMsgDialogOpen2( type_dialog_ok, STR_MAKPKGERR , dialog_fun2, (void*)0x0000aaab, NULL );
 	wait_dialog_simple();
 }
 
@@ -8512,12 +9310,12 @@ void load_lv2_kernel(u8 _sel)
 	if(is_size(path)<1024 | !exist(path))
 	{
 		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) "Invalid LV2 Kernel file selected!", dialog_fun2, (void*)0x0000aaab, NULL );
+		cellMsgDialogOpen2( type_dialog_ok, STR_LOADLV2KERR1, dialog_fun2, (void*)0x0000aaab, NULL );
 		wait_dialog_simple();
 		lv2_kernel=0;
 		return;
 	}
-	sprintf(msg, "Do you want to load the selected LV2 kernel and soft reboot?\n\nKernel selected: %s\nKernel path: %s", lv2_kernel_files[_sel].name, path);
+	sprintf(msg, "%s\n\nKernel selected: %s\nKernel path: %s", STR_LOADLV2K ,lv2_kernel_files[_sel].name, path);
 	dialog_ret=0;
 	cellMsgDialogOpen2( type_dialog_yes_no, msg, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog_simple();
@@ -8530,7 +9328,7 @@ void load_lv2_kernel(u8 _sel)
 		if(get_free_drive_space((char*)"/dev_flash")<(is_size(path)+2048))
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "There is not enough free space in /dev_flash!", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_LOADLV2KNOSPACE, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			lv2_kernel=0;
 			return;
@@ -8554,7 +9352,7 @@ void load_lv2_kernel(u8 _sel)
 		if(peek_lv1_cobra(lv2_offset)!=0x2F666C682F6F732FULL) //do some search
 		{
 			cellMsgDialogAbort();
-			dialog_ret=0; cellMsgDialogOpen2( type_dialog_no, (const char*) "Checking LV1, please wait...", dialog_fun2, (void*)0x0000aaab, NULL );
+			dialog_ret=0; cellMsgDialogOpen2( type_dialog_no, STR_LOADLV2KCHKLV1, dialog_fun2, (void*)0x0000aaab, NULL );
 			flipc(120);
 			dialog_ret=0;
 
@@ -8585,7 +9383,7 @@ void load_lv2_kernel(u8 _sel)
 
 	cellMsgDialogAbort();
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_ok, (const char*) "LV2 Kernel: Operation failed.", dialog_fun2, (void*)0x0000aaab, NULL );
+	cellMsgDialogOpen2( type_dialog_ok, STR_LOADLV2KERR2, dialog_fun2, (void*)0x0000aaab, NULL );
 	wait_dialog_simple();
 	lv2_kernel=0;
 }
@@ -8605,9 +9403,9 @@ void boot_otherOS(u8 _mode)
 
 	dialog_ret=0;
 	if(_mode==1)
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to change the boot order, enable all LV1 patches and load OtherOS?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_BOOTOOSMSG1, dialog_fun1, (void*)0x0000aaaa, NULL );
 	else
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to change the boot order and load OtherOS?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_BOOTOOSMSG2, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog_simple();
 	if(dialog_ret!=1) {otheros=0; return;}
 
@@ -8683,7 +9481,7 @@ done:
 done_reboot:
 
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_ok, (const char*) "OtherOS: Operation failed.", dialog_fun2, (void*)0x0000aaab, NULL );
+	cellMsgDialogOpen2( type_dialog_ok, STR_BOOTOOSERR1, dialog_fun2, (void*)0x0000aaab, NULL );
 	wait_dialog_simple();
 }
 
@@ -8698,7 +9496,7 @@ void swap_kernel()
 	else
 	{
 		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) "This function is not available in CEX mode.\n\nPlease flash a DEX NOR/NAND first.", dialog_fun2, (void*)0x0000aaab, NULL );
+		cellMsgDialogOpen2( type_dialog_ok, STR_SWPKERR, dialog_fun2, (void*)0x0000aaab, NULL );
 		wait_dialog_simple();
 	}
 }
@@ -8706,7 +9504,7 @@ void swap_kernel()
 void dump_flash()
 {
 	dialog_ret=0;
-	cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to export FLASH memory to a file?", dialog_fun1, (void*)0x0000aaaa, NULL );
+	cellMsgDialogOpen2( type_dialog_yes_no, STR_DMPFLSH, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog();
 	if(dialog_ret==1)
 	{
@@ -8726,7 +9524,7 @@ void dump_flash()
 		if(get_free_drive_space((char*)"/dev_usb000")<0x10000000ULL)//256MB
 		{
 			cellMsgDialogAbort();
-			sprintf(string1, "Please insert a USB drive (/dev_usb000) with at least 256MB free and try again!");
+			sprintf(string1, STR_DMPFLSHERR);
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
 		}
 		else
@@ -8787,9 +9585,9 @@ void export_lv(u8 _mode)
 {
 	dialog_ret=0;
 	if(!_mode)
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to export GameOS LV2 memory to a file?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_EXPLVMSG1, dialog_fun1, (void*)0x0000aaaa, NULL );
 	else
-		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to export HV LV1 memory to a file?", dialog_fun1, (void*)0x0000aaaa, NULL );
+		cellMsgDialogOpen2( type_dialog_yes_no, STR_EXPLVMSG2, dialog_fun1, (void*)0x0000aaaa, NULL );
 
 	wait_dialog();
 	if(dialog_ret==1)
@@ -8812,7 +9610,7 @@ void export_lv(u8 _mode)
 				sprintf(lv2file, "%s/%04d%02d%02d-%02d%02d%02d-LV2-FW%1.2f.BIN", app_usrdir, timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, c_firmware);
 			else
 				sprintf(lv2file, "%s/%04d%02d%02d-%02d%02d%02d-LV2-FW%1.2f.BIN", _dev, timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, c_firmware);
-			sprintf(string1, "Exporting GameOS memory to file:\n\n%s\n\nPlease wait...", lv2file);
+			sprintf(string1, "%s:\n\n%s\n\n%s", STR_EXPLVMSG5, lv2file, STR_EXPLVWAIT );
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_no, string1, dialog_fun2, (void*)0x0000aaab, NULL );
 			flipc(60);
 
@@ -8824,10 +9622,10 @@ void export_lv(u8 _mode)
 				fwrite(text_FONT, readb, 1, fpA);
 				fclose(fpA);
 				cellFsChmod(lv2file, 0666);
-				sprintf(string1, "GameOS memory exported successfully to file:\n\n%s", lv2file);
+				sprintf(string1, "%s:\n\n%s", STR_EXPLVOK, lv2file);
 			}
 			else
-				sprintf(string1, "GameOS memory export failed!\n\nCannot create: %s", lv2file);
+				sprintf(string1, "%s: %s", STR_EXPLVERR, lv2file);
 			cellMsgDialogAbort();
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
 		}
@@ -8838,7 +9636,7 @@ void export_lv(u8 _mode)
 			else
 				sprintf(lv2file, "%s/%04d%02d%02d-%02d%02d%02d-LV1-FW%1.2f.BIN", _dev, timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec, c_firmware);
 			remove(lv2file);
-			sprintf(string1, "Exporting HyperVisor (LV1) memory to file:\n\n%s\n\nPlease wait, it may take about 5 minutes...", lv2file);
+			sprintf(string1, "%s:\n\n%s\n\n%s", STR_EXPLVMSG3, lv2file, STR_EXPLVMSG4);
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_no, string1, dialog_fun2, (void*)0x0000aaab, NULL );
 			flipc(60);
 
@@ -8851,10 +9649,10 @@ void export_lv(u8 _mode)
 				fwrite(text_FONT, readb, 1, fpA);
 				fclose(fpA);
 				cellFsChmod(lv2file, 0666);
-				sprintf(string1, "Hypervisor memory exported successfully to file:\n\n%s", lv2file);
+				sprintf(string1, "%s:\n\n%s", STR_EXPLVOK2, lv2file);
 			}
 			else
-				sprintf(string1, "Hypervisor memory export failed!\n\nCannot create: %s", lv2file);
+				sprintf(string1, "%s: %s", STR_EXPLVERR2, lv2file);
 			cellMsgDialogAbort();
 			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
 		}
@@ -11669,17 +12467,17 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.swp" )== 0 &&
 				rename ("/dev_rebug/vsh/etc/version.txt.nrm", "/dev_rebug/vsh/etc/version.txt") == 0)
 			{
-				sprintf(status, "[NORMAL MODE] is now active.\n\nSystem will auto-reboot when you quit.");
+				strcpy(status, STR_MODNORM);
 				auto_reboot = 1;
 			}
 			else
 			{
-				sprintf(status, "FAILED: PLEASE TRY AGAIN");
+				strcpy(status, STR_TRYAGAIN);
 			}
 		  }
 		  else
 		  {
-				sprintf(status, "[NORMAL MODE] IS ALREADY SET!!");
+				strcpy(status, STR_MODNORMALRD);
 		  }
 		}
 
@@ -11715,17 +12513,17 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.nrm" )== 0 &&
 				rename ("/dev_rebug/vsh/etc/version.txt.swp", "/dev_rebug/vsh/etc/version.txt") == 0)
 			{
-				sprintf(status, "[REBUG MODE] is now active.\n\nSystem will auto-reboot when you quit.");
+				strcpy(status, STR_MODREB);
 				auto_reboot = 1;
 			}
 			else
 			{
-				sprintf(status, "FAILED: PLEASE TRY AGAIN");
+				strcpy(status, STR_TRYAGAIN);
 			}
 		  }
 		  else
 		  {
-			sprintf(status, "[REBUG MODE] IS ALREADY SET!");
+			strcpy(status, STR_MODREBALRD);
 		  }
 		}
 
@@ -11745,7 +12543,7 @@ void apply_settings(char *option, int val, u8 _forced)
 			rename ("/dev_rebug/vsh/module/webftp_server.sprx","/dev_rebug/vsh/module/webftp_server.sprx.bak" );
 			cellFsUnlink("/dev_hdd0/xmlhost/game_plugin/fb.xml");
 
-			sprintf(status, "WebMAN is disabled, System will auto-reboot when you quit.");
+			strcpy(status, STR_WMDIS);
 			auto_reboot = 1;
 		}
 		else if((webman_mode==1) && exist((char*)"/dev_rebug/vsh/module/webftp_server.sprx.bak"))
@@ -11775,7 +12573,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				file_copy((char*)ORG_DIR "/LANG_RU.TXT", (char*)LANG_DIR "/LANG_RU.TXT", 0);
 				file_copy((char*)ORG_DIR "/LANG_TR.TXT", (char*)LANG_DIR "/LANG_TR.TXT", 0);
 				file_copy((char*)ORG_DIR "/LANG_ZH.TXT", (char*)LANG_DIR "/LANG_ZH.TXT", 0);
-			sprintf(status, "WebMAN is enabled. webMAN will be loaded on next boot.\n\nMake sure to enable COBRA after enabling webMAN");
+			strcpy(status, STR_WMENA);	
 			auto_reboot = 1;
 		}
 		if(auto_reboot)
@@ -11814,22 +12612,22 @@ void apply_settings(char *option, int val, u8 _forced)
 								rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
 						}*/
 					}
-					sprintf(status, "[RETAIL XMB] is now active.\n\nSystem will auto-reboot when you quit.");
+					strcpy(status, STR_MODRET);
 					auto_reboot = 1;
 				}
 				else
 				{
-					sprintf(status, "FAILED: PLEASE TRY AGAIN");
+					strcpy(status, STR_TRYAGAIN);
 				}
 			}
 			else
 			{
-				sprintf(status, "PLEASE TRY [DEBUG XMB]");
+				strcpy(status, STR_MODRETERR1);
 			}
 		  }
 		  else
 		  {
-			sprintf(status, "UNAVAILABLE IN [NORMAL MODE]");
+			strcpy(status, STR_MODRETERR2);
 		  }
 		}
 
@@ -11845,22 +12643,22 @@ void apply_settings(char *option, int val, u8 _forced)
 				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.cexsp" )== 0 &&
 					rename ("/dev_rebug/vsh/module/vsh.self.dexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
 				{
-					sprintf(status, "[DEBUG XMB] is now active.\n\nSystem will auto-reboot when you quit.");
+					strcpy(status, STR_MODDEB);
 					auto_reboot = 1;
 				}
 				else
 				{
-					sprintf(status, "FAILED: PLEASE TRY AGAIN");
+					strcpy(status, STR_TRYAGAIN);
 				}
 			}
 			else
 			{
-				sprintf(status, "PLEASE TRY [RETAIL XMB]");
+				strcpy(status, STR_MODDEBERR1);
 			}
 		  }
 		  else
 		  {
-			sprintf(status, "UNAVAILABLE IN [NORMAL MODE]");
+			strcpy(status, STR_MODDEBERR2);
 		  }
 		}
 
@@ -11889,21 +12687,21 @@ void apply_settings(char *option, int val, u8 _forced)
 				{
 					if(auto_reboot)
 					{
-						sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.\n\nSystem will auto-reboot when you quit.");
+						strcpy(status, STR_MODDEBSQA);
 					}
 					else
 					{
-						sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] is now active.");
+						strcpy(status, STR_MODDEBSQAOK);
 					}
 				}
 				else
 				{
-					sprintf(status, "[DEBUG SETTINGS: MENU CEX QA] FAILED");
+					strcpy(status, STR_MODDEBSQAERR1);
 				}
 			}
 			else
 			{
-				sprintf(status, "TRY [DEBUG SETTINGS: MENU DEBUG]");
+				strcpy(status, STR_MODDEBSQAERR2);
 			}
 		}
 		// [DEBUG SETTINGS: MENU 2]: DEX
@@ -11924,21 +12722,21 @@ void apply_settings(char *option, int val, u8 _forced)
 				{
 					if(auto_reboot)
 					{
-						sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.\n\nSystem will auto-reboot when you quit.");
+						strcpy(status, STR_MODDEBSDEB);
 					}
 					else
 					{
-						sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] is now active.");
+						strcpy(status, STR_MODDEBSDEBOK);
 					}
 				}
 				else
 				{
-					sprintf(status, "[DEBUG SETTINGS: MENU DEBUG] FAILED");
+					strcpy(status, STR_MODDEBSDEBERR1);
 				}
 			}
 			else
 			{
-				sprintf(status, "TRY [DEBUG SETTINGS: MENU CEX QA]");
+				strcpy(status, STR_MODDEBSDEBERR2);
 			}
 		}
 
@@ -11964,7 +12762,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				}
 
 				{
-					sprintf(status, "COBRA Mode enabled." /*"System will reboot now."*/);
+					strcpy(status, STR_MODCOBENA /*"System will reboot now."*/);
 					auto_reboot = 1;
 				}
 			}
@@ -11984,14 +12782,14 @@ void apply_settings(char *option, int val, u8 _forced)
 				}
 
 				{
-					sprintf(status, "COBRA Mode disabled." /*"System will reboot now."*/);
+					strcpy(status, STR_MODCOBDIS /*"System will reboot now."*/);
 					auto_reboot = 1;
 				}
 			}
 		}
 		else
 		{
-		sprintf(status, "Error in flash, reinstall firmware to fix this");
+		strcpy(status, STR_ERRFLASH);
 		}
 
 		dialog_ret=0;
@@ -12017,7 +12815,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self") && !exist((char*)"/dev_usb000/rebug/ps2_netemu.self"))
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "No PS2Emu files found on HDD or USB(dev_usb000).", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_PS2ERR1, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			return;
 		}
@@ -12025,7 +12823,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		if(exist((char*)"/dev_usb000/rebug/ps2_netemu.self"))
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_yes_no, (const char*) "Continue to copy PS2Emu files from USB(dev_usb000)?", dialog_fun1, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_yes_no, STR_PS2CONT, dialog_fun1, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			if(dialog_ret==1)
 			{
@@ -12036,7 +12834,7 @@ void apply_settings(char *option, int val, u8 _forced)
 			file_copy((char*)"/dev_usb000/rebug/ps2_emu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_emu.self", 0);
 			file_copy((char*)"/dev_usb000/rebug/ps2_gxemu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self", 0);
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "PS2Emu files copied from USB!", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_PS2COP, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			}
 		}
@@ -12058,7 +12856,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self.cobra", (char*)"/dev_rebug/ps2emu/ps2_gxemu.self", 0);
 			}
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "PS2Emu swapped!\nReboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_PS2SWPOK, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 		}
 	}
@@ -12085,7 +12883,7 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw");
 				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org",
 					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
-			sprintf(status, "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.");
+			strcpy(status, STR_XMBCFWDIS);
 			auto_reboot = 1;
 			}
 			else
@@ -12336,7 +13134,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		}
 		else
 		{
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "Flag is already set.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_FLASHSET, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			lv2_sm_shutdown(0x8201, NULL, 0);
 		}
@@ -12349,5 +13147,14 @@ done:
 		lv2_storage_close(dev_handle);
 	}
 
+	 if(!strcmp(option, "lang"))
+	{
+		save_activ();
+		//update_language();
+		char reload[128];
+		sprintf(reload, "/dev_hdd0/game/%s/USRDIR/RELOAD.SELF", STR_APP_ID);
+		launch_self2(reload);
+	}
+	
 	check_settings();
 }
