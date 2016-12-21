@@ -536,7 +536,7 @@ static bool language(const char *file_str, char *default_str)
 
 	if(do_retry) {do_retry=false; lang_pos=0; goto retry;}
 
-	return true;
+	return false;
 }
 
 void get_all_language()
