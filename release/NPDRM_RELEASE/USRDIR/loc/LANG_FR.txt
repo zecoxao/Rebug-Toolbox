@@ -241,5 +241,5 @@ STR_4                       {min}
 STR_5                       {MB/s}
 STR_READFLASHERROR1			{Error occurred while accessing data!\n\nSectors read: }
 STR_READFLASHERROR2			{\nTotal sectors: }
-STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
-STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}
+STR_TOGHOSTINF              {Bascule l'affichage des informations de l'hôte sur le XMB [DEX].}
+STR_TOGHOSTINFDESC          {Active ou désactive l'affichage des informations de l'hôte sur le XMB.}
