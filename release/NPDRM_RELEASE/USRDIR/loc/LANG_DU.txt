@@ -1,0 +1,245 @@
+STR_LANGUAGE				{Dutch}
+STR_LANGCODE				{\x05}
+STR_LANG					{Taal}
+STR_LANGDESC				{Kies een taal}
+STR_DISABLE					{Gedeactiveerd}
+STR_ENABLE					{Geactiveerd}
+STR_NO						{Nee}
+STR_SYSTEM					{Systeem}
+STR_SELECTOR				{Keuzeschakelaar}
+STR_LV1PATCH				{LV1 Patches}
+STR_DTC						{DEX/CEX}
+STR_UTLS					{Hulpprogramma's}
+STR_EIDRK					{Wil u de eid root key dumpen en heropstarten?\n\nDe eid_root_key zal gemaakt worden onder /dev_hdd0/game/RBGTLBOX2/USRDIR}
+STR_SCRSHOT					{Screenshot opslaan naar}
+STR_DONE					{Klaar!}
+STR_SHTDWN					{Afsluiten...}
+STR_TRYRESTART				{Proberen te herstarten...}
+STR_NOTFOUND				{Is niet gevonden!}
+STR_PETBOOTINST				{Wil u Petitboot installeren op VFLASH/NAND Region 5?}
+STR_PETBOOTOK				{Petitboot is geïnstalleerd.. Geniet van OtherOS.}
+STR_PETBOOTERROR			{ERROR: Kan petitboot niet vinden..VFLASH Gedetecteerd.\n\nGelieve een file te plaatsen genaamd [dtbimage.ps3.bin] Op het USB toestel en probeer opnieuw.}
+STR_RESIZE5					{Wilt u het formaat wijzigen van VFLASH/NAND Region 5 Om OtherOs toe te laten?}
+STR_RESIZE5OK				{SUCCESS: Uw PS3 moet heropgestart worden om de aanpassingen door te voeren.}
+STR_RESIZE5ERROR			{MISLUKT: formaat wijzigen VFLASH/NAND Region 5 is niet compleet.}
+STR_FLASHOK					{SUCCESS: Uw PS3 moet heropgestart worden om de aanpassingen door te voeren.}
+STR_FLASHERROR				{MISLUKT!!!}
+STR_GAMEOSFLG				{Wil u GameOS boot aanzetten?}
+STR_GAMEOSFLGOK				{Instelling is al aangezet.}
+STR_SYSINF					{Informatie systeem}
+STR_SYSINFDESC				{Toon informatie over uw PS3™ systeem.}
+STR_QUIT					{Verlaten}
+STR_QUITDESC1				{Verlaten}
+STR_QUITDESC2				{en keer terug naar XMB™ scherm}
+STR_RESTSYS					{Herstart het systeem}
+STR_RESTSYSDESC1			{Sluit}
+STR_RESTSYSDESC2			{en herstart uw PLAYSTATION® 3 Systeem}
+STR_RESTSYS_SUB1			{Soft (Alleen LV2 heropstarten)}
+STR_RESTSYS_SUB2			{Full (Aan/Uit Cyclus)}
+STR_BOOTOOS					{Start OtherOS op}
+STR_BOOTOOSDESC				{Selecteer LV1 aanpassingen en start opnieuw op in OtherOS}
+STR_BOOTOOS_SUB1			{Boot (LV1 patches: Apply All)}
+STR_BOOTOOS_SUB2			{Boot (LV1 patches: Use current)}
+STR_TRNOFF					{Leg het systeem af}
+STR_TRNOFFDESC				{Sluit uw PLAYSTATION® 3 Systeem af}
+STR_QA						{Toggle QA Flag}
+STR_QADESC					{Activeer or deactiveer QA flag functies.}
+STR_NOTAV					{Niet Beschikbaar}
+STR_TOGREC					{Toggle Recovery Mode}
+STR_TOGRECDESC				{Activeer of deactiveer recovery mode bij nieuwe opstart.}
+STR_TOGPM					{Toggle Product Mode}
+STR_TOGPMDESC				{Activeer of deactiveer product mode (FSM).}
+STR_LOADLV2					{Laad LV2 Kernel}
+STR_LOADLV2DESC				{Laad lv2_kernel.self.[KERNEL_NAME] vanaf USB or /dev_hdd0.}
+STR_BUT						{Knoppen toewijzing}
+STR_BUTDESC					{Zet welke knoppen gebruikt worden voor Accept/Enter en Cancel/Back.}
+STR_CIRCLE					{Circle is [Accept]}
+STR_CROSS					{Cross is [Accept]}
+STR_XREG					{Backup/Restore xRegistry}
+STR_XREGDESC				{Backup of herstel de instellingen van het PS3 systeem vanaf USB.}
+STR_BACKUP					{Backup}
+STR_RESTORE					{Restore}
+STR_RESIZEVFLASH			{Formaat wijzigen van VFLASH/NAND Regio's}
+STR_RESIZEVFLASHDESC		{Wijzig het formaat van VFLASH/NAND Regions 5 om OtherOS toe te laten.}
+STR_INSTPETBOOT				{Installeer petitboot}
+STR_INSTPETBOOTDESC			{Installeer Petitboot naar VFLASH/NAND Regions 5 vanaf USB.}
+STR_GAMEOSBOOTFLG			{Zet GameOS Boot aan}
+STR_GAMEOSBOOTFLGDESC		{herstelt problemen i.v.m. het laden van PS2 titels als OtherOS is geïnstalleerd.}
+STR_PKG						{Maak \x22Packages\x22 map aan}
+STR_PKGDESC					{Maak /dev_hdd0/packages map aan.}
+STR_SAVLV1					{Exporteer Hypervisor LV1 Geheugen}
+STR_SAVLV1DESC				{Sla LV1 geheugen op naar een bestand.}
+STR_SAVLV2					{Exporteer GameOS LV2 Geheugen}
+STR_SAVLV2DESC				{Sla LV2 op naar een bestand.}
+STR_SAVFLASH				{Exporteer Flash naar een bestand}
+STR_SAVFLASHDESC			{Sla een backup van uw NOR/NAND Geheugen naar /dev_usb000.}
+STR_SAVEIDRK				{Dump eid root key}
+STR_SAVEIDRKDESC			{Dump eid root key naar dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
+STR_PS3ID					{Verander Actief PS3ID}
+STR_PS3IDDESC				{Spoof IDPS in LV2 geheugen.}
+STR_USE						{Gebruik}
+STR_SM						{Systeem Mode}
+STR_SMDESC					{Schakel over tussen Normal en REBUG mode.}
+STR_XMBOM					{XMB Operation Mode}
+STR_XMBOMDESC				{Verwissel tussen Retail en Debug XMB.}
+STR_MENU					{Debug Menu Type}
+STR_MENUDESC				{Verwissel between CEX QA and DEX Debug menu.}
+STR_TOGCFW					{Toggle XMB CFW settings}
+STR_TOGCFWDESC				{Activeer or Deactiveer XMB CFW settings v0.1a (MOD)}
+STR_TOGCOB					{Toggle COBRA Mode}
+STR_TOGCOBDESC				{Activeer or Deactiveer COBRA Mode bij volgende opstart.}
+STR_TOGPS2					{Toggle PS2 Emulator}
+STR_TOGPS2DESC				{PS2Emu verwissel om originele PS2 Emu bestanden te gebruiken.}
+STR_TOGWM					{Toggle webMAN}
+STR_TOGWMDESC				{Activeer or Deactiveer geïntegreerde webMAN bij volgende heropstart.}
+STR_NORBG					{REBUG Selecttie functies zijn niet beschikbaar}
+STR_NORBGDESC				{Installeer a.u.b een REBUG REX/D-REX Firmware voor toegang tot de Selectie Functies.}
+STR_PATCHLV1				{LV1 Peek/Poke Ondersteuning}
+STR_PATCHLV1DESC			{Patch ongebruikte LV1 syscalls 182 en 183.}
+STR_LV2MEMPRO				{LV2 Geheugen bescherming}
+STR_LV2MEMPRODESC			{Patch Shutdown in LV2 modificatie.}
+STR_HTAB					{HTAB Mapping Met Schrijf Bescherming}
+STR_HTABDESC				{Activeer or Deactiveer protected HTAB mapping.}
+STR_INDI					{Toegang tot alle INDI Info Manager Services}
+STR_INDIDESC				{Activeer or Deactiveer INDI toegang.}
+STR_EEPROM					{Update Manager EEPROM Schrijf toegang}
+STR_EEPROMDESC				{Patch Update Manager toegang naar EEPROM.}
+STR_DISPATCH				{Dispatch Manager Toegang}
+STR_DISPATCHDESC			{Patch Dispatch Manager toegang tot alle services.}
+STR_ENCDEC					{Activeer ENCDEC IOCTL Command 0x85}
+STR_ENCDECDESC				{Activeer IOCTL Command 0x85}
+STR_SYSMAN					{System Manager Ability Mask of GameOS}
+STR_SYSMANDESC				{Toegang toelaten tot alle system manager services.}
+STR_ALLPKG					{Extract all PKG Types}
+STR_ALLPKGDESC				{Laat Update Manager toe om alle PKG types te extracten.}
+STR_LPAR					{Volledige toegang voor Repo Nodes in Any LPAR}
+STR_LPARDESC				{Maakt het mogelijk om te maken, aanpassen, verwijderen voor repository nodes.}
+STR_LV1SPE					{LV1 Volledige toegang tot MFC_SR1 SPE Register}
+STR_LV1SPEDESC				{Geeft volledige toegang tot het register}
+STR_LV1DABR					{LV1 Access to set Data Break Points}
+STR_LV1DABRDESC				{Activeer LV1 toegang met lv1_set_dabr().}
+STR_LV1GART					{LV1 Toegang naar GPU GART Geheugen}
+STR_LV1GARTDESC				{Sta LV1 toe om 4KB IO page size te gebruiken.}
+STR_LV1KEYS					{Storage Manager ENCDEC Keys Access}
+STR_LV1KEYSDESC				{Allow Storage Manager to clear ENCDEC keys.}
+STR_LV1ACL					{Sla alle ACL Checks over}
+STR_LV1ACLDESC				{Activeer het overslaan van ACL checks voor alle opslagtoestellen.}
+STR_LV1GO					{Initial GuestOS Loader}
+STR_LV1GODESC				{Activeer GuestOS mode 1 voor GameOS.}
+STR_SWPLV2K					{Verwissel LV2 Kernel}
+STR_SWPLV2KDESC				{Verander tussen retail en debug kernels.}
+STR_REWTID					{Herschrijf Target ID in Flash}
+STR_REWTIDDESC				{Converteer PS3 naar cex/dex als een geldige flash dump/eid_root_key aanwezig is.}
+STR_NOCEXDEX				{CEX/DEX Functiet Beschikbaar}
+STR_NOCEXDEXDESC			{Installeer REBUG REX EDITION voor toegang tot al deze functies.}
+STR_SELECT					{: Select}
+STR_HOLDQUITREB				{: Vasthouden om Af te sluiten en herop te starten}
+STR_HOLDQUIT				{: Vasthouden om af te sluiten}
+STR_FREEHDD					{Vrij HDD geheugen}  
+STR_NUMFW                   {PS3\xE2\x84\xA2 System: Firmware}
+STR_IP						{IP Address}
+STR_QUITXMB					{Quit to XMB?}
+STR_CHANGEIDPSOK1			{Successvol aangebracht}
+STR_CHANGEIDPSOK2			{veranderingen naar LV2 geheugen.\n\nCurrent target ID set to}
+STR_CHANGEIDPSERROR			{Fout opgetreden bij het zoeken naar IDPS}
+STR_SWP2DEXOK				{LV2 Kernel successvol veranderd naar DEX/Debug.}
+STR_SWP2CEXOK				{LV2 Kernel successvol veranderd naar CEX/Retail.}
+STR_SWPERROR				{Incompatibele firmware versie of er heeft een fout plaatsgevonden.}
+STR_NEEDRESTSYS				{Systeem heropstarten is nodig. Druk OK om herop te starten}
+STR_WEIDERROR1				{Fout toegang tot flashgeheugen}
+STR_WEIDERROR2				{Het bestand dat u heeft opgegeven is niet compatibel met uw systeem!}
+STR_WEIDRUSURE1				{U staat op het punt om te updaten van het PS3™ Region/Target ID!\n\nRegion/Target ID:}
+STR_WEIDRUSURE2				{BENT U ZEKER?}
+STR_WEIDRUSURE3				{U staat op het punt van het veranderen van uw PS3™ Region/Target ID!\nCurrent ID:}
+STR_WEIDRUSURE4				{New ID:}
+STR_WEIDRRUUSURE			{WARNING:\n\nDeze operatie is GEVAARLIJK and zou allen mogen worden uitgevoerd ALLEEN als u ZEKER bent!\n\nA R E   Y O U   S U R E ?}
+STR_WEIDOK1					{Flash EID0 region succesvol overschreven (192 bytes).\n\nA.u.b. keer terug naar het XMB, Herstart vervolgens uw systeem!}
+STR_WEIDOK2					{Flash EID0 region succesvol overschreven (192 bytes).\n\nOm regio wijziging toe te passen, A.u.b. keer terug naar het XMB, Herstart vervolgens uw systeem!}
+STR_WEIDERROR3				{Fout bij schrijven naar flash EID0!}
+STR_WEIDERROR4				{Fout toegang tot flashgeheugen!}
+STR_WTDMSG1					{Uw firmware en huidige mode}
+STR_WTDMSG2					{Laat u toe om uw eid_root_key te dumpen.\nU kan het dumpen en converteren van DEX naar CEX en omgekeerd met deze toolbox.\nAls uw root key geplaatst is in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key, dan zal u kunnen kiezen.}
+STR_WTDMSG3					{Als u uw root key hebt in /dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key dan zal u kunnen kiezen.}
+STR_WTDMSG4					{Gevonden eid_root_key, wilt u een automatische conversie van}
+STR_WTDMSG5					{Gevonden true DEX\nCEX swap zou regio id veranderen naar USA(0x84)}
+STR_WTDMSG6					{Fout plaatsgevonden.\n\nA.u.b. verieer uw eid_root_key, uw key is mogelijk beschadigd of die van iemand anders}
+STR_WTDMSG7					{A.u.b voorzie het volgende bestand en probeer opnieuw}
+STR_WTDMSG8					{De volledige NOR flashen is gedeactiveerd.\n\nHernoem uw NOR dump juist om flashen te activeren en alleen te flashen naar de EID0 SECTIE.\n\n[*.EID0.NORBIN] moet 16MB zijn en ook van UW console zijn.\nAlleen 192 bytes zullen geschreven worden naar flash (EID0).}
+STR_WTDMSG9					{Flashing the whole NAND is disabled.\n\nName your NAND dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\n[*.EID0.NANDBIN] must be 239MB or 256MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).}
+STR_MAINNORBG				{Uw systeem draait geen compatibele REBUG configuratie!\n\nSommige optis zullen niet beschikbaar zijn.}
+STR_MAINNOCOB				{Uw systeem draait geen compatibele REBUG COBRA configuratie!\n\nCobra aanleggen zal niet beschikbaar zijn.}
+STR_MAINNOFW				{Kan firmware versie niet detecteren, druk OK om te sluiten.}
+STR_MAINERRFLASH			{Kan geen toegang verkrijgen tot FLASH toestel, druk OK te sluiten.}
+STR_SCRSHTSAVED				{Screenshot succesvol opgeslagen als}
+STR_SAVXREG					{Wilt u een backup van /dev_flash2/etc/xRegistry.sys naar /dev_usb000 opslaan?}
+STR_SAVXREGOK				{Backup compleet!\nxRegistry.sys opgeslagen naar /dev_usb000}
+STR_SAVXREGERR1				{ERROR!\nxRegistry.sys werd geen back-up van genomen}
+STR_SAVXREGERR2				{ERROR!\nEr is geen opslagtoestel verbonden met dev_usb000}
+STR_SAVXREGERR3				{ERROR: /dev_flash2/etc/xRegistry.sys is niet gevonden!}
+STR_RESXREG					{Wilt u xRegistry.sys herstellen vanaf /dev_usb000?}
+STR_RESXREGOK				{Herstellen compleet!\nxRegistry.sys hersteld vanaf /dev_usb000}
+STR_RESXREGERR1				{ERROR!\nxRegistry.sys was niet hersteld}
+STR_RESXREGERR2				{ERROR: /dev_usb000/xRegistry.sys was niet gevonden!}
+STR_MAKPKGOK				{Folder [/dev_hdd0/packages] succesvol gemaakt.}
+STR_MAKPKGERR				{Kan geen [/dev_hdd0/packages] map maken!}
+STR_LOADLV2KERR1			{Ongeldig LV2 Kernel bestand geselecteerd!}
+STR_LOADLV2K				{Wilt u de geselecteerde LV2 kernel laden and soft rebooten?}
+STR_LOADLV2KNOSPACE			{Er is geen genoeg vrije ruimte in /dev_flash!}
+STR_LOADLV2KCHKLV1			{Checking LV1, A.u.b. Wacht...}
+STR_LOADLV2KERR2			{LV2 Kernel: Operatie mislukt.}
+STR_BOOTOOSMSG1				{Wilt u de boot volgorde wijzigen, Activeer alle LV1 patches en laad OtherOS?}
+STR_BOOTOOSMSG2				{Wilt u de boot volgorde wijzigen en OtherOS laden?}
+STR_BOOTOOSERR1				{OtherOS: Operatie mislukt.}
+STR_SWPKERR					{Deze functie is niet beschikbaar in CEX mode.\n\nA.u.b. flash eerst een DEX NOR/NAND.}
+STR_DMPFLSH					{Wilt u het flash geheugen exporteren naar een bestand?}
+STR_DMPFLSHERR				{A.u.b. plug een USB opslag toestel in (/dev_usb000) met op zijn minst 256MB vrije ruimte en probeer opnieuw!}
+STR_EXPLVMSG1				{Do you want to export GameOS LV2 memory to a file?}
+STR_EXPLVMSG2				{Do you want to export HV LV1 memory to a file?}
+STR_EXPLVWAIT				{A.u.b. Wacht...}
+STR_EXPLVOK					{GameOS geheugen succesvol geëxporteerd naar een bestand}
+STR_EXPLVERR				{GameOS geheugen exporteren mislukt!\n\nKan niet maken}
+STR_EXPLVMSG3				{Exporteren van HyperVisor (LV1) geheugen naar bestand}	
+STR_EXPLVMSG5               {Exporteren van GameOS geheugen naar bestand}
+STR_EXPLVMSG4				{A.u.b. Wacht, Het kan ongeveer 5 minuten in beslag nemen...}
+STR_EXPLVOK2				{Hypervisor geheugen succesval geëxporteerd naar een bestand}
+STR_EXPLVERR2				{Hypervisor memory export mislukt!\n\nKan niet maken}
+STR_MODNORM					{[NORMAL MODE] is nu actief.\n\nSysteem zal automatisch heropstarten waneer u sluit.}
+STR_TRYAGAIN				{FAILED: A.u.b. probeer opnieuw}
+STR_MODNORMALRD				{[NORMAL MODE] IS AL INGESTELD!}
+STR_MODREB					{[REBUG MODE] is nu actief.\n\nSysteem zal automatisch heropstarten waneer u sluit.}
+STR_MODREBALRD				{[REBUG MODE] IS AL INGESTELD!}
+STR_WMDIS					{WebMAN is gedeactiveerd, Systeem zal automatisch heropstarten waneer u sluit.}
+STR_WMENA					{WebMAN is geactiveerd. webMAN zal geladen worden op volgende start.\n\nZorg ervoor om COBRA te activeren na het activeren van webMAN}
+STR_MODRET					{[RETAIL XMB] is nu actief.\n\nSysteem will auto-reboot when you quit.}
+STR_MODRETERR1				{PLEASE TRY [DEBUG XMB]}
+STR_MODRETERR2				{UNAVAILABLE IN [NORMAL MODE]}
+STR_MODDEB					{[DEBUG XMB] is now active.\n\nSysteem zal automatisch heropstarten waneer u sluit.}
+STR_MODDEBERR1				{PLEASE TRY [RETAIL XMB]}
+STR_MODDEBERR2				{NIET BESCHIKBAAR IN [NORMAL MODE]}
+STR_MODDEBSQA				{[DEBUG SETTINGS: MENU CEX QA] is nu actief.\n\nSystem will auto-reboot when you quit.}
+STR_MODDEBSQAOK				{[DEBUG SETTINGS: MENU CEX QA] is now active.}
+STR_MODDEBSQAERR1			{[DEBUG SETTINGS: MENU CEX QA] FAILED}
+STR_MODDEBSQAERR2			{TRY [DEBUG SETTINGS: MENU DEBUG]}
+STR_MODDEBSDEB				{[DEBUG SETTINGS: MENU DEBUG] is nu actief.\n\nSysteem zal automatisch heropstarten waneer u sluit.}
+STR_MODDEBSDEBOK			{[DEBUG SETTINGS: MENU DEBUG] is nu actief.}
+STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] FAILED}
+STR_MODDEBSDEBERR2			{TRY [DEBUG SETTINGS: MENU CEX QA]}
+STR_MODCOBENA				{COBRA Mode geactiveerd.}
+STR_MODCOBDIS				{COBRA Mode gedeactiveerd.}
+STR_ERRFLASH				{Error in flash, herinstalleer firmware om dit te herstellen}
+STR_PS2ERR1					{Geen PS2Emu bestanden gevonden op HDD of USB(dev_usb000).}
+STR_PS2CONT					{Ga door met het kopieren van PS2Emu bestanden van USB(dev_usb000)?}
+STR_PS2COP					{PS2Emu gekopieerd van USB!}
+STR_PS2SWPOK				{PS2Emu swapped!\nHeropstarten om de aanpassingen door te voeren.}
+STR_XMBCFWDIS				{XMB CFW settings MOD is gedeactiveerd. De plugin zal ontladen worden bij volgende start.}
+STR_XMBCFWENA				{XMB CFW settings MOD is geactiveerd. De functie zal beschikbaar zijn via de Netwerk kolom op het XMB.}
+STR_FLASHSET				{Flag is already set.}
+STR_1                       {Data saved as:}
+STR_2                       {Processed:}
+STR_3                       {MB in}
+STR_4                       {min}
+STR_5                       {MB/s}
+STR_READFLASHERROR1			{Fout bij het openen van bestanden!\n\nSectors read: }
+STR_READFLASHERROR2			{\nTotal sectors: }
+STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
+STR_TOGHOSTINFDESC          {Activeer of Deactiveer Host Informatie op XMB}

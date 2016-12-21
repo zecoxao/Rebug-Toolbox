@@ -727,6 +727,7 @@ static void update_language(void)
 	language("STR_USE", STR_USE);
 	language("STR_SM", STR_SM);
 	language("STR_SMDESC", STR_SMDESC);
+	language("STR_XMBOM", STR_XMBOM);	
 	language("STR_XMBOMDESC", STR_XMBOMDESC);
 	language("STR_MENU", STR_MENU);
 	language("STR_MENUDESC", STR_MENUDESC);
@@ -6229,7 +6230,7 @@ void add_utilities()
 		to_restore=1;
 	}
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"Toggle QA Flag", (char*)"Enable or disable QA flag functions.",	(char*)"util_qa");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_QA, STR_QADESC,	(char*)"util_qa");
 	if(c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f  || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f || c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 	{
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
@@ -6266,7 +6267,7 @@ void add_utilities()
 		change_lv1_dm(old_lv1_dm);
 	}
 
-	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LOADLV2, STR_LOADLV2,	(char*)"lv2_kernel");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LOADLV2, STR_LOADLV2DESC,	(char*)"lv2_kernel");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 
 	lv2_kernels=1;
