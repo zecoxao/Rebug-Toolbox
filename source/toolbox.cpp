@@ -545,8 +545,9 @@ void get_all_language()
 	char TXTPath[128];
 	int fd;
 	
-	
-	strcpy(STR_LANGUAGE[0], "English") ;
+	lang_N = 0;
+	strcpy(STR_LANGUAGE[lang_N], "English") ;
+	lang_N++;
 	sprintf(LOCPath, "/dev_hdd0/game/%s/USRDIR/loc", STR_APP_ID);
 	
 	if(cellFsOpendir(LOCPath, &fd) == CELL_FS_SUCCEEDED) {
