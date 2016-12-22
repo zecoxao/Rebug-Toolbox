@@ -241,5 +241,5 @@ STR_4                       {min}
 STR_5                       {MB/s}
 STR_READFLASHERROR1			{Fehler beim Zugriff auf Dateien!!\n\nSektoren gelesen: }
 STR_READFLASHERROR2			{\nSektoren gesamt: }
-STR_TOGHOSTINF              {Toggle Host Information on XMB [DEX]}
-STR_TOGHOSTINFDESC          {Enable or Disable Host Information on XMB}
+STR_TOGHOSTINF              {Zeige Host Informationen im XMB [DEX]}
+STR_TOGHOSTINFDESC          [Aktiviere oder deaktiviere Host Informationen im XMB}
