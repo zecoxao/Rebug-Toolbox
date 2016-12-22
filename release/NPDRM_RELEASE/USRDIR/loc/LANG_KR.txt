@@ -132,9 +132,9 @@ STR_REWTID					{플래시에서 타겟ID 변경}
 STR_REWTIDDESC				{EID 루트키가가 제공되는 경우, PS3를 CEX/DEX로 변환}
 STR_NOCEXDEX				{CEX/DEX 기능은 사용할 수 없습니다}
 STR_NOCEXDEXDESC			{이 기능은 오직 REBUG REX/D-REX 버젼에서만 지원됩니다.}
-STR_SELECT					{: 선택}
-STR_HOLDQUITREB				{: 종료를 유지시 재기동}
-STR_HOLDQUIT				{: 종료를 유지}
+STR_SELECT					{선택}
+STR_HOLDQUITREB				{계속 눌러서 재부팅}
+STR_HOLDQUIT				{계속 눌러 종료}
 STR_FREEHDD					{하드디스크의 남은 공간}  
 STR_NUMFW                   {PS3\xE2\x84\xA2 시스템: 펌웨어}
 STR_IP						{IP 주소}
@@ -209,7 +209,7 @@ STR_MODNORMALRD				{이미 [일반 모드]로 설정되어 있습니다!}
 STR_MODREB					{[REBUG 모드]가 활성화 되었습니다. 툴박스 종료시 자동으로 시스템 재기동 합니다.}
 STR_MODREBALRD				{이미 [REBUG 모드]로 설정되어 있습니다!}
 STR_WMDIS					{WebMAN이 비활성화 되었습니다.\n\n 툴박스 종료시 시스템이 자동 재기동 됩니다.}
-STR_WMENA					{WebMAN이 활성화 되었습니다. 툴박스 종료후 재기동시 활성화 됩니다.\n\n 코브라 모드를 활성화 하지 않으면 적용이 되지 않습니다. 반드시 활성화 해주세요}
+STR_WMENA					{WebMAN이 활성화 되었습니다. 코브라 모드를 활성화 하지 않으면 적용이 되지 않습니다.\n\n 툴박스 종료후 재기동시 활성화 됩니다.}
 STR_MODRET					{[RETAIL XMB]가 활성화 되었습니다.\n\n 툴박스 종료시 자동으로 시스템 재기동 합니다}
 STR_MODRETERR1				{[DEBUG XMB]를 사용해 보세요.}
 STR_MODRETERR2				{[일반모드]에서 사용할 수 없습니다.}
