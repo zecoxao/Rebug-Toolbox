@@ -30,10 +30,10 @@ STR_SYSINF					{Information Système}
 STR_SYSINFDESC				{Afficher les informations de votre système PS3™.}
 STR_QUIT					{Quitter}
 STR_QUITDESC1				{Quitter la}
-STR_QUITDESC2				{ et revenir au XMB™}
+STR_QUITDESC2				{et revenir au XMB™}
 STR_RESTSYS					{Redémarrer le système}
-STR_RESTSYSDESC1			{Fermez la Rebug ToolBox}
-STR_RESTSYSDESC2			{ et redémarrez votre Système PLAYSTATION® 3}
+STR_RESTSYSDESC1			{Fermez la}
+STR_RESTSYSDESC2			{et redémarrez votre Système PLAYSTATION® 3}
 STR_RESTSYS_SUB1			{Soft (Redémarrage LV2 Uniquement)}
 STR_RESTSYS_SUB2			{Full (Redémarrage Complet)}
 STR_BOOTOOS					{Démarrage de l'OtherOS}

@@ -6090,7 +6090,7 @@ void add_home_column()
 		
 		
 		sprintf(str, "%s %s %s", STR_RESTSYSDESC1, STR_APP_NAME, STR_RESTSYSDESC2);
-		add_xmb_option(xmb[col].member, &xmb[col].size, STR_RESTSYS, str, (char*) "Reboot");
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_RESTSYS, str, (char*) "reboot");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB1,			(char*)"1");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB2,			(char*)"2");
