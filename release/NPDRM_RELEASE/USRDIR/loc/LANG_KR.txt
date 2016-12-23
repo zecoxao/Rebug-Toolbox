@@ -10,22 +10,22 @@ STR_SELECTOR				{셀렉터}
 STR_LV1PATCH				{LV1패치}
 STR_DTC						{DEX/CEX}
 STR_UTLS					{유틸리티}
-STR_EIDRK					{Eid의 루트키를 추출한 뒤, 다시 시작합니까\?\n\n /Dev_hdd0/game/RBGTLBOX2/USRDIR에 [eid_root_key]가 추출됩니다.}
+STR_EIDRK					{Eid의 루트키를 추출한 뒤, 다시 시작합니까\?\n\n 경로 :(/Dev_hdd0/game/RBGTLBOX2/USRDIR)에 [eid_root_key]가 추출됩니다.}
 STR_SCRSHOT					{스크린샷을 저장}
 STR_DONE					{완료!}
 STR_SHTDWN					{종료...}
 STR_TRYRESTART				{재기동하려 합니다...}
 STR_NOTFOUND				{찾을수 없습니다!}
-STR_PETBOOTINST				{VFLASH/NAND영역5에 Petitboot을 설치 합니까?}
+STR_PETBOOTINST				{VFLASH/NAND의 리젼5에 Petitboot을 설치 합니까?}
 STR_PETBOOTOK				{Petitboot가 인스톨 되었습니다.OtherOS를 즐겨 보세요.}
-STR_PETBOOTERROR			{에러：Petitboot를 찾을수가 없습니다.VFLASH가 감지 되었습니다.\n\n USB디바이스에[dtbimage.ps3.bin]란 폴더를 생성한 뒤,다시 시도 해주세요.}
-STR_RESIZE5					{OtherOS를 사용하기 위해 VFLASH/NAND영역5의 사이즈 변경을 진행 하시겠습니까?}
+STR_PETBOOTERROR			{에러：Petitboot를 찾을수가 없습니다.VFLASH가 감지 되었습니다.\n\n USB 장치 루트에 [dtbimage.ps3.bin] 파일을 넣고, 재시도 해주세요.}
+STR_RESIZE5					{OtherOS를 사용하기 위해 VFLASH/NAND리젼 5의 사이즈 변경을 진행 하시겠습니까?}
 STR_RESIZE5OK				{성공： 변경 사항을 적용하기 위해 PS3를 재기동 해야 합니다.}
-STR_RESIZE5ERROR			{실패： VFLASH/NAND영역5의 사이즈 변경이 완료 되지 않았습니다.}
+STR_RESIZE5ERROR			{실패： VFLASH/NAND리젼 5의 사이즈 변경이 완료 되지 않았습니다.}
 STR_FLASHOK					{성공： 변경 사항을 적용하기 위해 PS3를 재기동 해야 합니다.}
 STR_FLASHERROR				{실패 했습니다!!!}
 STR_GAMEOSFLG				{GameOS를 기본 부팅으로 설정 하시겠습니까?}
-STR_GAMEOSFLGOK				{이미 플래그가 설정 되있습니다.}
+STR_GAMEOSFLGOK				{이미 플래그가 설정 되어있습니다.}
 STR_SYSINF					{시스템 정보}
 STR_SYSINFDESC				{PS3에 대한 시스템 정보를 표시 합니까?}
 STR_QUIT					{종료}
@@ -35,7 +35,7 @@ STR_RESTSYS					{시스템을 재기동 합니다}
 STR_RESTSYSDESC1			{닫기}
 STR_RESTSYSDESC2			{PS3를 재기동}
 STR_RESTSYS_SUB1			{소프트 (LV2의 재기동)}
-STR_RESTSYS_SUB2			{하드 리부트 (온/오프 사이클)}
+STR_RESTSYS_SUB2			{하드 (온/오프 사이클)}
 STR_BOOTOOS					{OtherOS 기동}
 STR_BOOTOOSDESC				{LV1패치를 선택 하고, OtherOS를 다시 시작}
 STR_BOOTOOS_SUB1			{기동 (LV1패치:모두 적용)}
@@ -50,19 +50,19 @@ STR_TOGRECDESC				{다음 재기동 시 복구모드를 활성화 혹은 비활�
 STR_TOGPM					{공장 초기화 모드}
 STR_TOGPMDESC				{공장 초기화 모드(FSM)를 활성화 혹은 비활성화 합니다.}
 STR_LOADLV2					{커스텀 LV2 커널 로더}
-STR_LOADLV2DESC				{Lv2_kernel.self을, USB 혹은/dev_hdd0부터[KERNEL_NAME] 에서 불러 들입니다.}
+STR_LOADLV2DESC				{Lv2_kernel.self을, USB루트 또는 내장하드 (/dev_hdd/[KERNEL_NAME])에서 불러 들입니다.}
 STR_BUT						{O/X 버튼 변경}
 STR_BUTDESC					{「네/진행」과「아니오/돌아가기」버튼의 O/X 전환}
-STR_CIRCLE					{○는 [네]}
+STR_CIRCLE					{O는 [네]}
 STR_CROSS					{X는 [네]}
 STR_XREG					{xRegistry의 백업/복원}
 STR_XREGDESC				{USB메모리로 부터 PS3의 시스템 설정을 백업 혹은 복원}
 STR_BACKUP					{백업}
 STR_RESTORE					{복원}
 STR_RESIZEVFLASH			{VFLASH/NAND영역의 사이즈를 변경 합니다.}
-STR_RESIZEVFLASHDESC		{OtherOS를 사용 하기 위해 VFLASH/NAND영역5의 사이즈를 조정 합니다}
+STR_RESIZEVFLASHDESC		{OtherOS를 사용 하기 위해 VFLASH/NAND 리젼5의 사이즈를 조정 합니다}
 STR_INSTPETBOOT				{Petitboot을 인스톨 합니다.}
-STR_INSTPETBOOTDESC			{USB로 부터 VFLASH/NAND영역5에 Petitboot을 인스톨 합니다.}
+STR_INSTPETBOOTDESC			{USB로 부터 VFLASH/NAND 리젼 5에 Petitboot을 인스톨 합니다.}
 STR_GAMEOSBOOTFLG			{GameOS의 부트 플래그를 설정합니다.}
 STR_GAMEOSBOOTFLGDESC		{OtherOS가 설치 된 경우,PS2의 제목을 로드하는 문제를 수정 합니다.}
 STR_PKG						{\x22Packages\x22 폴더를 작성 합니다.}
@@ -82,12 +82,12 @@ STR_SM						{시스템 모드}
 STR_SMDESC					{Normal / REBUG 모드로 전환}
 STR_XMBOM					{XMB 운영 모드}
 STR_XMBOMDESC				{리테일 버젼과 디버그 버젼의 XMB를 전환}
-STR_MENU					{디버그 메뉴의 종류}
+STR_MENU					{디버그 메뉴 타입}
 STR_MENUDESC				{CEX QA와 DEX 디버그 메뉴의 전환}
 STR_TOGCFW					{CFW settings MOD}
 STR_TOGCFWDESC				{CFW settings 0.1a(MOD)XMB를 활성화 혹은 비활성화 합니다.}
-STR_TOGCOB					{COBRA 모드}
-STR_TOGCOBDESC				{재기동시 COBRA 모드를 활성화 또는 비활성화 합니다.}
+STR_TOGCOB					{코브라 모드}
+STR_TOGCOBDESC				{재기동시 코브라 모드를 활성화 또는 비활성화 합니다.}
 STR_TOGPS2					{PS2 에뮬레이터 전환}
 STR_TOGPS2DESC				{코브라 모드를 사용하지 않을 경우 PS2 에뮬레이터를 오리지널로 변경해서 사용 합니다.}
 STR_TOGWM					{webMAN MOD}
@@ -167,7 +167,7 @@ STR_WTDMSG7					{다음의 파일을 지정하고,다시 시도하십시오.}
 STR_WTDMSG8					{Flashing the whole NOR is disabled.\n\nName your NOR dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\n[*.EID0.NORBIN] must be 16MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).}
 STR_WTDMSG9					{Flashing the whole NAND is disabled.\n\nName your NAND dump properly to enable FLASHING ONLY THE EID0 SECTION.\n\n[*.EID0.NANDBIN] must be 239MB or 256MB and also be from YOUR console.\nOnly 192 bytes will be written to flash (EID0).}
 STR_MAINNORBG				{현재 사용중인 시스템은, 리버그 펌웨어가 아닙니다.\n\n 몇가지의 옵션을 사용할 수 없습니다.}
-STR_MAINNOCOB				{현재 사용중인 시스템은, 리버그 코브라 펌웨어가 아닙니다!\n\n COBRA 모드의 전환이 불가능 합니다.}
+STR_MAINNOCOB				{현재 사용중인 시스템은, 리버그 코브라 펌웨어가 아닙니다!\n\n 코브라 모드의 전환이 불가능 합니다.}
 STR_MAINNOFW				{펌웨어 인식이 되지 않습니다.[OK]를 눌러 종료합니다.}
 STR_MAINERRFLASH			{디바이스에 액세스 할 수 없는 플래시 입니다.[OK]를 눌러 종료합니다.}
 STR_SCRSHTSAVED				{스크린 샷이 성공적으로 저장되었습니다.}
@@ -196,17 +196,17 @@ STR_DMPFLSHERR				{USB드라이브를 연결 해주세요.(/dev_usb000) 최소 2
 STR_EXPLVMSG1				{GameOS LV2 메모리를 파일로 추출 합니까?}
 STR_EXPLVMSG2				{HV LV1메모리를 파일로 추출 합니까?}
 STR_EXPLVWAIT				{잠시 기다려 주세요...}
-STR_EXPLVOK					{GameOS메모리가 성공정으로 추출 되었습니다.}
+STR_EXPLVOK					{GameOS메모리가 성공적으로 추출 되었습니다.}
 STR_EXPLVERR				{GameOS메모리가 추출 되지 않았습니다!\n\n 작성 할 수 없습니다.}
 STR_EXPLVMSG3				{하이퍼 바이저(LV1)메모리를 파일로 추출 합니다.}	
 STR_EXPLVMSG5               		{GameOS메모리를 파일로 추출 합니다.}
 STR_EXPLVMSG4				{잠시 기다려 주세요.최대 5 분 정도 걸릴 수 있습니다.}
 STR_EXPLVOK2				{하이퍼 바이저의 메모리는 정상적으로 추출 되었습니다.}
 STR_EXPLVERR2				{하이퍼 바이저의 메모리 추출에 실패 했습니다!\n\n 작성 할 수 없습니다.}
-STR_MODNORM					{[일반모드]는 활성화 되었습니다.\n\n 시스템이 자동으로 재시작을 종료 할 때}
+STR_MODNORM					{[NORMAL 모드]가 활성화 되었습니다. \n\n 툴박스 종료시 자동으로 시스템 재기동 합니다.}
 STR_TRYAGAIN				{실패 했습니다: 다시 시도하십시오.}
 STR_MODNORMALRD				{이미 [일반 모드]로 설정되어 있습니다!}
-STR_MODREB					{[REBUG 모드]가 활성화 되었습니다. 툴박스 종료시 자동으로 시스템 재기동 합니다.}
+STR_MODREB					{[REBUG 모드]가 활성화 되었습니다. \n\n 툴박스 종료시 자동으로 시스템 재기동 합니다.}
 STR_MODREBALRD				{이미 [REBUG 모드]로 설정되어 있습니다!}
 STR_WMDIS					{WebMAN이 비활성화 되었습니다.\n\n 툴박스 종료시 시스템이 자동 재기동 됩니다.}
 STR_WMENA					{WebMAN이 활성화 되었습니다. 코브라 모드를 활성화 하지 않으면 적용이 되지 않습니다.\n\n 툴박스 종료후 재기동시 활성화 됩니다.}
