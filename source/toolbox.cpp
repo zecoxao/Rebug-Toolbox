@@ -6837,7 +6837,7 @@ void draw_xmb_legend(const int _xmb_icon)
 
 	if(!xmb_legend_drawn)
 	{
-		u8 _menu_font=2;
+		u8 _menu_font=4;
 		if(mm_locale) _menu_font=mui_font;
 
 		xmb_legend_drawn=1;
