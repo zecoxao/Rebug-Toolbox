@@ -3812,7 +3812,7 @@ int load_texture(u8 *data, char *name, uint16_t dw)
 void pokeq( uint64_t addr, uint64_t val)
 {
 	if(c_firmware!=3.55f && c_firmware!=3.41f && c_firmware!=3.15f && c_firmware!=4.21f && c_firmware!=4.30f && c_firmware!=4.31f && c_firmware!=4.40f && c_firmware!=4.41f && c_firmware!=4.46f && c_firmware!=4.50f && c_firmware!=4.53f &&
-	   c_firmware!=4.55f && c_firmware!=4.60f && c_firmware!=4.65f && c_firmware!=4.66f && c_firmware!=4.70f && c_firmware!=4.75f && c_firmware!=4.76f && c_firmware!=4.78f && c_firmware!=4.80f) return;
+	   c_firmware!=4.55f && c_firmware!=4.60f && c_firmware!=4.65f && c_firmware!=4.66f && c_firmware!=4.70f && c_firmware!=4.75f && c_firmware!=4.76f && c_firmware!=4.78f && c_firmware!=4.80f && c_firmware!=4.81f) return;
 
 	if(!pp_enabled) return;
 	system_call_2(SYSCALL_POKE, addr, val);
@@ -7588,9 +7588,9 @@ void set_idps(u8 _val) //0=EID5, 1=EID0, 2=EID5, 3..13=0x82..0x8E
 
 	char msg[512];
 	if(found)
-		sprintf(msg, "%s %i %s 0x%02X.", STR_CHANGEIDPSOK1, STR_CHANGEIDPSOK2, found, newID);
+		sprintf(msg, "%s %i %s 0x%02X.", STR_CHANGEIDPSOK1, found, STR_CHANGEIDPSOK2, newID);
 	else
-		sprintf(msg, "%s: %08X-%08X-%08X-%08X", idps0>>32, idps0, idps1>>32, idps1);
+		sprintf(msg, "%s: %08X-%08X-%08X-%08X", STR_CHANGEIDPSERROR, idps0>>32, idps0, idps1>>32, idps1);
 
 	cellMsgDialogAbort();
 	dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, msg, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
