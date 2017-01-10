@@ -10037,6 +10037,9 @@ if(stat.st_size==2605184)
 else if(stat.st_size==2605232)
 	swap_emu=1;
 
+else if(stat.st_size==2605424)
+	swap_emu=1;
+
 else if(stat.st_size==2605216)
 	swap_emu=1;
 
