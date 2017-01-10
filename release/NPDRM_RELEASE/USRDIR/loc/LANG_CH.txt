@@ -65,7 +65,7 @@ STR_INSTPETBOOT                                     {安装petitboot}
 STR_INSTPETBOOTDESC                                 {从USB安装Petitboot到VFLASH / NAND地区5。}
 STR_GAMEOSBOOTFLG                                   {设GameOS引导标志}
 STR_GAMEOSBOOTFLGDESC                               {如果安装otheros的修复问题加载PS2游戏。}
-STR_PKG                                             {创建\ x22Packages \ X22文件夹}
+STR_PKG                                             {创建\x22Packages\x22文件夹}
 STR_PKGDESC                                         {创建/ dev_hdd0 /包文件夹。}
 STR_SAVLV1                                          {出口管理程序LV1内存}
 STR_SAVLV1DESC                                      {保存LV1存储器到文件。}

@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.11"
+#define STR_APP_VER	 "02.02.12"
 
 
 
@@ -1075,6 +1075,7 @@ void change_lv1_um(u8 val);
 void change_lv1_dm(u8 val);
 void set_xReg();
 void set_xo();
+void enable_netemu_cobra(); // 2.02.12
 
 u64 idps0=0;
 u64 idps1=0;
@@ -5921,6 +5922,29 @@ int open_side_menu(int _top, int sel)
 	return sel;
 }
 
+// 2.02.12 
+#define SYSCALL8_OPCODE_ENABLE_PS2NETEMU	0x1ee9	/* Cobra 7.50 */
+#define PS2NETEMU_GET_STATUS				2
+
+static int get_cobra_ps2netemu_status(void)
+{
+	system_call_2(8, (uint64_t) SYSCALL8_OPCODE_ENABLE_PS2NETEMU, (uint64_t) PS2NETEMU_GET_STATUS);
+	return (int)p1;
+}
+
+static void enable_netemu_cobra(int param)
+{
+	int status = get_cobra_ps2netemu_status();
+
+	if(status < 0 || status == param) return;
+
+	system_call_2(8, (uint64_t) SYSCALL8_OPCODE_ENABLE_PS2NETEMU, (uint64_t) param);
+	dialog_ret=0;
+	cellMsgDialogOpen2( type_dialog_ok, (const char*) "PS2 Emulator is set to use Software Emulation, exiting to XMB", dialog_fun2, (void*)0x0000aaab, NULL );
+	wait_dialog_simple();
+	exit(0);
+}
+//2.02.12 END
 /*
 int open_dd_menu_xmb(char *_caption, int _width, t_opt_list *list, int _max, int _x, int _y, int _max_entries)
 {
@@ -6329,7 +6353,20 @@ void add_utilities()
 	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVEIDRK, STR_SAVEIDRKDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 	}
-
+	// 2.02.12		
+	uint16_t version;
+	cobra_get_version(&version, NULL);
+	int status_ps2=get_cobra_ps2netemu_status();
+	if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))		
+	{
+	int param=0;
+	if(status_ps2==0)
+	param++;
+	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 netemu", (char*)"Force Enable PS2 Soft Emulation on Backward Compatible Consoles",
+			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128); 
+	}		
+	// 2.02.12 END	
+	
 	add_xmb_option(xmb[col].member, &xmb[col].size, STR_PS3ID, STR_PS3IDDESC,	(char*)"util_idps");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 	char tid[8];
@@ -8927,6 +8964,19 @@ force_reload:
             if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f)
 			{
 			  if(xmb[xmb_icon].first==n+8) {dump_root_key();}
+			}
+			uint16_t version;
+			cobra_get_version(&version, NULL);
+			int status_ps2=get_cobra_ps2netemu_status();
+			if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))		
+			{
+				if(xmb[xmb_icon].first==n+9) 
+					{
+					int param=0;
+					if(status_ps2==0)
+						param++;
+					enable_netemu_cobra(param);
+					}	// 2.02.12
 			}
 		}
 
