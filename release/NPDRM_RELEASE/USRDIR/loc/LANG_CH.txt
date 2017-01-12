@@ -1,5 +1,5 @@
 ﻿STR_LANGUAGE                                        {中文 (简体）}
-STR_LANGCODE                                        {\X09}
+STR_LANGCODE                                        {\x0B}
 STR_LANG                                            {语言}
 STR_LANGDESC                                        {选择一种语言}
 STR_DISABLE                                         {禁用}
