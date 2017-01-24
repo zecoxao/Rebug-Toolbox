@@ -1,7 +1,7 @@
 STR_LANGUAGE				{Português Brasileiro}
 STR_LANGCODE				{\x011}
 STR_LANG					{Idioma}
-STR_LANGDESC				{Escolha um language}
+STR_LANGDESC				{Escolha um idioma}
 STR_DISABLE					{Desabilitado}
 STR_ENABLE					{Habilitado}
 STR_NO						{Não}
@@ -10,7 +10,7 @@ STR_SELECTOR				{Seletor}
 STR_LV1PATCH				{Patches LV1}
 STR_DTC						{DEX/CEX}
 STR_UTLS					{Utilitários}
-STR_EIDRK					{Deseja descarregar usa chave raíz eid e reiniciar?\n\nO arquivo eid_root_key será criado em /dev_hdd0/game/RBGTLBOX2/USRDIR}
+STR_EIDRK					{Deseja fazer download da sua chave eid root e reiniciar?\n\nO arquivo eid_root_key será criado em /dev_hdd0/game/RBGTLBOX2/USRDIR}
 STR_SCRSHOT					{Salvando captura de tela em}
 STR_DONE					{Feito!}
 STR_SHTDWN					{Desligando...}
@@ -21,13 +21,13 @@ STR_PETBOOTOK				{Petitboot foi instalado com sucesso. Aproveite o OtherOS.}
 STR_PETBOOTERROR			{ERRO: Não foi possível encontrar Petitboot..VFLASH Detectada.\n\nPor favor coloque o arquivo [dtbimage.ps3.bin] no dispositivo USB e tente novamente.}
 STR_RESIZE5					{Deseja redimensionar a região 5 da VFLASH/NAND para permitir OtherOS?}
 STR_RESIZE5OK				{SUCESSO: Seu PS3 precisa reiniciar para efetuar as mudanças.}
-STR_RESIZE5ERROR			{FALHOU: Redimencionar a região 5 da VFLASH/NAND não foi completada.}
+STR_RESIZE5ERROR			{FALHOU: O redimensionamento a região 5 da VFLASH/NAND não foi completada.}
 STR_FLASHOK					{SUCESSO: Seu PS3 precisa reiniciar para efetuar as mudanças.}
 STR_FLASHERROR				{FALHOU!!!}
 STR_GAMEOSFLG				{Deseja habilitar a boot flag GameOS?}
 STR_GAMEOSFLGOK				{Flag já habilitada.}
 STR_SYSINF					{Informações do Sistema}
-STR_SYSINFDESC				{Mostra informações sobre seu sistema PS3™.}
+STR_SYSINFDESC				{Mostra informações sobre o sistema do seu PS3™.}
 STR_QUIT					{Sair}
 STR_QUITDESC1				{Sair}
 STR_QUITDESC2				{e retornar para a tela XMB™}
@@ -37,7 +37,7 @@ STR_RESTSYSDESC2			{e reiniciar seus sistema PLAYSTATION® 3}
 STR_RESTSYS_SUB1			{Soft (Reiniciar apenas V2)}
 STR_RESTSYS_SUB2			{Completo (Ciclo Liga/Desliga)}
 STR_BOOTOOS					{Iniciar OtherOS}
-STR_BOOTOOSDESC				{Select LV1 patches and reboot into OtherOS}
+STR_BOOTOOSDESC				{Selecionar patches LV1 e reiniciar em OtherOS}
 STR_BOOTOOS_SUB1			{Iniciar (LV1 patches: Aplicar todos)}
 STR_BOOTOOS_SUB2			{Iniciar (LV1 patches: Usar atual)}
 STR_TRNOFF					{Desligar Sistema}
@@ -56,15 +56,15 @@ STR_BUTDESC					{Atribui quais botões são usados para Aceitar/Entrar e Cancela
 STR_CIRCLE					{O é [Aceitar]}
 STR_CROSS					{X é [Aceitar]}
 STR_XREG					{Backup/Restaurar xRegistry}
-STR_XREGDESC				{Faz backup ou Restaura os sistema PS3 da USB.}
+STR_XREGDESC				{Faz backup ou restaura o sistema PS3 da USB.}
 STR_BACKUP					{Fazer backup}
 STR_RESTORE					{Restaurar}
-STR_RESIZEVFLASH			{Redimencionar Regiões da VFLASH/NAND}
-STR_RESIZEVFLASHDESC		{Redimencionar Região 5 da VFLASH/NAND para permitir OtherOS.}
+STR_RESIZEVFLASH			{Redimensionar Regiões da VFLASH/NAND}
+STR_RESIZEVFLASHDESC		{Redimensionar Região 5 da VFLASH/NAND para permitir OtherOS.}
 STR_INSTPETBOOT				{Instalar Petitboot}
 STR_INSTPETBOOTDESC			{Instalar Petitboot na região 5 da VFLASH/NAND a partir da USB.}
 STR_GAMEOSBOOTFLG			{Atribuir a Boot Flag GameOS}
-STR_GAMEOSBOOTFLGDESC		{corrige problemas ao carregar títulos do PS2 titles se OtherOS está instalado.}
+STR_GAMEOSBOOTFLGDESC		{corrige problemas ao carregar jogos de PS2 se OtherOS está instalado.}
 STR_PKG						{Criar a Pasta \x22Packages\x22}
 STR_PKGDESC					{Cria a pasta /dev_hdd0/packages.}
 STR_SAVLV1					{Exportar Memória do Hypervisor LV1}
@@ -73,8 +73,8 @@ STR_SAVLV2					{Exportar Memória do GameOS LV2}
 STR_SAVLV2DESC				{Salva a memória LV2 em um arquivo.}
 STR_SAVFLASH				{Exportar Flash para Arquivo}
 STR_SAVFLASHDESC			{Faz backup da sua atual NOR/NAND num arquivo em /dev_usb000.}
-STR_SAVEIDRK				{Descarregar chave raíz eid}
-STR_SAVEIDRKDESC			{Descarregar a chave raíz eid no arquivo dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
+STR_SAVEIDRK				{Fazer download da chave eid root}
+STR_SAVEIDRKDESC			{Fazer download da chave eid root no arquivo dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key.}
 STR_PS3ID					{Mudar a PS3ID Ativa}
 STR_PS3IDDESC				{Faz spoof IDPS na memória LV2.}
 STR_USE						{Usar}
@@ -135,7 +135,7 @@ STR_NOCEXDEXDESC			{Instale o REBUG REX EDITION para acessar estas funções.}
 STR_SELECT					{: Selecionar}
 STR_HOLDQUITREB				{: Segure para Sair e Reiniciar}
 STR_HOLDQUIT				{: Segure para Sair}
-STR_FREEHDD					{Espaço livre no HDD}  
+STR_FREEHDD					{Espaço livre no HDD}
 STR_NUMFW                   {Sistema PS3\xE2\x84\xA2: Firmware}
 STR_IP						{Endereço de IP}
 STR_QUITXMB					{Sair para oXMB?}
@@ -198,7 +198,7 @@ STR_EXPLVMSG2				{Deseja exportar a memória LV1 HV para um arquivo?}
 STR_EXPLVWAIT				{Por favor aguarde...}
 STR_EXPLVOK					{Memória GameOS exportado com sucesso para o arquivo }
 STR_EXPLVERR				{Exportação da memória GameOS falhou!\n\nNão foi possível criar}
-STR_EXPLVMSG3				{Exportando memória do HyperVisor (LV1) para um arquivo}	
+STR_EXPLVMSG3				{Exportando memória do HyperVisor (LV1) para um arquivo}
 STR_EXPLVMSG5               {Exportando memória do GameOS para um arquivo}
 STR_EXPLVMSG4				{Por favor aguarde, isto pode levar uns 5 minutos...}
 STR_EXPLVOK2				{Memória do HyperVisor exportada com sucesso para o arquivo}
