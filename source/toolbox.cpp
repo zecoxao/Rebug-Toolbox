@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.12"
+#define STR_APP_VER	 "02.02.13"
 
 
 
@@ -6138,6 +6138,7 @@ u8 xmb_mode=0;
 u8 menu_mode=0;
 u8 cobra_mode=0;
 u8 swap_emu=0;
+u8 update_cobra=0; // 02.02.13
 u8 gameos_flag=0;
 u8 webman_mode=0;
 u8 cfw_settings=0;
@@ -6189,6 +6190,7 @@ void parse_settings()
 			else if(!strcmp(oini, "menu_mode"))			menu_mode		=val;
 			else if(!strcmp(oini, "cobra_mode"))		cobra_mode		=val;
 			else if(!strcmp(oini, "swap_emu"))		swap_emu		=val;
+			else if(!strcmp(oini, "update_cobra"))		update_cobra	=val;	// 02.02.13		
 			else if(!strcmp(oini, "webman_mode"))		webman_mode		=val;
 			else if(!strcmp(oini, "cfw_settings"))		cfw_settings		=val;
 			else if(!strcmp(oini, "wmlp"))				wmlp		=val;
@@ -6489,6 +6491,18 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
+		// 02.02.13
+		uint16_t version;
+		cobra_get_version(&version, NULL);		
+		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x752))
+		{			
+			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"COBRA Payload Updater ", (char*)"Updating COBRA Payload to the latest version",	(char*)"update_cobra");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"NO",			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"UPDATE",				(char*)"1");
+			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
+			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}
+		// 02.02.13 END
 
 /*			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"GameOS boot flag", (char*)"set gameos boot flag to fix ps2 issue",	(char*)"gameos_flag");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Set it",			(char*)"0");
@@ -12915,7 +12929,40 @@ void apply_settings(char *option, int val, u8 _forced)
 			wait_dialog_simple();
 		}
 	}
-
+	///02.02.13
+	if(!strcmp(option, "update_cobra"))
+	{
+		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
+		{
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) "No COBRA payload files are found.", dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
+			return;
+		}
+		if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
+		{
+			unlink("/dev_rebug/rebug/cobra/stage2.cex");
+			unlink("/dev_rebug/rebug/cobra/stage2.dex");
+			unlink("/dev_rebug/rebug/cobra/stage2.cex.bak");
+			unlink("/dev_rebug/rebug/cobra/stage2.dex.bak");			
+			if(update_cobra==1)
+			{
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update", (char*)"/dev_rebug/rebug/cobra/stage2.cex", 0);
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.dex.update", (char*)"/dev_rebug/rebug/cobra/stage2.dex", 0);
+				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update");
+				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.dex.update");
+				auto_reboot = 1;
+			}
+			else
+			{
+				return;
+			}
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) "Cobra payload updated!\nReboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
+		}
+	}
+	/// 02.02.13 END
 	if((c_firmware==4.78f || c_firmware==4.80f) && !strcmp(option, "cfw_settings"))
 	{
 
