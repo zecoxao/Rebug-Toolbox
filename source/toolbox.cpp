@@ -6496,7 +6496,7 @@ void add_settings_column()
 		cobra_get_version(&version, NULL);		
 		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x752))
 		{			
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"COBRA Payload Updater ", (char*)"Updating COBRA Payload to the latest version",	(char*)"update_cobra");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"NO",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"UPDATE",				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
