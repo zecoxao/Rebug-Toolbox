@@ -92,6 +92,8 @@ STR_TOGPS2					{Toggle PS2 Emulator}
 STR_TOGPS2DESC				{PS2Emu swap to use Original PS2 Emu files.}
 STR_TOGWM					{Toggle webMAN}
 STR_TOGWMDESC				{Enable or disable integrated webMAN on next reboot.}
+STR_COBPUPD       {COBRA Payload Updater}
+STR_COBPUPDDESC   {Updating COBRA Payload to the latest version}
 STR_NORBG					{REBUG Selector Functions Not Available}
 STR_NORBGDESC				{Please install REBUG REX/D-REX Firmware to access the Selector Functions.}
 STR_PATCHLV1				{LV1 Peek/Poke Support}
