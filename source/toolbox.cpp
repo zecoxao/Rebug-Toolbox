@@ -739,6 +739,8 @@ static void update_language(void)
 	language("STR_TOGPS2DESC", STR_TOGPS2DESC);
 	language("STR_TOGWM", STR_TOGWM);
 	language("STR_TOGWMDESC", STR_TOGWMDESC);
+	language("STR_COBPUPD", STR_COBPUPD);
+	language("STR_COBPUPDDESC", STR_COBPUPDDESC);
 	language("STR_NORBG", STR_NORBG);
 	language("STR_NORBGDESC", STR_NORBGDESC); 
 	language("STR_PATCHLV1", STR_PATCHLV1); 
@@ -873,6 +875,8 @@ static void update_language(void)
 	language("STR_MODDEBSDEBERR2", STR_MODDEBSDEBERR2);
 	language("STR_MODCOBENA", STR_MODCOBENA);
 	language("STR_MODCOBDIS", STR_MODCOBDIS);
+	language("STR_ERRCOBUP", STR_ERRCOBUP);
+	language("STR_COBUPSUCC", STR_COBUPSUCC);
 	language("STR_ERRFLASH", STR_ERRFLASH);
 	language("STR_PS2ERR1", STR_PS2ERR1);
 	language("STR_PS2CONT", STR_PS2CONT);
