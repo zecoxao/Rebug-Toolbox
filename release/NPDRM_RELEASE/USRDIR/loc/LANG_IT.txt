@@ -228,6 +228,8 @@ STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] FALLITO}
 STR_MODDEBSDEBERR2			{TRY [DEBUG SETTINGS: MENU CEX QA]}
 STR_MODCOBENA				{COBRA Mode abilitato.}
 STR_MODCOBDIS				{COBRA Mode disabilitato.}
+STR_ERRCOBUP        {Nessun payload COBRA trovato.}
+STR_COBUPSUCC       {I Payload Cobra sono stati aggiornati!\nRiavviare la PS3 per rendere effettive le modifiche.}
 STR_ERRFLASH				{Errore nella flash, reinstallare il firmware per fixare questo problema}
 STR_PS2ERR1					{Nessun file PS2Emu trovato su HDD o USB(dev_usb000).}
 STR_PS2CONT					{Vuoi continuare per copiare i file PS2Emu su USB(dev_usb000)?}
