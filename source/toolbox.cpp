@@ -12935,7 +12935,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "No COBRA payload files are found.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_ERRCOBUP, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			return;
 		}
@@ -12958,7 +12958,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				return;
 			}
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "Cobra payload updated!\nReboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_COBUPSUCC, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 		}
 	}
