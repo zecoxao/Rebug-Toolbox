@@ -228,6 +228,8 @@ STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] FAILED}
 STR_MODDEBSDEBERR2			{TRY [DEBUG SETTINGS: MENU CEX QA]}
 STR_MODCOBENA				{COBRA Mode enabled.}
 STR_MODCOBDIS				{COBRA Mode disabled.}
+STR_ERRCOBUP        {No COBRA payload files are found.}
+STR_COBUPSUCC       {Cobra payload updated!\nReboot for changes to take effect.}
 STR_ERRFLASH				{Error in flash, reinstall firmware to fix this}
 STR_PS2ERR1					{No PS2Emu files found on HDD or USB(dev_usb000).}
 STR_PS2CONT					{Continue to copy PS2Emu files from USB(dev_usb000)?}
