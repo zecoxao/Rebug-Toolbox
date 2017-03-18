@@ -223,6 +223,8 @@ char STR_TOGPS2[50] = "Toggle PS2 Emulator";
 char STR_TOGPS2DESC[130] = "PS2Emu swap to use Original PS2 Emu files.";
 char STR_TOGWM[50] = "Toggle webMAN";
 char STR_TOGWMDESC[130] = "Enable or disable integrated webMAN on next reboot.";
+char STR_COBPUPD[50] = "COBRA Payload Updater"; 
+char STR_COBPUPDDESC[130] = "Updating COBRA Payload to the latest version";
 char STR_NORBG[130] = "REBUG Selector Functions Not Available";
 char STR_NORBGDESC[130] = "Please install REBUG REX/D-REX Firmware to access the Selector Functions.";
 char STR_PATCHLV1[130] = "LV1 Peek/Poke Support";
@@ -357,6 +359,8 @@ char STR_MODDEBSDEBERR1[130] = "[DEBUG SETTINGS: MENU DEBUG] FAILED";
 char STR_MODDEBSDEBERR2[130] = "TRY [DEBUG SETTINGS: MENU CEX QA]";
 char STR_MODCOBENA[50] = "COBRA Mode enabled.";
 char STR_MODCOBDIS[50] = "COBRA Mode disabled.";
+char STR_ERRCOBUP[130]  = "No COBRA payload files are found.";
+char STR_COBUPSUCC[130]  = "Cobra payload updated!\nReboot for changes to take effect.";
 char STR_ERRFLASH[130] = "Error in flash, reinstall firmware to fix this";
 char STR_PS2ERR1[130] = "No PS2Emu files found on HDD or USB(dev_usb000).";
 char STR_PS2CONT[130] = "Continue to copy PS2Emu files from USB(dev_usb000)?";
@@ -739,6 +743,8 @@ static void update_language(void)
 	language("STR_TOGPS2DESC", STR_TOGPS2DESC);
 	language("STR_TOGWM", STR_TOGWM);
 	language("STR_TOGWMDESC", STR_TOGWMDESC);
+	language("STR_COBPUPD", STR_COBPUPD);
+	language("STR_COBPUPDDESC", STR_COBPUPDDESC);
 	language("STR_NORBG", STR_NORBG);
 	language("STR_NORBGDESC", STR_NORBGDESC); 
 	language("STR_PATCHLV1", STR_PATCHLV1); 
@@ -873,6 +879,8 @@ static void update_language(void)
 	language("STR_MODDEBSDEBERR2", STR_MODDEBSDEBERR2);
 	language("STR_MODCOBENA", STR_MODCOBENA);
 	language("STR_MODCOBDIS", STR_MODCOBDIS);
+	language("STR_ERRCOBUP", STR_ERRCOBUP);
+	language("STR_COBUPSUCC", STR_COBUPSUCC);
 	language("STR_ERRFLASH", STR_ERRFLASH);
 	language("STR_PS2ERR1", STR_PS2ERR1);
 	language("STR_PS2CONT", STR_PS2CONT);
@@ -6496,7 +6504,7 @@ void add_settings_column()
 		cobra_get_version(&version, NULL);		
 		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x752))
 		{			
-			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"COBRA Payload Updater ", (char*)"Updating COBRA Payload to the latest version",	(char*)"update_cobra");
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"NO",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"UPDATE",				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
@@ -12935,7 +12943,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
 		{
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "No COBRA payload files are found.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_ERRCOBUP, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			return;
 		}
@@ -12958,7 +12966,7 @@ void apply_settings(char *option, int val, u8 _forced)
 				return;
 			}
 			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, (const char*) "Cobra payload updated!\nReboot for changes to take effect.", dialog_fun2, (void*)0x0000aaab, NULL );
+			cellMsgDialogOpen2( type_dialog_ok, STR_COBUPSUCC, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 		}
 	}
