@@ -92,6 +92,8 @@ STR_TOGPS2					{Toggle PS2 Emulator}
 STR_TOGPS2DESC				{PS2Emu swap to use Original PS2 Emu files.}
 STR_TOGWM					{Toggle webMAN}
 STR_TOGWMDESC				{Enable or disable integrated webMAN on next reboot.}
+STR_COBPUPD       {COBRA Payload Updater}
+STR_COBPUPDDESC   {Updating COBRA Payload to the latest version}
 STR_NORBG					{REBUG Selector Functions Not Available}
 STR_NORBGDESC				{Please install REBUG REX/D-REX Firmware to access the Selector Functions.}
 STR_PATCHLV1				{LV1 Peek/Poke Support}
@@ -226,6 +228,8 @@ STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] FAILED}
 STR_MODDEBSDEBERR2			{TRY [DEBUG SETTINGS: MENU CEX QA]}
 STR_MODCOBENA				{COBRA Mode enabled.}
 STR_MODCOBDIS				{COBRA Mode disabled.}
+STR_ERRCOBUP        {No COBRA payload files are found.}
+STR_COBUPSUCC       {Cobra payload updated!\nReboot for changes to take effect.}
 STR_ERRFLASH				{Error in flash, reinstall firmware to fix this}
 STR_PS2ERR1					{No PS2Emu files found on HDD or USB(dev_usb000).}
 STR_PS2CONT					{Continue to copy PS2Emu files from USB(dev_usb000)?}
