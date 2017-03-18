@@ -92,6 +92,8 @@ STR_TOGPS2					{Toggle PS2 Emulator}
 STR_TOGPS2DESC				{PS2Emu swap per utilizzare i file Originali PS2 Emu.}
 STR_TOGWM					{Toggle webMAN}
 STR_TOGWMDESC				{Abilita o disabilita webMAN (gia' integrato) al prossimo riavvio.}
+STR_COBPUPD        {Aggiornare Payload COBRA}
+STR_COBPUPDDESC    {Aggiornare i Payload COBRA all'ultima versione}
 STR_NORBG					{Le Funzionalita' del REBUG Selector non sono Disponibili}
 STR_NORBGDESC				{Per favore installa un firmware REBUG REX/D-REX per avere accesso alla funzionalita' Selector.}
 STR_PATCHLV1				{Supporto LV1 Peek/Poke }
@@ -226,6 +228,8 @@ STR_MODDEBSDEBERR1			{[DEBUG SETTINGS: MENU DEBUG] FALLITO}
 STR_MODDEBSDEBERR2			{TRY [DEBUG SETTINGS: MENU CEX QA]}
 STR_MODCOBENA				{COBRA Mode abilitato.}
 STR_MODCOBDIS				{COBRA Mode disabilitato.}
+STR_ERRCOBUP        {Nessun payload COBRA trovato.}
+STR_COBUPSUCC       {I Payload Cobra sono stati aggiornati!\nRiavviare la PS3 per rendere effettive le modifiche.}
 STR_ERRFLASH				{Errore nella flash, reinstallare il firmware per fixare questo problema}
 STR_PS2ERR1					{Nessun file PS2Emu trovato su HDD o USB(dev_usb000).}
 STR_PS2CONT					{Vuoi continuare per copiare i file PS2Emu su USB(dev_usb000)?}
