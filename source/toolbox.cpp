@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.13"
+#define STR_APP_VER	 "02.02.14"
 
 
 
@@ -6499,10 +6499,10 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
-		// 02.02.13
+		// 02.02.14
 		uint16_t version;
 		cobra_get_version(&version, NULL);		
-		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x752))
+		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x753))
 		{			
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"NO",			(char*)"0");
@@ -12937,28 +12937,32 @@ void apply_settings(char *option, int val, u8 _forced)
 			wait_dialog_simple();
 		}
 	}
-	///02.02.13
+	///02.02.14
 	if(!strcmp(option, "update_cobra"))
 	{
-		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
+		if(!exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/stage2.cex.update"))
 		{
 			dialog_ret=0;
 			cellMsgDialogOpen2( type_dialog_ok, STR_ERRCOBUP, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
 			return;
 		}
-		if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update"))
+		if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/stage2.cex.update"))
 		{
 			unlink("/dev_rebug/rebug/cobra/stage2.cex");
 			unlink("/dev_rebug/rebug/cobra/stage2.dex");
 			unlink("/dev_rebug/rebug/cobra/stage2.cex.bak");
-			unlink("/dev_rebug/rebug/cobra/stage2.dex.bak");			
+			unlink("/dev_rebug/rebug/cobra/stage2.dex.bak");
+			unlink("/dev_rebug/ps2emu/ps2gxemu_stage2.bin");
+			unlink("/dev_rebug/ps2emu/ps2hwemu_stage2.bin");
 			if(update_cobra==1)
 			{
-				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update", (char*)"/dev_rebug/rebug/cobra/stage2.cex", 0);
-				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.dex.update", (char*)"/dev_rebug/rebug/cobra/stage2.dex", 0);
-				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update");
-				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.dex.update");
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/stage2.cex.update", (char*)"/dev_rebug/rebug/cobra/stage2.cex", 0);
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/stage2.dex.update", (char*)"/dev_rebug/rebug/cobra/stage2.dex", 0);
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/ps2gxemu_stage2.update", (char*)"/dev_rebug/ps2emu/ps2gxemu_stage2.bin", 0);
+				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/ps2hwemu_stage2.update", (char*)"/dev_rebug/ps2emu/ps2hwemu_stage2.bin", 0);
+				//unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.cex.update");
+				//unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/stage2.dex.update");
 				auto_reboot = 1;
 			}
 			else

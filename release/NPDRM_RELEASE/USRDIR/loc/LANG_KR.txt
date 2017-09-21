@@ -94,6 +94,8 @@ STR_TOGWM					{webMAN MOD}
 STR_TOGWMDESC				{다음 재부팅시 webMAN MOD를 활성화 하거나 비활성화 합니다.}
 STR_NORBG					{REBUG 셀렉터의 기능을 사용할 수 없습니다.}
 STR_NORBGDESC				{셀렉터 기능에 액세스 하기 위해 REBUG REX / D-REX 펌웨어를 설치하십시오.}
+STR_COBPUPD					{COBRA 페이로드 업데이터}
+STR_COBPUPDDESC					{COBRA 페이로드를 최신 버젼으로 업데이트 합니다}
 STR_PATCHLV1				{LV1 Peek/Poke 지원}
 STR_PATCHLV1DESC			{미사용 된 182와 183의 LV1시스템콜에 패치를 사용 합니다.}
 STR_LV2MEMPRO				{LV2 메모리의 보호}

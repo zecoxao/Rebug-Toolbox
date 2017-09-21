@@ -1,4 +1,4 @@
-STR_LANGUAGE				{Русский}
+﻿STR_LANGUAGE				{Русский}
 STR_LANGCODE				{\x07}
 STR_LANG					{Язык}
 STR_LANGDESC				{Выбор языка Rebug Toolbox}
@@ -92,6 +92,8 @@ STR_TOGPS2					{PS2 Эмулятор}
 STR_TOGPS2DESC				{Переключение между встроенным PS2Emu и Cobra эмуляторами}
 STR_TOGWM					{webMAN}
 STR_TOGWMDESC				{Вкл/Откл webMAN при следующей загрузке}
+STR_COBPUPD					{Обновления патча COBRA}
+STR_COBPUPDDESC					{Обновление патча COBRA до последней версии}
 STR_NORBG					{Возможности Режимов Rebug недоступны}
 STR_NORBGDESC				{Установите CFW Rebug REX/D-REX для доступа к Режимам Rebug}
 STR_PATCHLV1				{Поддержка LV1 Peek/Poke}
