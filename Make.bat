@@ -1,6 +1,6 @@
 @echo off
 
-set CYGWIN=C:\cygwin\bin
+set CYGWIN=C:\cygwin64\bin
 
 if not exist %CYGWIN%\bash.exe set CYGWIN=C:\PSDK3v2\MinGW\msys\1.0\bin
 

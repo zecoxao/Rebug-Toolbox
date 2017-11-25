@@ -71,7 +71,7 @@
 #define NEW_POKE_SYSCALL_ADDR_466D	0x80000000001AD3F4ULL	// where above syscall is in lv2 4.66 DEX <- peek( SYSCALL_TABLE_466D + NEW_POKE_SYSCALL*8)
 #define NEW_POKE_SYSCALL_ADDR_470	0x80000000002A1408ULL	// where above syscall is in lv2 4.70
 #define NEW_POKE_SYSCALL_ADDR_470D	0x80000000002BC5ACULL   // where above syscall is in lv2 4.70 DEX
-#define NEW_POKE_SYSCALL_ADDR_475	0x80000000002A1480ULL	// where above syscall is in lv2 4.75 , 4.76, 4.78, 4.81 CEX
+#define NEW_POKE_SYSCALL_ADDR_475	0x80000000002A1480ULL	// where above syscall is in lv2 4.75 , 4.76, 4.78, 4.81, 4.82 CEX
 #define NEW_POKE_SYSCALL_ADDR_475D	0x80000000002BC624ULL   // where above syscall is in lv2 4.75 , 4.76, 4.78 DEX
 #define NEW_POKE_SYSCALL_ADDR_480	0x80000000002A1474ULL	// where above syscall is in lv2 4.80
 #define NEW_POKE_SYSCALL_ADDR_480D	0x80000000002BC6F0ULL   // where above syscall is in lv2 4.80 DEX
