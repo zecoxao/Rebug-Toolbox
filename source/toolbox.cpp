@@ -6556,6 +6556,15 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
+
+		if((c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
+		{
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCFW, STR_TOGCFWDESC,	(char*)"cfw_settings");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,		(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,			(char*)"1");
+			xmb[col].member[xmb[col].size-1].option_selected=cfw_settings;
+			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}
 	}
 	else
 		add_xmb_member(xmb[col].member, &xmb[col].size, STR_NORBG, STR_NORBGDESC,
@@ -10076,6 +10085,9 @@ else if(stat.st_size==2605232)
 	swap_emu=1;
 
 else if(stat.st_size==2605104)
+	swap_emu=1;
+
+else if(stat.st_size==2606768)
 	swap_emu=1;
 
 else
