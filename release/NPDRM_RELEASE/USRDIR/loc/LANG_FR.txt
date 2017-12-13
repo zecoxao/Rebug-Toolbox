@@ -88,6 +88,11 @@ STR_TOGCFW					{Activer les paramètres XMB CFW}
 STR_TOGCFWDESC				{Active ou désactive les paramètres XMB CFW v0.1a ( MOD )}
 STR_TOGCOB					{Activer le mode COBRA}
 STR_TOGCOBDESC				{Active ou désactive le mode COBRA au prochain démarrage.}
+STR_COBPUPD                 {COBRA Payload Updater}
+STR_COBPUPDDESC             {Mise à jour du Payload COBRA 7.54 vers 7.55}
+STR_MAJ                     {Mettre a jour}
+STR_COBUPSUCC               {payload Cobra  mis a jour!\nRedémarrez pour que les modifications prennent effet.}
+STR_ERRCOBUP                {Aucune charge utile COBRA n'a été trouvé.}
 STR_TOGPS2					{Bascule de l'émulateur PS2}
 STR_TOGPS2DESC				{Change le PS2Emu pour utiliser les fichiers PS2Emu originaux.}
 STR_TOGWM					{Activer webMAN MOD}
