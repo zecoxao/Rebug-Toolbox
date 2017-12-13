@@ -746,6 +746,7 @@ static void update_language(void)
 	language("STR_TOGWMDESC", STR_TOGWMDESC);
 	language("STR_COBPUPD", STR_COBPUPD);
 	language("STR_COBPUPDDESC", STR_COBPUPDDESC);
+	language("STR_MAJ", STR_MAJ);
 	language("STR_NORBG", STR_NORBG);
 	language("STR_NORBGDESC", STR_NORBGDESC); 
 	language("STR_PATCHLV1", STR_PATCHLV1); 
