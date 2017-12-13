@@ -225,6 +225,7 @@ char STR_TOGWM[50] = "Toggle webMAN";
 char STR_TOGWMDESC[130] = "Enable or disable integrated webMAN on next reboot.";
 char STR_COBPUPD[50] = "COBRA Payload Updater"; 
 char STR_COBPUPDDESC[130] = "Updating COBRA Payload to the latest version";
+char STR_MAJ[50] = "Update";
 char STR_NORBG[130] = "REBUG Selector Functions Not Available";
 char STR_NORBGDESC[130] = "Please install REBUG REX/D-REX Firmware to access the Selector Functions.";
 char STR_PATCHLV1[130] = "LV1 Peek/Poke Support";
@@ -6507,8 +6508,8 @@ void add_settings_column()
 		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x753))
 		{			
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"NO",			(char*)"0");
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"UPDATE",				(char*)"1");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_NO,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_MAJ,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
@@ -6563,6 +6564,18 @@ void add_settings_column()
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,		(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,			(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cfw_settings;
+			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}
+		
+		// 12.12.17 Add payload updater 7.55 for 4.82.1 Light 7.54
+		uint16_t version;
+		cobra_get_version(&version, NULL);		
+		if((c_firmware==4.82f) && (is_cobra_based()) && (version==0x754))
+		{			
+			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_NO,			(char*)"0");
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_MAJ,				(char*)"1");
+			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
 	}
