@@ -84,7 +84,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.15"
+#define STR_APP_VER	 "02.02.16"
 
 
 
@@ -2825,7 +2825,7 @@ void dump_root_key()
 	if(c_firmware==4.81f && !dex_mode) strcpy(version, "475");   else
     if(c_firmware==4.81f &&  dex_mode) strcpy(version, "481d");  else
 	if(c_firmware==4.82f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.82f &&  dex_mode) strcpy(version, "482d");  else	return;
+    if(c_firmware==4.82f &&  dex_mode) strcpy(version, "481d");  else	return;
 
     char rkdumper[64];
     sprintf(rkdumper, "/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_%s.self", version);
@@ -8588,7 +8588,9 @@ int main(int argc, char **argv)
 	else
 	if(peekq(0x800000000030F3A0ULL)==DEX) {dex_mode=2; c_firmware=4.80f;}
 	else
-	if(peekq(0x800000000030F3B0ULL)==DEX) {dex_mode=2; c_firmware=4.81f;}
+	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031362F31302FULL) {dex_mode=2; c_firmware=4.81f;} //timestamp: 2016/10
+	else
+	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031372F30382FULL) {dex_mode=2; c_firmware=4.82f;} //timestamp: 2017/08
 	else
 	if(c_firmware == 0)
     {
@@ -8799,7 +8801,7 @@ int main(int argc, char **argv)
 		SYSCALL_TABLE			= SYSCALL_TABLE_480D;
 	}
 	else
-	if(c_firmware==4.81f && dex_mode)
+	if(c_firmware==4.81f || c_firmware==4.82f && dex_mode)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_481D;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_481D;
