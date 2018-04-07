@@ -1,4 +1,4 @@
-﻿STR_LANGUAGE				{Polski}
+STR_LANGUAGE				{Polski}
 STR_LANGCODE				{\x10}
 STR_LANG					{Język}
 STR_LANGDESC				{Wybierz język}
@@ -26,7 +26,7 @@ STR_FLASHOK					{Sukces: Twój PS3 musi zostać zrestartowany, aby zmiany zaczę
 STR_FLASHERROR				{Niepowodzenie!!!}
 STR_GAMEOSFLG				{Czy chcesz ustawić flagę rozruchową GameOS?}
 STR_GAMEOSFLGOK				{Flaga jest już ustawiona.}
-STR_SYSINF					{System informacyjny}
+STR_SYSINF					{Informacje Systemowe}
 STR_SYSINFDESC				{Wyświetl informacje o systemie PS3 ™.}
 STR_QUIT					{Wyjdź}
 STR_QUITDESC1				{Wyjdź}
