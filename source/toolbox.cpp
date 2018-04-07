@@ -81,13 +81,9 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 		(uint32_t) &__sys_process_crash_dump_param};
 
 
-
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
 #define STR_APP_VER	 "02.02.16"
-
-
-
 
 
 //#include "syscall8.h"
@@ -119,17 +115,19 @@ u64 SYSCALL_TABLE			= SYSCALL_TABLE_355;
 #define OFF		0
 #define ON		1
 
-#define SYSCALL8_OPCODE_GET_VERSION   0x7000
-#define SYSCALL8_OPCODE_GET_VERSION2   0x7001
+#define SYSCALL8_OPCODE_GET_VERSION 	0x7000
+#define SYSCALL8_OPCODE_GET_VERSION2	0x7001
 
 
-// LANGUAGE 
+// LANGUAGE
 
-static char STR_LANGUAGE[130][128]={{0}};
-static char STR_LANGCODE[130][2]={{0}};
+#define MAX_LANGUAGES 20
+
+static char STR_LANGUAGE[MAX_LANGUAGES][128]={{0}};
+static char STR_LANGCODE[MAX_LANGUAGES][2]={{0}};
 int lang_N;
 u8 lang=0;
-char lang_path[130][128];
+char lang_path[MAX_LANGUAGES][128];
 
 char STR_LANG[50] = "Language";
 char STR_LANGDESC[50] = "Choose a language";
@@ -223,7 +221,7 @@ char STR_TOGPS2[50] = "Toggle PS2 Emulator";
 char STR_TOGPS2DESC[130] = "PS2Emu swap to use Original PS2 Emu files.";
 char STR_TOGWM[50] = "Toggle webMAN";
 char STR_TOGWMDESC[130] = "Enable or disable integrated webMAN on next reboot.";
-char STR_COBPUPD[50] = "COBRA Payload Updater"; 
+char STR_COBPUPD[50] = "COBRA Payload Updater";
 char STR_COBPUPDDESC[130] = "Updating COBRA Payload to the latest version";
 char STR_MAJ[50] = "Update";
 char STR_ERRCOBUP[130]  = "No COBRA payload files are found.";
@@ -460,8 +458,8 @@ static bool language(const char *file_str, char *default_str)
 	bool do_retry=true;
 
 	if (fh) f=fh; //file is already open
-    else
-    {
+	else
+	{
 		if (cellFsOpen(lang_path[lang], CELL_FS_O_RDONLY, &f, NULL, 0) != CELL_FS_SUCCEEDED) return false;
 
 		fh = f;
@@ -482,7 +480,7 @@ static bool language(const char *file_str, char *default_str)
 					cellFsRead(f, (void *)&temp, 0x01, &siz);
 					lang_pos++;
 				}
-				
+
 				int str_len = 0;
 				while(siz) {
 					cellFsRead(f, (void *)&temp, 0x01, &siz);
@@ -491,19 +489,18 @@ static bool language(const char *file_str, char *default_str)
 						default_str[str_len] = NULL;
 						return true;
 					}
-					
-					
-					if (temp[0] == 92) { 
+
+					if (temp[0] == 92) {
 						cellFsRead(f, (void *)&temp, 0x01, &siz);
 						lang_pos++;
 						if (temp[0] == 'n') {
 							default_str[str_len] = '\n';
 							str_len++;
-						} 
+						}
 						else if (temp[0] == 'r') {
 							default_str[str_len] = '\r';
 							str_len++;
-						} 
+						}
 						else if (temp[0] == 'x') {
 							cellFsRead(f, (void *)&temp, 0x01, &siz);
 							lang_pos++;
@@ -523,12 +520,12 @@ static bool language(const char *file_str, char *default_str)
 							default_str[str_len] = temp[0];
 							str_len++;
 						}
-						
+
 					} else {
 						default_str[str_len] = temp[0];
 						str_len++;
 					}
-					
+
 				}
 			}
 			else
@@ -549,34 +546,31 @@ void get_all_language()
 	char LOCPath[128];
 	char TXTPath[128];
 	int fd;
-	
+
 	lang_N = 0;
-	strcpy(STR_LANGUAGE[lang_N], "English (default)") ;
-	lang_N++;
+	strcpy(STR_LANGUAGE[lang_N], "English (default)") ; lang_N++;
 	sprintf(LOCPath, "/dev_hdd0/game/%s/USRDIR/loc", STR_APP_ID);
-	
+
 	if(cellFsOpendir(LOCPath, &fd) == CELL_FS_SUCCEEDED) {
-		
+
 		CellFsDirent entry; u64 read_e;
-	
+
 		while(cellFsReaddir(fd, &entry, &read_e) == 0 && read_e > 0) {
-			
+
 			sprintf(TXTPath, "%s/%s", LOCPath, entry.d_name);
-			
+
 			lang_pos=fh=0;
-			
+
 			if(cellFsOpen(TXTPath, CELL_FS_O_RDONLY, &fh, NULL, 0) == CELL_FS_SUCCEEDED) {
 				if( language("STR_LANGUAGE", STR_LANGUAGE[lang_N]) == true) {
 					language("STR_LANGCODE", STR_LANGCODE[lang_N]);
-					strcpy(lang_path[lang_N], TXTPath);
-					lang_N++;
+					strcpy(lang_path[lang_N], TXTPath); lang_N++;
 				}
-				cellFsClose(fh);
+				cellFsClose(fh); if(lang_N >= MAX_LANGUAGES) break;
 			}
 		}
 		cellFsClosedir(fd);
 	}
-
 }
 
 /*
@@ -607,11 +601,11 @@ void load_activ()
 	char activ[128];
 	char data[130]={0};
 	int i;
-	
+
 	sprintf(activ, "/dev_hdd0/game/%s/USRDIR/loc/activ.txt", STR_APP_ID);
-	
+
 	fp = fopen(activ, "r");
-	
+
 	if( fp != NULL ) {
 		fgets(data, 128, fp);
 		fclose(fp);
@@ -621,10 +615,10 @@ void load_activ()
 				return;
 			}
 		}
-	} 
+	}
 	else {
 		uint32_t lang_xreg = get_xreg_value((char*)"/setting/system/language", 1);
-		
+
 		for(i=0; i < lang_N ;i++) {
 			if((u8) STR_LANGCODE[i][0] == lang_xreg) {
 				lang = i;
@@ -632,9 +626,8 @@ void load_activ()
 			}
 		}
 	}
-	
+
 	lang = 0;
-	
 }
 
 void save_activ()
@@ -650,11 +643,10 @@ void save_activ()
 
 static void update_language(void)
 {
-	
 	lang_pos=fh=0;
-	
+
 	if( language("STR_DISABLE", STR_DISABLE) == false ) return ;
-	
+
 	language("STR_ENABLE", STR_ENABLE);
 	language("STR_NO", STR_NO);
 	language("STR_SYSTEM", STR_SYSTEM);
@@ -704,7 +696,7 @@ static void update_language(void)
 	language("STR_LOADLV2", STR_LOADLV2);
 	language("STR_LOADLV2DESC", STR_LOADLV2DESC);
 	language("STR_BUT", STR_BUT);
-	language("STR_BUTDESC", STR_BUTDESC); 
+	language("STR_BUTDESC", STR_BUTDESC);
 	language("STR_CIRCLE", STR_CIRCLE);
 	language("STR_CROSS", STR_CROSS);
 	language("STR_XREG", STR_XREG);
@@ -732,7 +724,7 @@ static void update_language(void)
 	language("STR_USE", STR_USE);
 	language("STR_SM", STR_SM);
 	language("STR_SMDESC", STR_SMDESC);
-	language("STR_XMBOM", STR_XMBOM);	
+	language("STR_XMBOM", STR_XMBOM);
 	language("STR_XMBOMDESC", STR_XMBOMDESC);
 	language("STR_MENU", STR_MENU);
 	language("STR_MENUDESC", STR_MENUDESC);
@@ -748,13 +740,13 @@ static void update_language(void)
 	language("STR_COBPUPDDESC", STR_COBPUPDDESC);
 	language("STR_MAJ", STR_MAJ);
 	language("STR_NORBG", STR_NORBG);
-	language("STR_NORBGDESC", STR_NORBGDESC); 
-	language("STR_PATCHLV1", STR_PATCHLV1); 
-	language("STR_PATCHLV1DESC", STR_PATCHLV1DESC); 
-	language("STR_LV2MEMPRO", STR_LV2MEMPRO); 
-	language("STR_LV2MEMPRODESC", STR_LV2MEMPRODESC); 
-	language("STR_HTAB", STR_HTAB); 
-	language("STR_HTABDESC", STR_HTABDESC); 
+	language("STR_NORBGDESC", STR_NORBGDESC);
+	language("STR_PATCHLV1", STR_PATCHLV1);
+	language("STR_PATCHLV1DESC", STR_PATCHLV1DESC);
+	language("STR_LV2MEMPRO", STR_LV2MEMPRO);
+	language("STR_LV2MEMPRODESC", STR_LV2MEMPRODESC);
+	language("STR_HTAB", STR_HTAB);
+	language("STR_HTABDESC", STR_HTABDESC);
 	language("STR_INDI", STR_INDI);
 	language("STR_INDIDESC", STR_INDIDESC);
 	language("STR_EEPROM", STR_EEPROM);
@@ -893,7 +885,7 @@ static void update_language(void)
 	language("STR_FLASHSET", STR_FLASHSET);
 	language("STR_LANG", STR_LANG);
 	language("STR_LANGDESC", STR_LANGDESC);
-    language("STR_1", STR_1);
+	language("STR_1", STR_1);
 	language("STR_2", STR_2);
 	language("STR_3", STR_3);
 	language("STR_4", STR_4);
@@ -902,86 +894,85 @@ static void update_language(void)
 	language("STR_READFLASHERROR2", STR_READFLASHERROR2);
 	language("STR_TOGHOSTINF", STR_TOGHOSTINF);
 	language("STR_TOGHOSTINFDESC", STR_TOGHOSTINFDESC);
-	
+
 	if(fh) {cellFsClose(fh); lang_pos=fh=0;}
 }
 
-
 static int sys_get_version(uint32_t *version)
 {
- system_call_2(8, SYSCALL8_OPCODE_GET_VERSION, (uint64_t)(uint32_t)version);
- return (int)p1;
+	system_call_2(8, SYSCALL8_OPCODE_GET_VERSION, (uint64_t)(uint32_t)version);
+	return (int)p1;
 }
 
 static int sys_get_version2(uint16_t *version)
 {
- system_call_2(8, SYSCALL8_OPCODE_GET_VERSION2, (uint64_t)(uint32_t)version);
- return (int)p1;
+	system_call_2(8, SYSCALL8_OPCODE_GET_VERSION2, (uint64_t)(uint32_t)version);
+	return (int)p1;
 }
 
 int cobra_get_version(uint16_t *cobra_version, uint16_t *ps3_version)
 {
- uint32_t version1;
- uint16_t version2;
- int ret;
+	uint32_t version1;
+	uint16_t version2;
+	int ret;
 
- ret = sys_get_version(&version1);
- if (ret != 0)
-  return ret;
+	ret = sys_get_version(&version1);
+	if (ret != 0)
+		return ret;
 
- if (cobra_version && sys_get_version2(&version2) == 0)
- {
-  *cobra_version = version2;
- }
- else if (cobra_version)
- {
-  switch (version1&0xFF)
-  {
-   case 1:
-    *cobra_version = 0x0102;
-   break;
+	if (cobra_version && sys_get_version2(&version2) == 0)
+	{
+		*cobra_version = version2;
+	}
+	else if (cobra_version)
+	{
+		switch (version1&0xFF)
+		{
+			case 1:
+				*cobra_version = 0x0102;
+			break;
 
-   case 2:
-    *cobra_version = 0x0200;
-   break;
+			case 2:
+				*cobra_version = 0x0200;
+			break;
 
-   case 3:
-    *cobra_version = 0x0300;
-   break;
+			case 3:
+				*cobra_version = 0x0300;
+			break;
 
-   case 4:
-    *cobra_version = 0x0310;
-   break;
+			case 4:
+				*cobra_version = 0x0310;
+			break;
 
-   case 5:
-    *cobra_version = 0x0320;
-   break;
+			case 5:
+				*cobra_version = 0x0320;
+			break;
 
-   case 6:
-    *cobra_version = 0x0330;
-   break;
+			case 6:
+				*cobra_version = 0x0330;
+			break;
 
-   case 7:
-    *cobra_version = 0x0400;
-   break;
+			case 7:
+				*cobra_version = 0x0400;
+			break;
 
-   default:
-    *cobra_version = 0x0410;
-   break;
-  }
- }
+			default:
+				*cobra_version = 0x0410;
+			break;
+		}
+	}
 
- if (ps3_version)
- {
-  *ps3_version = ((version1>>8)&0xFFFF);
+	if (ps3_version)
+	{
+		*ps3_version = ((version1>>8)&0xFFFF);
 
-  if (*ps3_version == 0x0000)
-  {
-   *ps3_version = 0x0341;
-  }
- }
+		if (*ps3_version == 0x0000)
+		{
+			*ps3_version = 0x0341;
+		}
+	}
 
- return 0;
+	return 0;
 }
 
 u32 COL_XMB_CLOCK=0xffd0d0d0;
@@ -1091,7 +1082,6 @@ u64 idps0=0;
 u64 idps1=0;
 u8 get_idps(u8 _eid);
 void set_idps(u8 _val);
-
 
 u8 get_eid();
 
@@ -1250,7 +1240,6 @@ u16 dox_circle_x=207;
 u16 dox_circle_y=14;
 u16 dox_circle_w=34;
 u16 dox_circle_h=34;
-
 
 u16 dox_triangle_x=80;
 u16 dox_triangle_y=14;
@@ -1444,116 +1433,115 @@ int  xmbbg_user_h=1080;
 
 int abort_rec=0;
 
-	u8 *text_bmp=NULL;
-	u8 *text_bmpS=NULL;
-	u8 *text_bmpUBG=NULL;
+u8 *text_bmp=NULL;
+u8 *text_bmpS=NULL;
+u8 *text_bmpUBG=NULL;
 
-	u8 *text_USB=NULL;
-	u8 *text_HDD=NULL;
-	u8 *text_BLU_1=NULL;
-	u8 *text_NET_6=NULL;
-	u8 *text_OFF_2=NULL;
-	u8 *text_FMS=NULL;
+u8 *text_USB=NULL;
+u8 *text_HDD=NULL;
+u8 *text_BLU_1=NULL;
+u8 *text_NET_6=NULL;
+u8 *text_OFF_2=NULL;
+u8 *text_FMS=NULL;
 
-	u8 *text_DOX=NULL;
-	u8 *text_MSG=NULL;
-	u8 *text_INFO=NULL;
+u8 *text_DOX=NULL;
+u8 *text_MSG=NULL;
+u8 *text_INFO=NULL;
 
-	u8 *text_CFC_3=NULL;
-	u8 *text_SDC_4=NULL;
-	u8 *text_MSC_5=NULL;
-	u8 *text_bmpUPSR=NULL;
-	u8 *text_bmpIC;
-	u8 *text_TEMP;
-	u8 *text_DROPS;
-	u8 *text_SLIDER;
-	u8 *text_legend;
-	u8 *text_DEVS;
-	u8 *text_TEXTS;
-	u8 *text_FONT;
+u8 *text_CFC_3=NULL;
+u8 *text_SDC_4=NULL;
+u8 *text_MSC_5=NULL;
+u8 *text_bmpUPSR=NULL;
+u8 *text_bmpIC;
+u8 *text_TEMP;
+u8 *text_DROPS;
+u8 *text_SLIDER;
+u8 *text_legend;
+u8 *text_DEVS;
+u8 *text_TEXTS;
+u8 *text_FONT;
 
-	u8* BORDER_TL=NULL;
-	u8* BORDER_BL=NULL;
-	u8* BORDER_TR=NULL;
-	u8* BORDER_BR=NULL;
-	u8* BORDER_LT=NULL;
-	u8* BORDER_RB=NULL;
-	u8* BORDER_SS=NULL;
+u8* BORDER_TL=NULL;
+u8* BORDER_BL=NULL;
+u8* BORDER_TR=NULL;
+u8* BORDER_BR=NULL;
+u8* BORDER_LT=NULL;
+u8* BORDER_RB=NULL;
+u8* BORDER_SS=NULL;
 
-	u8* BORDER_TL2=NULL;
-	u8* BORDER_BL2=NULL;
-	u8* BORDER_TR2=NULL;
-	u8* BORDER_BR2=NULL;
-	u8* BORDER_LT2=NULL;
-	u8* BORDER_RB2=NULL;
-	u8* BORDER_SS2=NULL;
+u8* BORDER_TL2=NULL;
+u8* BORDER_BL2=NULL;
+u8* BORDER_TR2=NULL;
+u8* BORDER_BR2=NULL;
+u8* BORDER_LT2=NULL;
+u8* BORDER_RB2=NULL;
+u8* BORDER_SS2=NULL;
 
-	u8 win_opened=0;
-	u16	win_number=0;
+u8 win_opened=0;
+u16	win_number=0;
 
-	u8* BORDER_PATH_BOX_A=NULL;
-	u8* BORDER_PATH_BOX_I=NULL;
+u8* BORDER_PATH_BOX_A=NULL;
+u8* BORDER_PATH_BOX_I=NULL;
 
-	//u8* text_TASKBAR=NULL;
+//u8* text_TASKBAR=NULL;
 
-	u8 *text_PBOX;
-	u8 *text_PBOX1;
+u8 *text_PBOX;
+u8 *text_PBOX1;
 
-	u8 *text_CBOX;
-	u8 *text_GBOX;
+u8 *text_CBOX;
+u8 *text_GBOX;
 
-	u8 *xmb_col;
-	u8 *xmb_clock;
+u8 *xmb_col;
+u8 *xmb_clock;
 
-	u8 *xmb_icon_home	=	NULL;
-	u8 *xmb_icon_refresh=	NULL;
-	u8 *xmb_icon_off	=	NULL;
-	u8 *xmb_icon_info	=	NULL;
-	u8 *xmb_icon_util	=	NULL;
+u8 *xmb_icon_home	=	NULL;
+u8 *xmb_icon_refresh=	NULL;
+u8 *xmb_icon_off	=	NULL;
+u8 *xmb_icon_info	=	NULL;
+u8 *xmb_icon_util	=	NULL;
 
-	u8 *xmb_icon_globe	=	NULL;
-	u8 *xmb_icon_help	=	NULL;
-	u8 *xmb_icon_quit	=	NULL;
-	u8 *xmb_icon_star	=	NULL;
-	u8 *xmb_icon_star_small = NULL;
-	u8 *xmb_icon_blu_small = NULL;
-	u8 *xmb_icon_net_small = NULL;
+u8 *xmb_icon_globe	=	NULL;
+u8 *xmb_icon_help	=	NULL;
+u8 *xmb_icon_quit	=	NULL;
+u8 *xmb_icon_star	=	NULL;
+u8 *xmb_icon_star_small = NULL;
+u8 *xmb_icon_blu_small = NULL;
+u8 *xmb_icon_net_small = NULL;
 
-	u8 *xmb_icon_retro	=	NULL;
-	u8 *xmb_icon_ftp	=	NULL;
-	u8 *xmb_icon_folder	=	NULL;
-	u8 *xmb_icon_usb	=	NULL;
-	u8 *xmb_icon_psx	=	NULL;
-	u8 *xmb_icon_ps2	=	NULL;
-	u8 *xmb_icon_blend	=	NULL;
-	u8 *xmb_icon_psp	=	NULL;
-	u8 *xmb_icon_psp2	=	NULL;
-	u8 *xmb_icon_dvd	=	NULL;
-	u8 *xmb_icon_bdv	=	NULL;
+u8 *xmb_icon_retro	=	NULL;
+u8 *xmb_icon_ftp	=	NULL;
+u8 *xmb_icon_folder	=	NULL;
+u8 *xmb_icon_usb	=	NULL;
+u8 *xmb_icon_psx	=	NULL;
+u8 *xmb_icon_ps2	=	NULL;
+u8 *xmb_icon_blend	=	NULL;
+u8 *xmb_icon_psp	=	NULL;
+u8 *xmb_icon_psp2	=	NULL;
+u8 *xmb_icon_dvd	=	NULL;
+u8 *xmb_icon_bdv	=	NULL;
 
-	u8 *xmb_icon_psx_n	=	NULL;
-	u8 *xmb_icon_ps2_n	=	NULL;
-	u8 *xmb_icon_psp_n	=	NULL;
-	u8 *xmb_icon_dvd_n	=	NULL;
-	u8 *xmb_icon_bdv_n	=	NULL;
+u8 *xmb_icon_psx_n	=	NULL;
+u8 *xmb_icon_ps2_n	=	NULL;
+u8 *xmb_icon_psp_n	=	NULL;
+u8 *xmb_icon_dvd_n	=	NULL;
+u8 *xmb_icon_bdv_n	=	NULL;
 
+u8 *xmb_icon_desk	=	NULL;
+u8 *xmb_icon_hdd	=	NULL;
+u8 *xmb_icon_blu	=	NULL;
+u8 *xmb_icon_blu_n	=	NULL;
+u8 *xmb_icon_tool	=	NULL;
+u8 *xmb_icon_note	=	NULL;
+u8 *xmb_icon_film	=	NULL;
+u8 *xmb_icon_photo	=	NULL;
+u8 *xmb_icon_update	=	NULL;
+u8 *xmb_icon_usb_update=NULL;
+u8 *xmb_icon_logo	=	NULL;
 
-	u8 *xmb_icon_desk	=	NULL;
-	u8 *xmb_icon_hdd	=	NULL;
-	u8 *xmb_icon_blu	=	NULL;
-	u8 *xmb_icon_blu_n	=	NULL;
-	u8 *xmb_icon_tool	=	NULL;
-	u8 *xmb_icon_note	=	NULL;
-	u8 *xmb_icon_film	=	NULL;
-	u8 *xmb_icon_photo	=	NULL;
-	u8 *xmb_icon_update	=	NULL;
-	u8 *xmb_icon_usb_update=NULL;
-	u8 *xmb_icon_logo	=	NULL;
-
-	u8 *xmb_icon_ss		=	NULL;
-	u8 *xmb_icon_showtime=	NULL;
-	u8 *xmb_icon_theme	=	NULL;
-	u8 *xmb_icon_arrow	=	NULL;
+u8 *xmb_icon_ss		=	NULL;
+u8 *xmb_icon_showtime=	NULL;
+u8 *xmb_icon_theme	=	NULL;
+u8 *xmb_icon_arrow	=	NULL;
 
 
 FILE *fpV;
@@ -1583,10 +1571,10 @@ char new_file_name[1024];
  float overscan=0.0f;
  bool is_remoteplay=0;
 
-
 #define MAX_LIST 960
 
 #define MAX_LIST_OPTIONS 128
+
 typedef struct
 {
 	u32		color;
@@ -1624,7 +1612,6 @@ typedef struct
 }
 t_dir_pane_bare;
 
-
 volatile int draw_legend=1;
 
 int file_counter=0; // to count files
@@ -1633,7 +1620,7 @@ int abort_copy=0; // abort process
 typedef struct
 {
 	char 	label[256];
-    float	x;
+	float	x;
 	float	y;
 	float	scale;
 	float	weight;
@@ -1653,10 +1640,8 @@ int max_ttf_label=0;
 int mode_list=0;
 u32 forcedevices=0xffff;
 
-
 u8 fm_sel=0;
 u8 fm_sel_old=15;
-
 
 int cover_mode=8, user_font=4;
 
@@ -1699,7 +1684,7 @@ char xmb_bg_path[128];
 #define MAX_STARS 128
 typedef struct
 {
-    u16		x;
+	u16		x;
 	u16		y;
 	u8		bri;
 	u8		size;
@@ -1736,7 +1721,7 @@ xmbthumbs;
 xmbthumbs xmb_icon_buf[MAX_XMB_THUMBS];
 int xmb_icon_buf_max=0;
 
-#define MAX_XMB_OPTIONS 16
+#define MAX_XMB_OPTIONS 20
 typedef struct __xmbopt
 {
 	char label[36];
@@ -1785,7 +1770,7 @@ xmbmem;// __attribute__((aligned(16)));
 typedef struct
 {
 	u8		init;
-    volatile u16		size;
+	volatile u16		size;
 	u16		first;
 	u8		*data;
 	char	name[32];
@@ -1889,16 +1874,15 @@ void set_xo()
 }
 
 
-
 static void callback_aio(CellFsAio *aio, CellFsErrno err, int id, uint64_t size)
 {
 	(void) id;
-    if (err == CELL_FS_SUCCEEDED) {
-        aio->offset+=size;
-        aio->user_data=0;
-    } else {
-        aio->user_data=3;
-    }
+	if (err == CELL_FS_SUCCEEDED) {
+		aio->offset+=size;
+		aio->user_data=0;
+	} else {
+		aio->user_data=3;
+	}
 }
 
 static void initAIO()
@@ -1928,19 +1912,17 @@ static void initAIO()
 
 int sys8_disable_all = 0;
 
-
 int is_cobra_based(void)
 {
-    uint32_t version = 0x99999999;
+	uint32_t version = 0x99999999;
 
-    if (sys_get_version(&version) < 0)
-        return 0;
+	if (sys_get_version(&version) < 0)
+		return 0;
 
-    if (version != 0x99999999) // If value changed, it is cobra
-        return 1;
+	if (version != 0x99999999) // If value changed, it is cobra
+		return 1;
 
-    return 0;
-
+	return 0;
 }
 
 
@@ -1995,7 +1977,6 @@ u32 type_dialog_yes_no = CELL_MSGDIALOG_TYPE_SE_TYPE_NORMAL | CELL_MSGDIALOG_TYP
 
 u32 type_dialog_yes_back = CELL_MSGDIALOG_TYPE_SE_TYPE_NORMAL | CELL_MSGDIALOG_TYPE_BG_VISIBLE | CELL_MSGDIALOG_TYPE_BUTTON_TYPE_OK
 					   | CELL_MSGDIALOG_TYPE_DISABLE_CANCEL_OFF | CELL_MSGDIALOG_TYPE_DEFAULT_CURSOR_OK;
-
 
 u32 type_dialog_ok = CELL_MSGDIALOG_TYPE_SE_TYPE_NORMAL | CELL_MSGDIALOG_TYPE_BG_VISIBLE | CELL_MSGDIALOG_TYPE_BUTTON_TYPE_OK
 				   | CELL_MSGDIALOG_TYPE_DISABLE_CANCEL_ON| CELL_MSGDIALOG_TYPE_DEFAULT_CURSOR_OK;
@@ -2086,7 +2067,6 @@ void wait_dialog()
 	ss_timer_last=time(NULL);
 }
 
-
 u64 is_size(char *path)
 {
 	struct CellFsStat s;
@@ -2096,13 +2076,11 @@ u64 is_size(char *path)
 		return 0;
 }
 
-
 int exist(char *path)
 {
 	struct stat p_stat;
 	return (stat(path, &p_stat)>=0);
 }
-
 
 int exist_c(const char *path)
 {
@@ -2212,7 +2190,6 @@ static CellKbData kdata;
 	CellPadInfo2 infobuf;
 
 
-
 uint32_t old_info_k = 0;
 
 //check for keyboard input
@@ -2228,13 +2205,13 @@ uint32_t old_info_k = 0;
 				 (old_info_k & CELL_KB_INFO_INTERCEPTED)){
 			old_info_k = info.info;
 		}
-        if (info.status[0] == CELL_KB_STATUS_DISCONNECTED) goto read_mouse;
+		if (info.status[0] == CELL_KB_STATUS_DISCONNECTED) goto read_mouse;
 		if (cellKbRead (0, &kdata)!=CELL_KB_OK) goto read_mouse;
-        if (kdata.len == 0) goto read_mouse;
+		if (kdata.len == 0) goto read_mouse;
 
 //		sprintf(mouseInfo, "Keyboard: Buttons : %02X %c", kdata.keycode[0], kdata.keycode[0]);
 
-        old_status_k = info.status[0];
+		old_status_k = info.status[0];
 
 		padd = 0;
 		if(kdata.keycode[0]==0x8050) padd = padd | (1<<7); //LEFT
@@ -2280,7 +2257,6 @@ read_mouse:
 	old_pad = new_pad = 0;
 	pad_num++;
 	return 1;
-
 
 pad_ok:
 
@@ -2369,7 +2345,6 @@ pad_ok:
 	if(padRYstick>=(128+yDZa)){
 		mouseYD=(float)(((padRYstick-yDZa-128.0f))/(11000.0f/active_pads));//*(1.f-overscan);
 		mouseYDR=mouseYD;}
-
 
 	if(padLXstick<=(128-xDZa)){
 		mouseXD=(float)(((padLXstick+xDZa-128.0f))/(11000.0f/active_pads));//*(1.f-overscan);
@@ -2469,7 +2444,6 @@ void screen_saver()
 		screen_saver_mode=1;
 		while(!restart_request && !app_shutdown) {
 
-
 			if(ftp_clients<2)
 			{
 				for(int n=0; n<MAX_STARS; n++)
@@ -2512,8 +2486,8 @@ void screen_saver()
 				new_pad=0;  break;
 				}
 			if(ss_timer>=(sao_timeout*3600) && sao_timeout) shutdown_system(0);
-
 		}
+
 		ss_timer=0;
 		ss_timer_last=time(NULL);
 		c_opacity=0xff; c_opacity2=0xff;
@@ -2671,7 +2645,6 @@ void launch_self3(char *_self, char *_param, char *_param2)
 	exit(0);
 }
 
-
 u64 get_free_drive_space(char *_path)
 {
 	if(strlen(_path)<6) return 0;
@@ -2710,138 +2683,138 @@ u64 unmount_dev_flash()
 /*
 void dump_root_key()
 {
-    if(c_firmware==3.55f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_355.self");
-    }
-    else
-    if(c_firmware==4.21f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_421.self");
-    }
-    else
-    if(c_firmware==4.21f && dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_421d.self");
-    }
-    else
-    if(c_firmware==4.46f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_446.self");
-    }
-    else
-    if(c_firmware==4.65f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_465.self");
-    }
-    else
-    if(c_firmware==4.66f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_465.self");
-    }
-    else
-    if(c_firmware==4.70f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_470.self");
-    }
-    else
-    if(c_firmware==4.70f && dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_470d.self");
-    }
-    else
-    if(c_firmware==4.75f && !dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_475.self");
-    }
-    else
-    if(c_firmware==4.75f && dex_mode)
-    {
-        dialog_ret=0;
-        cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
-        wait_dialog();
-        if(dialog_ret==1)
-            launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_475d.self");
-    }
-
+	if(c_firmware==3.55f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_355.self");
+	}
+	else
+	if(c_firmware==4.21f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_421.self");
+	}
+	else
+	if(c_firmware==4.21f && dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_421d.self");
+	}
+	else
+	if(c_firmware==4.46f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_446.self");
+	}
+	else
+	if(c_firmware==4.65f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_465.self");
+	}
+	else
+	if(c_firmware==4.66f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_465.self");
+	}
+	else
+	if(c_firmware==4.70f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_470.self");
+	}
+	else
+	if(c_firmware==4.70f && dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_470d.self");
+	}
+	else
+	if(c_firmware==4.75f && !dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_475.self");
+	}
+	else
+	if(c_firmware==4.75f && dex_mode)
+	{
+		dialog_ret=0;
+		cellMsgDialogOpen2( type_dialog_yes_no, "Do you want to dump your eid root key and reboot?\n\nThe eid_root_key will be created in /dev_hdd0/game/RBGTLBOX2/USRDIR", dialog_fun1, (void*)0x0000aaaa, NULL );
+		wait_dialog();
+		if(dialog_ret==1)
+			launch_self2((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_475d.self");
+	}
 }
 */
 void dump_root_key()
 {
-    char version[8];
+	char version[8];
 
-    if(c_firmware==3.55f && !dex_mode) strcpy(version, "355");   else
-    if(c_firmware==4.21f && !dex_mode) strcpy(version, "421");   else
-    if(c_firmware==4.21f &&  dex_mode) strcpy(version, "421d");  else
-    if(c_firmware==4.46f && !dex_mode) strcpy(version, "446");   else
-    if(c_firmware==4.65f && !dex_mode) strcpy(version, "465");   else
-    if(c_firmware==4.66f && !dex_mode) strcpy(version, "465");   else
-    if(c_firmware==4.70f && !dex_mode) strcpy(version, "470");   else
-    if(c_firmware==4.70f &&  dex_mode) strcpy(version, "470d");  else
-    if(c_firmware==4.75f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.75f &&  dex_mode) strcpy(version, "475d");  else
+	if(c_firmware==3.55f && !dex_mode) strcpy(version, "355");   else
+	if(c_firmware==4.21f && !dex_mode) strcpy(version, "421");   else
+	if(c_firmware==4.21f &&  dex_mode) strcpy(version, "421d");  else
+	if(c_firmware==4.46f && !dex_mode) strcpy(version, "446");   else
+	if(c_firmware==4.65f && !dex_mode) strcpy(version, "465");   else
+	if(c_firmware==4.66f && !dex_mode) strcpy(version, "465");   else
+	if(c_firmware==4.70f && !dex_mode) strcpy(version, "470");   else
+	if(c_firmware==4.70f &&  dex_mode) strcpy(version, "470d");  else
+	if(c_firmware==4.75f && !dex_mode) strcpy(version, "475");   else
+	if(c_firmware==4.75f &&  dex_mode) strcpy(version, "475d");  else
 	if(c_firmware==4.76f && !dex_mode) strcpy(version, "475");   else
 	if(c_firmware==4.76f &&  dex_mode) strcpy(version, "475d");  else
 	if(c_firmware==4.78f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.78f &&  dex_mode) strcpy(version, "475d");  else
+	if(c_firmware==4.78f &&  dex_mode) strcpy(version, "475d");  else
 	if(c_firmware==4.80f && !dex_mode) strcpy(version, "480");   else
-    if(c_firmware==4.80f &&  dex_mode) strcpy(version, "480d");  else
+	if(c_firmware==4.80f &&  dex_mode) strcpy(version, "480d");  else
 	if(c_firmware==4.81f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.81f &&  dex_mode) strcpy(version, "481d");  else
+	if(c_firmware==4.81f &&  dex_mode) strcpy(version, "481d");  else
 	if(c_firmware==4.82f && !dex_mode) strcpy(version, "475");   else
-    if(c_firmware==4.82f &&  dex_mode) strcpy(version, "481d");  else	return;
+	if(c_firmware==4.82f &&  dex_mode) strcpy(version, "481d");  else	return;
 
-    char rkdumper[64];
-    sprintf(rkdumper, "/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_%s.self", version);
+	char rkdumper[64];
+	sprintf(rkdumper, "/dev_hdd0/game/RBGTLBOX2/USRDIR/root_key_%s.self", version);
 
-    if(!exist((char*)rkdumper)) return;
+	if(!exist((char*)rkdumper)) return;
 
-    dialog_ret=0;
-    cellMsgDialogOpen2( type_dialog_yes_no, STR_EIDRK, dialog_fun1, (void*)0x0000aaaa, NULL );
-    wait_dialog();
+	dialog_ret=0;
+	cellMsgDialogOpen2( type_dialog_yes_no, STR_EIDRK, dialog_fun1, (void*)0x0000aaaa, NULL );
+	wait_dialog();
 
-    if(dialog_ret==1)
-        launch_self2((char*)rkdumper);
+	if(dialog_ret==1)
+		launch_self2((char*)rkdumper);
 }
+
 /*******************/
 /* Control Console */
-
+/*******************/
 
 CellConsoleInputProcessorResult _cellConsolePeek
 				(unsigned int uiConnection,
@@ -2853,16 +2826,16 @@ CellConsoleInputProcessorResult _cellConsolePeek
 	char peek_addr[32]; peek_addr[0]=0;
 	uint64_t peekA=0;
 
-      if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
-		  peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
-  		  if(peekA>0x80000000007ffff8ULL) return CELL_CONSOLE_INPUT_PROCESSED;
+	if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
+		peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
+		if(peekA>0x80000000007ffff8ULL) return CELL_CONSOLE_INPUT_PROCESSED;
 			cellConsolePrintf(uiConnection, "peek(0x80000000%08X): 0x%08X%08X\n", peekA, (peekq(peekA)>>32), peekq(peekA));
-      } else {
-            cellConsolePrintf(uiConnection,
+	} else {
+		cellConsolePrintf(uiConnection,
 				"Usage: peek <u32 address>\n\npeek 2f8011\n\n");
-      }
-      cellConsolePrintf(uiConnection, "\n> ");
-      return CELL_CONSOLE_INPUT_PROCESSED;
+	}
+	cellConsolePrintf(uiConnection, "\n> ");
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsolePeekL
@@ -2877,26 +2850,25 @@ CellConsoleInputProcessorResult _cellConsolePeekL
 	uint64_t _val=0;
 	unsigned char _vals[9];
 
-      if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
+	if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
 		for(n=0; n<256; n+=8)
-		  {
-		peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL + (uint64_t) n;
-		if(peekA>0x80000000007ffff8ULL) break;
-		_val=peekq(peekA);
-		for(u8 m=0;m<8;m++)
-		  {
-			_vals[7-m]=(_val>>(m*8))&0xff; if(_vals[7-m]<0x20 || _vals[7-m]>0x7f) _vals[7-m]='.';
+		{
+			peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL + (uint64_t) n;
+			if(peekA>0x80000000007ffff8ULL) break;
+			_val=peekq(peekA);
+			for(u8 m=0;m<8;m++)
+			{
+				_vals[7-m]=(_val>>(m*8))&0xff; if(_vals[7-m]<0x20 || _vals[7-m]>0x7f) _vals[7-m]='.';
+			}
+			cellConsolePrintf(uiConnection, "peek(0x80000000%08X): 0x%08X%08X | %s\n", peekA, (_val>>32), _val, _vals);
+		}
 
-		  }
-		cellConsolePrintf(uiConnection, "peek(0x80000000%08X): 0x%08X%08X | %s\n", peekA, (_val>>32), _val, _vals);
-		  }
-
-      } else {
-            cellConsolePrintf(uiConnection,
+	} else {
+		cellConsolePrintf(uiConnection,
 				"Usage: peekl <u32 address>\n\npeek 2f8011\n\n");
-      }
-      cellConsolePrintf(uiConnection, "\n> ");
-      return CELL_CONSOLE_INPUT_PROCESSED;
+	}
+	cellConsolePrintf(uiConnection, "\n> ");
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsolePoke
@@ -2910,22 +2882,22 @@ CellConsoleInputProcessorResult _cellConsolePoke
 	char poke_val[32]; poke_val[0]=0;
 	uint64_t peekA=0, pokeA=0;
 
-      if (sscanf(pcInput, "%*s %s %s", peek_addr, poke_val)==2) {
-			peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
-			if(peekA>0x80000000007ffff8ULL) return CELL_CONSOLE_INPUT_PROCESSED;
-			cellConsolePrintf(uiConnection, "peek(0x80000000%08X): 0x%08X%08X\n", peekA, (peekq(peekA)>>32), peekq(peekA));
+	if (sscanf(pcInput, "%*s %s %s", peek_addr, poke_val)==2) {
+		peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
+		if(peekA>0x80000000007ffff8ULL) return CELL_CONSOLE_INPUT_PROCESSED;
+		cellConsolePrintf(uiConnection, "peek(0x80000000%08X): 0x%08X%08X\n", peekA, (peekq(peekA)>>32), peekq(peekA));
 
-  			pokeA=strtoull(poke_val, NULL, 16);
-			pokeq(peekA, pokeA);
-			peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
-			cellConsolePrintf(uiConnection, "poke(0x80000000%08X)= 0x%08X%08X\n", peekA, (peekq(peekA)>>32), peekq(peekA));
+		pokeA=strtoull(poke_val, NULL, 16);
+		pokeq(peekA, pokeA);
+		peekA=strtoull(peek_addr, NULL, 16)+0x8000000000000000ULL;
+		cellConsolePrintf(uiConnection, "poke(0x80000000%08X)= 0x%08X%08X\n", peekA, (peekq(peekA)>>32), peekq(peekA));
 
-      } else {
-            cellConsolePrintf(uiConnection,
+	} else {
+		cellConsolePrintf(uiConnection,
 				"Usage: poke <u32 address> <u64 value>\n\npoke 2f8011 1020304050607080\n\n");
-      }
-      cellConsolePrintf(uiConnection, "\n> ");
-      return CELL_CONSOLE_INPUT_PROCESSED;
+	}
+	cellConsolePrintf(uiConnection, "\n> ");
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsolePeekLV1
@@ -2940,7 +2912,7 @@ CellConsoleInputProcessorResult _cellConsolePeekLV1
 	uint64_t _val=0;
 	unsigned char _vals[9];
 
-      if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
+	if (sscanf(pcInput, "%*s %s", peek_addr)==1) {
 		for(n=0; n<256; n+=8)
 		  {
 		peekA=strtoull(peek_addr, NULL, 16) + (uint64_t) n;
@@ -2953,12 +2925,12 @@ CellConsoleInputProcessorResult _cellConsolePeekLV1
 		cellConsolePrintf(uiConnection, "peeklv1(0x00000000%08X): 0x%08X%08X | %s\n", peekA, (_val>>32), _val, _vals);
 		  }
 
-      } else {
-            cellConsolePrintf(uiConnection,
+	} else {
+		cellConsolePrintf(uiConnection,
 				"Usage: peeklv1 <u32 address>\n\npeeklv1 2f8011\n\n");
-      }
-      cellConsolePrintf(uiConnection, "\n> ");
-      return CELL_CONSOLE_INPUT_PROCESSED;
+	}
+	cellConsolePrintf(uiConnection, "\n> ");
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsolePokeLV1
@@ -2972,22 +2944,21 @@ CellConsoleInputProcessorResult _cellConsolePokeLV1
 	char poke_val[32]; poke_val[0]=0;
 	uint64_t peekA=0, pokeA=0;
 
-      if (sscanf(pcInput, "%*s %s %s", peek_addr, poke_val)==2) {
+	if (sscanf(pcInput, "%*s %s %s", peek_addr, poke_val)==2) {
 			peekA=strtoull(peek_addr, NULL, 16);
-  			pokeA=strtoull(poke_val, NULL, 16);
+			pokeA=strtoull(poke_val, NULL, 16);
 
 			cellConsolePrintf(uiConnection, "peeklv1(0x00000000%08X): 0x%08X%08X\n", peekA, (peek_lv1_cobra(peekA)>>32), peek_lv1_cobra(peekA));
 			poke_lv1(peekA, pokeA);
 			cellConsolePrintf(uiConnection, "pokelv1(0x00000000%08X)= 0x%08X%08X\n", peekA, (peek_lv1_cobra(peekA)>>32), peek_lv1_cobra(peekA));
 
-      } else {
-            cellConsolePrintf(uiConnection,
+	} else {
+		cellConsolePrintf(uiConnection,
 				"Usage: pokelv1 <u32 address> <u64 value>\n\npokelv1 2f8011 1020304050607080\n\n");
-      }
-      cellConsolePrintf(uiConnection, "\n> ");
-      return CELL_CONSOLE_INPUT_PROCESSED;
+	}
+	cellConsolePrintf(uiConnection, "\n> ");
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
-
 
 CellConsoleInputProcessorResult _cellConsoleQuitXMB
 				(unsigned int uiConnection,
@@ -2996,12 +2967,12 @@ CellConsoleInputProcessorResult _cellConsoleQuitXMB
 				int iContinuation) {
 
 	(void) pvDummy; (void) iContinuation; (void)uiConnection; (void)iContinuation; (void) pcInput;
-    cellConsolePrintf(uiConnection, "\nShutting down...\n");
+	cellConsolePrintf(uiConnection, "\nShutting down...\n");
 	//unload_modules();
-    cellConsolePrintf(uiConnection, "Done!\n\n");
+	cellConsolePrintf(uiConnection, "Done!\n\n");
 	exit_app();
 
-    return CELL_CONSOLE_INPUT_PROCESSED;
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsoleSS
@@ -3020,7 +2991,7 @@ CellConsoleInputProcessorResult _cellConsoleSS
 	else
 		sprintf(video_mem, "/dev_hdd0/%04d%02d%02d-%02d%02d%02d-SCREENSHOT.RAW", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
 	sprintf(scm, "\n%s: [%s]...\n", STR_SCRSHTSAVED, video_mem);
-    cellConsolePrintf(uiConnection, scm);
+	cellConsolePrintf(uiConnection, scm);
 	FILE *fpA;
 	remove(video_mem);
 	fpA = fopen ( video_mem, "wb" );
@@ -3030,10 +3001,9 @@ CellConsoleInputProcessorResult _cellConsoleSS
 	}
 	fclose(fpA);
 	sprintf(scm, "%s\n\n> ", STR_DONE);
-    cellConsolePrintf(uiConnection, scm);
+	cellConsolePrintf(uiConnection, scm);
 
-
-    return CELL_CONSOLE_INPUT_PROCESSED;
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 CellConsoleInputProcessorResult _cellConsoleRESTART
@@ -3045,12 +3015,12 @@ CellConsoleInputProcessorResult _cellConsoleRESTART
 	(void) pvDummy; (void) iContinuation; (void)uiConnection; (void)iContinuation; (void) pcInput;
 	char str[128];
 	sprintf(str, "\n%s\n", STR_SHTDWN);
-    cellConsolePrintf(uiConnection, str);
+	cellConsolePrintf(uiConnection, str);
 	sprintf(str, "%s\n", STR_TRYRESTART);
 	cellConsolePrintf(uiConnection, str);
 	restart_request=1;
 
-    return CELL_CONSOLE_INPUT_PROCESSED;
+	return CELL_CONSOLE_INPUT_PROCESSED;
 }
 
 
@@ -3096,87 +3066,86 @@ static int load_modules()
 	//cellConsoleNetworkInitialize();
 	cellConsoleNetworkServerInit(8080);
 
-/*
-cellConsoleInputProcessorAdd("resetbd",
-				"Unmount/mount dev_bdvd",
-			      "", 0,
-			      _cellConsoleResetBDVD);
+	/*
+	cellConsoleInputProcessorAdd("resetbd",
+					"Unmount/mount dev_bdvd",
+				      "", 0,
+				      _cellConsoleResetBDVD);
 
-cellConsoleInputProcessorAdd("panic",
-				"LV2 panic/reload",
-			      "", 0,
-			      _cellConsolePanic);
+	cellConsoleInputProcessorAdd("panic",
+					"LV2 panic/reload",
+				      "", 0,
+				      _cellConsolePanic);
 
-cellConsoleInputProcessorAdd("debug",
-				"Enable disable debug messages",
-			      "on|off", 0,
-			      _cellConsoleDebug);
-*/
+	cellConsoleInputProcessorAdd("debug",
+					"Enable disable debug messages",
+				      "on|off", 0,
+				      _cellConsoleDebug);
+	*/
 
-cellConsoleInputProcessorAdd("pokelv1",
-				"Write value to LV1 memory",
-			      "<u32 address> <u64 value>", 0,
-			      _cellConsolePokeLV1);
+	cellConsoleInputProcessorAdd("pokelv1",
+					"Write value to LV1 memory",
+				      "<u32 address> <u64 value>", 0,
+				      _cellConsolePokeLV1);
 
-cellConsoleInputProcessorAdd("peeklv1",
-				"Read value from LV1 memory",
-			      "<u32 address>", 0,
-			      _cellConsolePeekLV1);
+	cellConsoleInputProcessorAdd("peeklv1",
+					"Read value from LV1 memory",
+				      "<u32 address>", 0,
+				      _cellConsolePeekLV1);
 
-cellConsoleInputProcessorAdd("poke",
-				"Write value to LV2 memory",
-			      "<u32 address> <u64 value>", 0,
-			      _cellConsolePoke);
+	cellConsoleInputProcessorAdd("poke",
+					"Write value to LV2 memory",
+				      "<u32 address> <u64 value>", 0,
+				      _cellConsolePoke);
 
-cellConsoleInputProcessorAdd("peekl",
-				"Read 256 values from LV2 memory",
-			      "<u32 address>", 0,
-			      _cellConsolePeekL);
+	cellConsoleInputProcessorAdd("peekl",
+					"Read 256 values from LV2 memory",
+				      "<u32 address>", 0,
+				      _cellConsolePeekL);
 
-cellConsoleInputProcessorAdd("peek",
-				"Read value from LV2 memory",
-			      "<u32 address>", 0,
-			      _cellConsolePeek);
+	cellConsoleInputProcessorAdd("peek",
+					"Read value from LV2 memory",
+				      "<u32 address>", 0,
+				      _cellConsolePeek);
 
-cellConsoleInputProcessorAdd("quit",
-				"Quit and exit to XMB",
-			      "", 0,
-			      _cellConsoleQuitXMB);
+	cellConsoleInputProcessorAdd("quit",
+					"Quit and exit to XMB",
+				      "", 0,
+				      _cellConsoleQuitXMB);
 
-cellConsoleInputProcessorAdd("screenshot",
-				"Save current screen as RAW (RGB) image in /dev_hdd0",
-			      "", 0,
-			      _cellConsoleSS);
+	cellConsoleInputProcessorAdd("screenshot",
+					"Save current screen as RAW (RGB) image in /dev_hdd0",
+				      "", 0,
+				      _cellConsoleSS);
 
-cellConsoleInputProcessorAdd("restart",
-				"Restart",
-			      "", 0,
-			      _cellConsoleRESTART);
+	cellConsoleInputProcessorAdd("restart",
+					"Restart",
+				      "", 0,
+				      _cellConsoleRESTART);
 
+	ret = Fonts_LoadModules();
+	if ( ret != CELL_OK ) {
+		return CELL_OK;
+	}
 
-		ret = Fonts_LoadModules();
-		if ( ret != CELL_OK ) {
-			return CELL_OK;
-		}
-
-		fonts = Fonts_Init();
-		if ( fonts ) {
-			ret = Fonts_InitLibraryFreeType( &freeType );
+	fonts = Fonts_Init();
+	if ( fonts ) {
+		ret = Fonts_InitLibraryFreeType( &freeType );
+		if ( ret == CELL_OK ) {
+			ret = Fonts_OpenFonts( freeType, fonts, app_usrdir );
 			if ( ret == CELL_OK ) {
-				ret = Fonts_OpenFonts( freeType, fonts, app_usrdir );
+				ret = Fonts_CreateRenderer( freeType, 0, &RenderWork.Renderer );
 				if ( ret == CELL_OK ) {
-					ret = Fonts_CreateRenderer( freeType, 0, &RenderWork.Renderer );
-					if ( ret == CELL_OK ) {
-						return CELL_OK;
-					}
-
-					Fonts_CloseFonts( fonts );
+					return CELL_OK;
 				}
-				Fonts_EndLibrary( freeType );
+
+				Fonts_CloseFonts( fonts );
 			}
-			Fonts_End();
-			fonts = (Fonts_t*)0;
+			Fonts_EndLibrary( freeType );
 		}
+		Fonts_End();
+		fonts = (Fonts_t*)0;
+	}
 
 	return ret;
 }
@@ -3196,7 +3165,6 @@ static int unload_modules()
 	{
 		save_options();
 	}
-
 
 	cellPadEnd();
 
@@ -3221,20 +3189,15 @@ static int unload_modules()
 }
 
 
-
-
-
 /****************************************************/
 /* PNG SECTION                                      */
 /****************************************************/
-
 
 typedef struct CtrlMallocArg
 {
 	u32 mallocCallCounts;
 
 } CtrlMallocArg;
-
 
 typedef struct CtrlFreeArg
 {
@@ -3244,18 +3207,17 @@ typedef struct CtrlFreeArg
 
 void *png_malloc(u32 size, void * a)
 {
-    CtrlMallocArg *arg;
+	CtrlMallocArg *arg;
 	arg = (CtrlMallocArg *) a;
 	arg->mallocCallCounts++;
 	return memalign(16,size+16);
 }
 
-
 static int png_free(void *ptr, void * a)
 {
-    CtrlFreeArg *arg;
-  	arg = (CtrlFreeArg *) a;
-  	arg->freeCallCounts++;
+	CtrlFreeArg *arg;
+	arg = (CtrlFreeArg *) a;
+	arg->freeCallCounts++;
 	free(ptr);
 	return 0;
 }
@@ -3263,18 +3225,17 @@ static int png_free(void *ptr, void * a)
 /*
 void *jpg_malloc(u32 size, void * a)
 {
-    CtrlMallocArg *arg;
+	CtrlMallocArg *arg;
 	arg = (CtrlMallocArg *) a;
 	arg->mallocCallCounts++;
 	return memalign(16,size+16);
 }
 
-
 static int jpg_free(void *ptr, void * a)
 {
-    CtrlFreeArg *arg;
-  	arg = (CtrlFreeArg *) a;
-  	arg->freeCallCounts++;
+	CtrlFreeArg *arg;
+	arg = (CtrlFreeArg *) a;
+	arg->freeCallCounts++;
 	free(ptr);
 	return 0;
 }*/
@@ -3299,30 +3260,30 @@ int load_jpg_texture_th(u8 *data, char *name, uint16_t _DW)
 	int ret=-1, ok=-1;
 	jpg_w=0; jpg_h=0;
 
-    CellJpgDecMainHandle     mHandle;
-    CellJpgDecSubHandle      sHandle;
+	CellJpgDecMainHandle     mHandle;
+	CellJpgDecSubHandle      sHandle;
 
-    CellJpgDecInParam        inParam;
-    CellJpgDecOutParam       outParam;
+	CellJpgDecInParam        inParam;
+	CellJpgDecOutParam       outParam;
 
-    CellJpgDecSrc            src;
-    CellJpgDecOpnInfo        opnInfo;
-    CellJpgDecInfo           info;
+	CellJpgDecSrc            src;
+	CellJpgDecOpnInfo        opnInfo;
+	CellJpgDecInfo           info;
 
-    CellJpgDecDataOutInfo    dOutInfo;
-    CellJpgDecDataCtrlParam  dCtrlParam;
+	CellJpgDecDataOutInfo    dOutInfo;
+	CellJpgDecDataCtrlParam  dCtrlParam;
 
-    CellJpgDecThreadInParam  InParam;
-    CellJpgDecThreadOutParam OutParam;
+	CellJpgDecThreadInParam  InParam;
+	CellJpgDecThreadOutParam OutParam;
 
 	CtrlMallocArg               MallocArg;
 	CtrlFreeArg                 FreeArg;
 
-    float                    downScale;
+	float                    downScale;
 
 
-    MallocArg.mallocCallCounts  = 0;
-    FreeArg.freeCallCounts      = 0;
+	MallocArg.mallocCallCounts  = 0;
+	FreeArg.freeCallCounts      = 0;
 
 //	InParam.spuThreadEnable   = CELL_JPGDEC_SPU_THREAD_DISABLE;
 	InParam.spuThreadEnable   = CELL_JPGDEC_SPU_THREAD_ENABLE;
@@ -3333,21 +3294,21 @@ int load_jpg_texture_th(u8 *data, char *name, uint16_t _DW)
 	InParam.cbCtrlFreeFunc    = jpg_free;
 	InParam.cbCtrlFreeArg     = &FreeArg;
 
-    if(cellJpgDecCreate(&mHandle, &InParam, &OutParam) == CELL_OK)
+	if(cellJpgDecCreate(&mHandle, &InParam, &OutParam) == CELL_OK)
 	{
-            src.srcSelect  = CELL_JPGDEC_FILE;
-            src.streamPtr  = NULL;
-            src.streamSize = 0;
+			src.srcSelect  = CELL_JPGDEC_FILE;
+			src.streamPtr  = NULL;
+			src.streamSize = 0;
 
-            src.fileName   = name;
-            src.fileOffset = 0;
-            src.fileSize   = 0;
+			src.fileName   = name;
+			src.fileOffset = 0;
+			src.fileSize   = 0;
 
-            src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_ENABLE;
+			src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_ENABLE;
 //			src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_DISABLE;
 
-            int ret_dec_open = cellJpgDecOpen(mHandle, &sHandle, &src, &opnInfo);
-            if(ret_dec_open == CELL_OK)
+			int ret_dec_open = cellJpgDecOpen(mHandle, &sHandle, &src, &opnInfo);
+			if(ret_dec_open == CELL_OK)
 			{
 				if(cellJpgDecReadHeader(mHandle, sHandle, &info) == CELL_OK)
 				{
@@ -3436,30 +3397,30 @@ int load_jpg_texture(u8 *data, char *name, uint16_t _DW)
 	int ret=-1, ok=-1;
 	png_w=0; png_h=0;
 
-    CellJpgDecMainHandle     mHandle;
-    CellJpgDecSubHandle      sHandle;
+	CellJpgDecMainHandle     mHandle;
+	CellJpgDecSubHandle      sHandle;
 
-    CellJpgDecInParam        inParam;
-    CellJpgDecOutParam       outParam;
+	CellJpgDecInParam        inParam;
+	CellJpgDecOutParam       outParam;
 
-    CellJpgDecSrc            src;
-    CellJpgDecOpnInfo        opnInfo;
-    CellJpgDecInfo           info;
+	CellJpgDecSrc            src;
+	CellJpgDecOpnInfo        opnInfo;
+	CellJpgDecInfo           info;
 
-    CellJpgDecDataOutInfo    dOutInfo;
-    CellJpgDecDataCtrlParam  dCtrlParam;
+	CellJpgDecDataOutInfo    dOutInfo;
+	CellJpgDecDataCtrlParam  dCtrlParam;
 
-    CellJpgDecThreadInParam  InParam;
-    CellJpgDecThreadOutParam OutParam;
+	CellJpgDecThreadInParam  InParam;
+	CellJpgDecThreadOutParam OutParam;
 
 	CtrlMallocArg               MallocArg;
 	CtrlFreeArg                 FreeArg;
 
-    float                    downScale;
-    bool                     unsupportFlag;
+	float                    downScale;
+	bool                     unsupportFlag;
 
-    MallocArg.mallocCallCounts  = 0;
-    FreeArg.freeCallCounts      = 0;
+	MallocArg.mallocCallCounts  = 0;
+	FreeArg.freeCallCounts      = 0;
 
 //	InParam.spuThreadEnable   = CELL_JPGDEC_SPU_THREAD_DISABLE;
 	InParam.spuThreadEnable   = CELL_JPGDEC_SPU_THREAD_ENABLE;
@@ -3470,22 +3431,22 @@ int load_jpg_texture(u8 *data, char *name, uint16_t _DW)
 	InParam.cbCtrlFreeFunc    = jpg_free;
 	InParam.cbCtrlFreeArg     = &FreeArg;
 
-    if(cellJpgDecCreate(&mHandle, &InParam, &OutParam) == CELL_OK)
+	if(cellJpgDecCreate(&mHandle, &InParam, &OutParam) == CELL_OK)
 	{
-            src.srcSelect  = CELL_JPGDEC_FILE;
-            src.fileName   = name;
-            src.fileOffset = 0;
-            src.fileSize   = 0;
-            src.streamPtr  = NULL;
-            src.streamSize = 0;
+			src.srcSelect  = CELL_JPGDEC_FILE;
+			src.fileName   = name;
+			src.fileOffset = 0;
+			src.fileSize   = 0;
+			src.streamPtr  = NULL;
+			src.streamSize = 0;
 
-            src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_ENABLE;
+			src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_ENABLE;
 //			src.spuThreadEnable = CELL_JPGDEC_SPU_THREAD_DISABLE;
 
 			unsupportFlag = false;
-            if(cellJpgDecOpen(mHandle, &sHandle, &src, &opnInfo) == CELL_OK)
+			if(cellJpgDecOpen(mHandle, &sHandle, &src, &opnInfo) == CELL_OK)
 			{
-                ret = cellJpgDecReadHeader(mHandle, sHandle, &info);
+				ret = cellJpgDecReadHeader(mHandle, sHandle, &info);
 				if(info.jpegColorSpace == CELL_JPG_UNKNOWN){
 					unsupportFlag = true;
 				}
@@ -3536,13 +3497,12 @@ int load_jpg_texture(u8 *data, char *name, uint16_t _DW)
 
 						}
 
-
 					inParam.commandPtr       = NULL;
 					inParam.method           = CELL_JPGDEC_FAST;//CELL_JPGDEC_QUALITY
 					inParam.outputMode       = CELL_JPGDEC_TOP_TO_BOTTOM;
 					inParam.outputColorSpace = CELL_JPG_RGBA;
 			//		if(scale_icon_h)
-			//          inParam.outputColorAlpha = 0x80;
+			// 			inParam.outputColorAlpha = 0x80;
 			//		else
 						inParam.outputColorAlpha = 0xfe;
 					ret = cellJpgDecSetParameter(mHandle, sHandle, &inParam, &outParam);
@@ -3617,7 +3577,6 @@ int load_png_texture_th(u8 *data, char *name)//, uint16_t _DW)
 	InParam.cbCtrlMallocArg   = &MallocArg;
 	InParam.cbCtrlFreeFunc    = png_free;
 	InParam.cbCtrlFreeArg     = &FreeArg;
-
 
 	ret_png= ret= cellPngDecCreate(&mHandle, &InParam, &OutParam);
 
@@ -3695,6 +3654,7 @@ int load_png_texture(u8 *data, char *name, uint16_t _DW)
 {
 	while(is_decoding_jpg || is_decoding_png){ sys_timer_usleep(3336); cellSysutilCheckCallback();}
 	is_decoding_png=1;
+
 	int  ret_file, ret, ok=-1;
 	png_w= png_h= 0;
 
@@ -3726,7 +3686,6 @@ int load_png_texture(u8 *data, char *name, uint16_t _DW)
 	InParam.cbCtrlMallocArg   = &MallocArg;
 	InParam.cbCtrlFreeFunc    = png_free;
 	InParam.cbCtrlFreeArg     = &FreeArg;
-
 
 	ret_png= ret= cellPngDecCreate(&mHandle, &InParam, &OutParam);
 
@@ -3768,7 +3727,6 @@ int load_png_texture(u8 *data, char *name, uint16_t _DW)
 				inParam.outputColorAlpha  = 0xff;
 
 //				inParam.outputColorAlpha  = 0x00;
-
 
 			ret = cellPngDecSetParameter(mHandle, sHandle, &inParam, &outParam);
 		}
@@ -3821,7 +3779,6 @@ int load_texture(u8 *data, char *name, uint16_t dw)
 /* syscalls                                         */
 /****************************************************/
 
-
 void pokeq( uint64_t addr, uint64_t val)
 {
 	if(c_firmware!=3.55f && c_firmware!=3.41f && c_firmware!=3.15f && c_firmware!=4.21f && c_firmware!=4.30f && c_firmware!=4.31f && c_firmware!=4.40f && c_firmware!=4.41f && c_firmware!=4.46f && c_firmware!=4.50f && c_firmware!=4.53f &&
@@ -3840,7 +3797,7 @@ uint64_t peekq(uint64_t addr)
 uint64_t peek_lv1_cobra(uint64_t addr)
 {
 	if(!is_cobra) return peek_lv1(addr); //OLD
-    //if(!is_cobra || addr <= 0x1000 || addr >= 0xA000) return peek_lv1(addr); // NEW BYPASS FOR SYSCALL8
+	//if(!is_cobra || addr <= 0x1000 || addr >= 0xA000) return peek_lv1(addr); // NEW BYPASS FOR SYSCALL8
 	system_call_1(11, addr);
 	return_to_user_prog(uint64_t);
 }
@@ -4175,56 +4132,54 @@ void blur_texture(uint8_t *buffer_to, uint32_t width, uint32_t height, int x, in
 
 			if(lines>=p_range && cline>=p_range && lines<(wy-p_range) && cline<((wx-p_range)*4))
 			{
+				if(use_blur)
+				{
+				// box blur
+					// get RGB values for all surrounding pixels
+					// to create average for blurring
+					c_pixelB = buffer_to[pos_to + cline + 0 + p_step];
+					c_pixelG = buffer_to[pos_to + cline + 1 + p_step];
+					c_pixelR = buffer_to[pos_to + cline + 2 + p_step];
 
-			if(use_blur)
-			{
-			// box blur
-				// get RGB values for all surrounding pixels
-				// to create average for blurring
-				c_pixelB = buffer_to[pos_to + cline + 0 + p_step];
-				c_pixelG = buffer_to[pos_to + cline + 1 + p_step];
-				c_pixelR = buffer_to[pos_to + cline + 2 + p_step];
+					c_pixelB+= buffer_to[pos_to + cline + 0 - p_step];
+					c_pixelG+= buffer_to[pos_to + cline + 1 - p_step];
+					c_pixelR+= buffer_to[pos_to + cline + 2 - p_step];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 - p_step];
-				c_pixelG+= buffer_to[pos_to + cline + 1 - p_step];
-				c_pixelR+= buffer_to[pos_to + cline + 2 - p_step];
+					c_pixelB+= buffer_to[pos_to + cline + 0 - row];
+					c_pixelG+= buffer_to[pos_to + cline + 1 - row];
+					c_pixelR+= buffer_to[pos_to + cline + 2 - row];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 - row];
-				c_pixelG+= buffer_to[pos_to + cline + 1 - row];
-				c_pixelR+= buffer_to[pos_to + cline + 2 - row];
+					c_pixelB+= buffer_to[pos_to + cline + 0 + row];
+					c_pixelG+= buffer_to[pos_to + cline + 1 + row];
+					c_pixelR+= buffer_to[pos_to + cline + 2 + row];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 + row];
-				c_pixelG+= buffer_to[pos_to + cline + 1 + row];
-				c_pixelR+= buffer_to[pos_to + cline + 2 + row];
+					c_pixelB+= buffer_to[pos_to + cline + 0 - row - p_step];
+					c_pixelG+= buffer_to[pos_to + cline + 1 - row - p_step];
+					c_pixelR+= buffer_to[pos_to + cline + 2 - row - p_step];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 - row - p_step];
-				c_pixelG+= buffer_to[pos_to + cline + 1 - row - p_step];
-				c_pixelR+= buffer_to[pos_to + cline + 2 - row - p_step];
+					c_pixelB+= buffer_to[pos_to + cline + 0 + row + p_step];
+					c_pixelG+= buffer_to[pos_to + cline + 1 + row + p_step];
+					c_pixelR+= buffer_to[pos_to + cline + 2 + row + p_step];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 + row + p_step];
-				c_pixelG+= buffer_to[pos_to + cline + 1 + row + p_step];
-				c_pixelR+= buffer_to[pos_to + cline + 2 + row + p_step];
+					c_pixelB+= buffer_to[pos_to + cline + 0 - row + p_step];
+					c_pixelG+= buffer_to[pos_to + cline + 1 - row + p_step];
+					c_pixelR+= buffer_to[pos_to + cline + 2 - row + p_step];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 - row + p_step];
-				c_pixelG+= buffer_to[pos_to + cline + 1 - row + p_step];
-				c_pixelR+= buffer_to[pos_to + cline + 2 - row + p_step];
+					c_pixelB+= buffer_to[pos_to + cline + 0 + row - p_step];
+					c_pixelG+= buffer_to[pos_to + cline + 1 + row - p_step];
+					c_pixelR+= buffer_to[pos_to + cline + 2 + row - p_step];
 
-				c_pixelB+= buffer_to[pos_to + cline + 0 + row - p_step];
-				c_pixelG+= buffer_to[pos_to + cline + 1 + row - p_step];
-				c_pixelR+= buffer_to[pos_to + cline + 2 + row - p_step];
-
-				// average values
-				c_pixelB_AVG=((uint8_t) (c_pixelB/8));
-				c_pixelG_AVG=((uint8_t) (c_pixelG/8));
-				c_pixelR_AVG=((uint8_t) (c_pixelR/8));
-			}
+					// average values
+					c_pixelB_AVG=((uint8_t) (c_pixelB/8));
+					c_pixelG_AVG=((uint8_t) (c_pixelG/8));
+					c_pixelR_AVG=((uint8_t) (c_pixelR/8));
+				}
 				else //no blur
 				{
 					c_pixelB_AVG = buffer_to[pos_to + cline + 0];
 					c_pixelG_AVG = buffer_to[pos_to + cline + 1];
 					c_pixelR_AVG = buffer_to[pos_to + cline + 2];
 				}
-
 
 				if(c_BRI>0) // increase brightnes by percent (101+=1%+)
 				{
@@ -4274,7 +4229,6 @@ void blur_texture(uint8_t *buffer_to, uint32_t width, uint32_t height, int x, in
 
 			}
 
-
 			if(use_grayscale && !use_blur)
 			{
 				// convert to grayscale only
@@ -4286,7 +4240,6 @@ void blur_texture(uint8_t *buffer_to, uint32_t width, uint32_t height, int x, in
 					c_pixel-=(c_BRI*3); else c_pixel=0; }
 				memset(buffer_to + pos_to + cline, (uint8_t) (c_pixel/3), 3);
 			}
-
 
 			// keep alpha
 			// memset(buffer_to + pos_to + cline + 3, buffer_to[pos_to + cline + 3], 1);
@@ -4301,8 +4254,7 @@ void blur_texture(uint8_t *buffer_to, uint32_t width, uint32_t height, int x, in
 */
 
 
-//FONTS
-
+// FONTS
 
 void print_label(float x, float y, float scale, uint32_t color, char *str1p, float weight, float slant, int ufont)
 {
@@ -4446,7 +4398,6 @@ void flush_ttf(uint8_t *buffer, uint32_t _V_WIDTH, uint32_t _V_HEIGHT)
 					if(ttf_label[cl].centered==1) x=(ttf_label[cl].x - (w/2.0f)/surfW);
 					else if(ttf_label[cl].centered==2) x=(ttf_label[cl].x - (w)/surfW); //right justified
 
-
 					if ( ( (w+(x*surfW)) > textW) && (ttf_label[cl].cut==0.0f) && ttf_label[cl].centered!=2) {
 						float ratio;
 
@@ -4498,46 +4449,44 @@ void fix_perm_recursive(const char* start_path)
 	new_pad=0; old_pad=0;
 	if(abort_rec==1) return;
 
-    int dir_fd;
-    uint64_t nread;
-    char f_name[CELL_FS_MAX_FS_FILE_NAME_LENGTH+1];
-    CellFsDirent dir_ent;
-    CellFsErrno err;
-    cellFsChmod(start_path, 0777);
-
+	int dir_fd;
+	uint64_t nread;
+	char f_name[CELL_FS_MAX_FS_FILE_NAME_LENGTH+1];
+	CellFsDirent dir_ent;
+	CellFsErrno err;
+	cellFsChmod(start_path, 0777);
 
 	flip();
-    if (cellFsOpendir(start_path, &dir_fd) == CELL_FS_SUCCEEDED)
-    {
-        cellFsChmod(start_path, 0777);
-        while (1) {
+	if (cellFsOpendir(start_path, &dir_fd) == CELL_FS_SUCCEEDED)
+	{
+		cellFsChmod(start_path, 0777);
+		while (1) {
 			pad_read();
 			if ( (old_pad & BUTTON_CIRCLE) || (old_pad & BUTTON_TRIANGLE) || dialog_ret==3) { abort_rec=1; new_pad=0; old_pad=0; break; } //
-            err = cellFsReaddir(dir_fd, &dir_ent, &nread);
-            if (nread != 0) {
-                if (!strcmp(dir_ent.d_name, ".") || !strcmp(dir_ent.d_name, ".."))
-                    continue;
+			err = cellFsReaddir(dir_fd, &dir_ent, &nread);
+			if (nread != 0) {
+				if (!strcmp(dir_ent.d_name, ".") || !strcmp(dir_ent.d_name, ".."))
+					continue;
 
-                sprintf(f_name, "%s/%s", start_path, dir_ent.d_name);
+				sprintf(f_name, "%s/%s", start_path, dir_ent.d_name);
 
-                if (dir_ent.d_type == CELL_FS_TYPE_DIRECTORY)
-                {
-                    cellFsChmod(f_name, CELL_FS_S_IFDIR | 0777);
-                    fix_perm_recursive(f_name);
+				if (dir_ent.d_type == CELL_FS_TYPE_DIRECTORY)
+				{
+					cellFsChmod(f_name, CELL_FS_S_IFDIR | 0777);
+					fix_perm_recursive(f_name);
 					if(abort_rec==1) break;
-                }
-                else if (dir_ent.d_type == CELL_FS_TYPE_REGULAR)
-                {
-                    cellFsChmod(f_name, 0666);
-                }
-            } else {
-                break;
-            }
-        }
-        err = cellFsClosedir(dir_fd);
-    }
+				}
+				else if (dir_ent.d_type == CELL_FS_TYPE_REGULAR)
+				{
+					cellFsChmod(f_name, 0666);
+				}
+			} else {
+				break;
+			}
+		}
+		err = cellFsClosedir(dir_fd);
+	}
 }
-
 
 static u32 get_crc(char *_path)
 {
@@ -4780,7 +4729,6 @@ void file_copy(char *path, char *path2, int progress)
 		ss_timer_last=time(NULL);
 }
 
-
 /*
 void open_osk(int for_what, char *init_text)
 {
@@ -4791,11 +4739,11 @@ void open_osk(int for_what, char *init_text)
 	if(for_what==3)	sprintf(orig, "%s", init_text);
 	if(for_what==4)	sprintf(orig, "%s", init_text);
 
-    wchar_t my_message[((strlen(orig) + 1)*2)];
-    mbstowcs(my_message, orig, (strlen(orig) + 1));
+	wchar_t my_message[((strlen(orig) + 1)*2)];
+	mbstowcs(my_message, orig, (strlen(orig) + 1));
 
-    wchar_t INIT_TEXT[((strlen(init_text) + 1)*2)];
-    mbstowcs(INIT_TEXT, init_text, (strlen(init_text) + 1));
+	wchar_t INIT_TEXT[((strlen(init_text) + 1)*2)];
+	mbstowcs(INIT_TEXT, init_text, (strlen(init_text) + 1));
 	if(for_what==2 || for_what==3) INIT_TEXT[0]=0;
 
 	inputFieldInfo.message = (uint16_t*)my_message;
@@ -4867,7 +4815,6 @@ void open_osk(int for_what, char *init_text)
 
 #define PETITBOOT_FILENAME		"dtbImage.ps3.bin"
 #define PETITBOOT_FILENAME2	    "dtbImage.ps3.bin.minimal"
-
 
 void install_petiboot()
 {
@@ -5067,8 +5014,7 @@ static void setup_vflash(void){
 	dialog_ret=0;
 	cellMsgDialogOpen2( type_dialog_yes_no, STR_RESIZE5, dialog_fun1, (void*)0x0000aaaa, NULL );
 	wait_dialog();
-        if(dialog_ret!=1)  {lv2_storage_close(dev_handle); return;}
-
+	if(dialog_ret!=1) {lv2_storage_close(dev_handle); return;}
 
 	result = lv2_storage_open(VFLASH_DEV_ID, &dev_handle);
 	if (result) {
@@ -5218,31 +5164,30 @@ void resize_vflash()
 
 int parse_ini()
 {
-    char line [ 256 ];
+	char line [ 256 ];
 
-    FILE *fp;
+	FILE *fp;
 
-    if(!exist( (char*) "/dev_hdd0/game/RBGTLBOX2/USRDIR/options.bin")) return 0;
+	if(!exist( (char*) "/dev_hdd0/game/RBGTLBOX2/USRDIR/options.bin")) return 0;
 
-    fp = fopen ( (char*) "/dev_hdd0/game/RBGTLBOX2/USRDIR/options.bin", "r" );
+	fp = fopen ( (char*) "/dev_hdd0/game/RBGTLBOX2/USRDIR/options.bin", "r" );
 
-    if( fp != NULL )
-    {
+	if( fp != NULL )
+	{
 
-        while ( fgets ( line, sizeof line, fp ) != NULL ) /* read a line */
-        {
-            if(line[0]==35) continue;
+		while ( fgets ( line, sizeof line, fp ) != NULL ) /* read a line */
+		{
+			if(line[0]==35) continue;
 
-            if(strstr (line,"confirm_with_x=0")!=NULL) {confirm_with_x=0; set_xo();}
-            if(strstr (line,"confirm_with_x=1")!=NULL) {confirm_with_x=1; set_xo();}
-        }
+			if(strstr (line,"confirm_with_x=0")!=NULL) {confirm_with_x=0; set_xo();}
+			if(strstr (line,"confirm_with_x=1")!=NULL) {confirm_with_x=1; set_xo();}
+		}
 
-        fclose ( fp );
-    }
+		fclose ( fp );
+	}
 
-    return 0;
+	return 0;
 }
-
 
 void clean_up()
 {
@@ -5368,7 +5313,6 @@ void free_text_buffers()
 
 	for(int c=0; c<MAX_XMB_ICONS; c++)
 		for(int n=0; n<xmb[c].size; n++) xmb[c].member[n].data=-1;
-
 }
 
 void free_all_buffers()
@@ -5672,7 +5616,6 @@ void draw_xmb_icons(xmb_def *_xmb, const int _xmb_icon_, int _xmb_x_offset, int 
 
 			display_img(nx, ny, nw, nh, 128, 128, 0.0f, 128, 128);
 		}
-
 	}
 
 	if(is_any_xmb_column)
@@ -5697,18 +5640,16 @@ void draw_xmb_icons(xmb_def *_xmb, const int _xmb_icon_, int _xmb_x_offset, int 
 
 void draw_xmb_bare(u8 _xmb_icon, u8 _all_icons, bool recursive, int _sub_level)
 {
-
-
 	draw_stars();
 	draw_xmb_bg();
 	draw_xmb_clock(xmb_clock, (_all_icons!=2 ? _xmb_icon : -1));
 
 	if(_all_icons==1) draw_xmb_icons(xmb, _xmb_icon, xmb_slide, xmb_slide_y, recursive, _sub_level, 0);
-	else if(_all_icons==2) draw_xmb_icons(xmb, _xmb_icon, xmb_slide, xmb_slide_y, recursive, -1, 0);
+	else
+	if(_all_icons==2) draw_xmb_icons(xmb, _xmb_icon, xmb_slide, xmb_slide_y, recursive, -1, 0);
+
 	flip();
 }
-
-
 
 void change_opacity(u8 *buffer, int delta, u32 size)
 {
@@ -5880,7 +5821,6 @@ int open_side_menu(int _top, int sel)
 		if ( (new_pad & BUTTON_TRIANGLE) || (new_pad & BUTTON_CIRCLE) ) {sel=-1; break;}
 		if ( (new_pad & BUTTON_CROSS) && opt_list[sel].label[0]==' ')  break;
 
-
 		if ( (new_pad & BUTTON_L1) || (new_pad & BUTTON_L2) || (new_pad & BUTTON_LEFT))  {sel=-2; break;}
 		if ( (new_pad & BUTTON_R1) || (new_pad & BUTTON_R2) || (new_pad & BUTTON_RIGHT)) {sel=-3; break;}
 
@@ -5934,7 +5874,7 @@ int open_side_menu(int _top, int sel)
 	return sel;
 }
 
-// 2.02.12 
+// 2.02.12
 #define SYSCALL8_OPCODE_ENABLE_PS2NETEMU	0x1ee9	/* Cobra 7.50 */
 #define PS2NETEMU_GET_STATUS				2
 
@@ -6056,8 +5996,6 @@ int open_dd_menu_xmb(char *_caption, int _width, t_opt_list *list, int _max, int
 			last_sel=sel;
 		}
 
-
-
 		draw_whole_xmb(0);
 
 		set_texture(text_LIST, _width, _height);
@@ -6068,7 +6006,6 @@ int open_dd_menu_xmb(char *_caption, int _width, t_opt_list *list, int _max, int
 		mouseX+=mouseXD; mouseY+=mouseYD;
 		if(mouseX>0.995f) {mouseX=0.995f;mouseXD=0.0f;} if(mouseX<0.0f) {mouseX=0.0f;mouseXD=0.0f;}
 		if(mouseY>0.990f) {mouseY=0.990f;mouseYD=0.0f;} if(mouseY<0.0f) {mouseY=0.0f;mouseYD=0.0f;}
-
 	}
 
 	return -1;
@@ -6102,42 +6039,41 @@ system_call_4(379,0x1100,0,0,0);
 void add_home_column()
 {
 		char str[128];
-		
+
 		sprintf(xmb[1].name, "%s", xmb_columns[1]); xmb[1].first=0; xmb[1].size=0;
 
 		add_xmb_member(xmb[1].member, &xmb[1].size, STR_SYSINF, STR_SYSINFDESC,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_info, 128, 128);
-		
+
 		sprintf(str, "%s %s %s", STR_QUITDESC1, STR_APP_NAME, STR_QUITDESC2);
 		add_xmb_member(xmb[1].member, &xmb[1].size, STR_QUIT, str,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_quit, 128, 128);
 
 		u8 col=1;
-		
+
 		add_xmb_option(xmb[col].member, &xmb[col].size, STR_LANG, STR_LANGDESC, (char*) "lang");
 		char nb[2];
 		int i;
 		for(i=0; i < lang_N ; i++) {
 			sprintf(nb, "%d", i);
-			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_LANGUAGE[i],			nb);
+			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_LANGUAGE[i],	nb);
 		}
 		xmb[col].member[xmb[col].size-1].option_selected=lang;
 		xmb[col].member[xmb[col].size-1].icon=xmb[0].data;
-		
-		
+
 		sprintf(str, "%s %s %s", STR_RESTSYSDESC1, STR_APP_NAME, STR_RESTSYSDESC2);
 		add_xmb_option(xmb[col].member, &xmb[col].size, STR_RESTSYS, str, (char*) "reboot");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB1,			(char*)"1");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB2,			(char*)"2");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB1,	(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_RESTSYS_SUB2,	(char*)"2");
 		xmb[col].member[xmb[col].size-1].option_selected=reboot;
 		xmb[col].member[xmb[col].size-1].icon=xmb[0].data;
 
 
 		add_xmb_option(xmb[col].member, &xmb[col].size, STR_BOOTOOS, STR_BOOTOOSDESC, (char*)"otheros");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO			 ,				(char*)"0");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB1,				(char*)"1");
-		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB2,				(char*)"2");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO			 ,	(char*)"0");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB1,	(char*)"1");
+		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_BOOTOOS_SUB2,	(char*)"2");
 		xmb[col].member[xmb[col].size-1].option_selected=otheros;
 		xmb[col].member[xmb[col].size-1].icon=xmb[4].data;
 
@@ -6202,7 +6138,7 @@ void parse_settings()
 			else if(!strcmp(oini, "menu_mode"))			menu_mode		=val;
 			else if(!strcmp(oini, "cobra_mode"))		cobra_mode		=val;
 			else if(!strcmp(oini, "swap_emu"))		swap_emu		=val;
-			else if(!strcmp(oini, "update_cobra"))		update_cobra	=val;	// 02.02.13		
+			else if(!strcmp(oini, "update_cobra"))		update_cobra	=val;	// 02.02.13
 			else if(!strcmp(oini, "webman_mode"))		webman_mode		=val;
 			else if(!strcmp(oini, "cfw_settings"))		cfw_settings		=val;
 			else if(!strcmp(oini, "wmlp"))				wmlp		=val;
@@ -6241,7 +6177,7 @@ void parse_settings()
 			else if(!strcmp(oini, "util_xReg"))         util_xReg       =val;
 
 			else if(!strcmp(oini, "lv2_kernel"))		lv2_kernel		=val;
-			
+
 			else if(!strcmp(oini, "lang"))				lang		=val;
 		}
 	}
@@ -6282,17 +6218,15 @@ void add_utilities()
 	}
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-
 	add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGREC, STR_TOGRECDESC,	(char*)"util_recovery");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=read_recover_mode_flag();//util_recovery;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-
 	if(c_firmware==3.55f)
 	{
-        add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPM, STR_TOGPMDESC,	(char*)"util_prodmode");
+		add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPM, STR_TOGPMDESC,	(char*)"util_prodmode");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
 		add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 		xmb[col].member[xmb[col].size-1].option_selected=read_product_mode_flag();//util_prodmode;
@@ -6361,26 +6295,25 @@ void add_utilities()
 	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVFLASH, STR_SAVFLASHDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
-
 	if( (!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f)) || c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f)
 	{
-	add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVEIDRK, STR_SAVEIDRKDESC,
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_SAVEIDRK, STR_SAVEIDRKDESC,
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 	}
-	// 2.02.12		
+	// 2.02.12
 	uint16_t version;
 	cobra_get_version(&version, NULL);
 	int status_ps2=get_cobra_ps2netemu_status();
-	if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))		
+	if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))
 	{
-	int param=0;
-	if(status_ps2==0)
-	param++;
-	add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 netemu", (char*)"Force Enable PS2 Soft Emulation on Backward Compatible Consoles",
-			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128); 
-	}		
-	// 2.02.12 END	
-	
+		int param=0;
+		if(status_ps2==0)
+		param++;
+		add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 netemu", (char*)"Force Enable PS2 Soft Emulation on Backward Compatible Consoles",
+			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
+	}
+	// 2.02.12 END
+
 	add_xmb_option(xmb[col].member, &xmb[col].size, STR_PS3ID, STR_PS3IDDESC,	(char*)"util_idps");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, STR_NO,			(char*)"0");
 	char tid[8];
@@ -6409,6 +6342,7 @@ void add_utilities()
 	}
 	else
 		util_idps=0;
+
 	xmb[col].member[xmb[col].size-1].option_selected=util_idps;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
@@ -6468,8 +6402,8 @@ void add_settings_column()
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_XC2_ENABLE,			(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=wmlp;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
-		}*/		
-		
+		}*/
+
 		if( dex_mode && (c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)STR_TOGHOSTINF, (char*)STR_TOGHOSTINFDESC,	(char*)"xmb_plugin");
@@ -6480,7 +6414,7 @@ void add_settings_column()
 		}
 
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
+			c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCOB, STR_TOGCOBDESC,	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
@@ -6505,9 +6439,9 @@ void add_settings_column()
 		}
 		// 02.02.14
 		uint16_t version;
-		cobra_get_version(&version, NULL);		
+		cobra_get_version(&version, NULL);
 		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x753))
-		{			
+		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_NO,			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_MAJ,				(char*)"1");
@@ -6535,7 +6469,7 @@ void add_settings_column()
 	else if(cobra_compatible)
 	{
 		if((c_firmware==4.21f || c_firmware==4.30f || c_firmware==4.31f || c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f || c_firmware==4.50f || c_firmware==4.53f || c_firmware==4.55f ||
-		    c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
+			c_firmware==4.60f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && cobra_compatible)
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGCOB, STR_TOGCOBDESC,	(char*)"cobra_mode");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
@@ -6567,12 +6501,12 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=cfw_settings;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
-		
+
 		// 12.12.17 Add payload updater 7.55 for 4.82.1 Light 7.54
 		uint16_t version;
-		cobra_get_version(&version, NULL);		
+		cobra_get_version(&version, NULL);
 		if((c_firmware==4.82f) && (is_cobra_based()) && (version==0x754))
-		{			
+		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_NO,			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_MAJ,				(char*)"1");
@@ -6693,7 +6627,7 @@ void add_settings_column()
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_acl;
 	xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 
-    add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1GO, STR_LV1GODESC,	(char*)"lv1_go");
+	add_xmb_option(xmb[col].member, &xmb[col].size, STR_LV1GO, STR_LV1GODESC,	(char*)"lv1_go");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_DISABLE,			(char*)"0");
 	add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 	xmb[col].member[xmb[col].size-1].option_selected=lv1_go;
@@ -6709,7 +6643,7 @@ void add_settings_column()
 	first=xmb[col].first;
 	xmb[col].first=0;
 	xmb[col].size=0;
-    if(rex_compatible)
+	if(rex_compatible)
 	{
 		add_xmb_member(xmb[col].member, &xmb[col].size, STR_SWPLV2K, STR_SWPLV2KDESC,
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
@@ -6718,12 +6652,11 @@ void add_settings_column()
 				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 
 		if(first<xmb[col].size) xmb[col].first=first; else xmb[col].first=0;
-    }
+	}
 	else
-	add_xmb_member(xmb[col].member, &xmb[col].size, STR_NOCEXDEX, STR_NOCEXDEXDESC,
-			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_NOCEXDEX, STR_NOCEXDEXDESC,
+				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 }
-
 
 void init_slider()
 {
@@ -6803,7 +6736,6 @@ void init_xmb_icons()
 		draw_xmb_icon_text(xmb_icon);
 }
 
-
 void draw_xmb_clock(u8 *buffer, const int _xmb_icon)
 {
 	u32 clock_color=COL_XMB_CLOCK;
@@ -6811,6 +6743,7 @@ void draw_xmb_clock(u8 *buffer, const int _xmb_icon)
 	if(_xmb_icon) seconds_clock=0;
 
 	if( (time(NULL)-seconds_clock)>5  &&  show_temp==1 ) goto skip2;
+
 	if( (time(NULL)-seconds_clock)>0  &&  show_temp>=2 )
 	{
 		show_temp2++;
@@ -6818,101 +6751,104 @@ void draw_xmb_clock(u8 *buffer, const int _xmb_icon)
 		goto skip2;
 	}
 
-		if( (time(NULL)-seconds_clock)<30) goto clock_text;
+	if( (time(NULL)-seconds_clock)<30) goto clock_text;
+
 skip2:
-		if(_xmb_icon) seconds_clock=0; else seconds_clock=time(NULL);
+	if(_xmb_icon) seconds_clock=0; else seconds_clock=time(NULL);
 
-		char xmb_date[32];
-		time ( &rawtime ); timeinfo = localtime ( &rawtime );
+	char xmb_date[32];
+	time ( &rawtime ); timeinfo = localtime ( &rawtime );
 
-		if(date_format==0)	sprintf(xmb_date, "%d/%d %s:%02d", timeinfo->tm_mday, timeinfo->tm_mon+1, tmhour(timeinfo->tm_hour), timeinfo->tm_min); //, timeinfo->tm_sec
-		else sprintf(xmb_date,"%d/%d %s:%02d", timeinfo->tm_mon+1, timeinfo->tm_mday, tmhour(timeinfo->tm_hour), timeinfo->tm_min);
+	if(date_format==0)	sprintf(xmb_date, "%d/%d %s:%02d", timeinfo->tm_mday, timeinfo->tm_mon+1, tmhour(timeinfo->tm_hour), timeinfo->tm_min); //, timeinfo->tm_sec
+	else sprintf(xmb_date,"%d/%d %s:%02d", timeinfo->tm_mon+1, timeinfo->tm_mday, tmhour(timeinfo->tm_hour), timeinfo->tm_min);
 
-		max_ttf_label=0;
+	max_ttf_label=0;
 
-		if(show_temp)
+	if(show_temp)
+	{
+		char xmb_temp[64];
+		u32 t1=0, t2=0;
+		get_temperature(0, &t1); // 3E030000 -> 3E.03'C -> 62.(03/256)'C
+		get_temperature(1, &t2);
+		t1=t1>>24;
+		t2=t2>>24;
+
+		if(show_temp==1)
 		{
-			char xmb_temp[64];
-			u32 t1=0, t2=0;
-			get_temperature(0, &t1); // 3E030000 -> 3E.03'C -> 62.(03/256)'C
-			get_temperature(1, &t2);
-			t1=t1>>24;
-			t2=t2>>24;
-
-			if(show_temp==1)
-			{
-				print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 18.0f, 1);
-				sprintf(xmb_temp, "CPU: %i°C RSX: %i°C", t1, t2);
-				if(t1>79 || t2>79) clock_color=0x800000e0;
-				print_label_ex( 0.5f, 0.5f, 0.9f, clock_color, xmb_temp, 1.04f, 0.0f, 2, 4.50f, 18.0f, 1);
-			}
-			else
-			if(show_temp>=2)
-			{
-				if(show_temp2<6)
-					print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
-				else
-				{
-					if(show_temp==3)
-					{
-						t1=int(1.8f*(float)t1+32.f);
-						t2=int(1.8f*(float)t2+32.f);
-					}
-
-					if(show_temp2<11)
-					{
-						if( (t1>79 && show_temp==2) || (t1>175 && show_temp==3) ) clock_color=0x800000e0;
-						if(show_temp==2)
-							sprintf(xmb_date, "CPU: %i°C", t1);
-						else
-							sprintf(xmb_date, "CPU: %i°F", t1);
-					}
-					else
-					{
-						if( (t2>79 && show_temp==2) || (t2>175 && show_temp==3) ) clock_color=0x800000e0;
-						if(show_temp==2)
-							sprintf(xmb_date, "RSX: %i°C", t2);
-						else
-							sprintf(xmb_date, "RSX: %i°F", t2);
-					}
-					print_label_ex( 0.5f, 0.0f, 0.9f, clock_color, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
-				}
-			}
+			print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 18.0f, 1);
+			sprintf(xmb_temp, "CPU: %i°C RSX: %i°C", t1, t2);
+			if(t1>79 || t2>79) clock_color=0x800000e0;
+			print_label_ex( 0.5f, 0.5f, 0.9f, clock_color, xmb_temp, 1.04f, 0.0f, 2, 4.50f, 18.0f, 1);
 		}
 		else
-			print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
-
-		//draw_legend=1;
-
-		if(_xmb_icon==-1)
+		if(show_temp>=2)
 		{
-			if(time(NULL)&1)
-			{
-				set_texture(xmb[0].data, 128, 128);
-				display_img(1770, 74, 64, 64, 128, 128, -0.1f, 128, 128);
-			}
-		}
-		if(_xmb_icon>0 && _xmb_icon<MAX_XMB_ICONS)
-		{
-			set_texture(xmb[_xmb_icon].data, 128, 128);
-			display_img(1834, 74, 64, 64, 128, 128, -0.1f, 128, 128);
-		}
-
-		memset(buffer, 0, 36000); flush_ttf(buffer, 300, 30);
-clock_text:
-		if(cover_mode!=1)
-		{
-			set_texture(buffer, 300, 30);
-			if(cover_mode!=6)
-			{
-				if(cover_mode==5)
-					display_img(1663, 1031, 300, 30, 300, 30, -0.25f, 300, 30);
-				else
-					display_img(1520, 90, 300, 30, 300, 30, -0.1f, 300, 30);
-			}
+			if(show_temp2<6)
+				print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
 			else
-				display_img(1520, 1020+bounce/2, 300, 30, 300, 30, -0.25f, 300, 30);
+			{
+				if(show_temp==3)
+				{
+					t1=int(1.8f*(float)t1+32.f);
+					t2=int(1.8f*(float)t2+32.f);
+				}
+
+				if(show_temp2<11)
+				{
+					if( (t1>79 && show_temp==2) || (t1>175 && show_temp==3) ) clock_color=0x800000e0;
+					if(show_temp==2)
+						sprintf(xmb_date, "CPU: %i°C", t1);
+					else
+						sprintf(xmb_date, "CPU: %i°F", t1);
+				}
+				else
+				{
+					if( (t2>79 && show_temp==2) || (t2>175 && show_temp==3) ) clock_color=0x800000e0;
+					if(show_temp==2)
+						sprintf(xmb_date, "RSX: %i°C", t2);
+					else
+						sprintf(xmb_date, "RSX: %i°F", t2);
+				}
+				print_label_ex( 0.5f, 0.0f, 0.9f, clock_color, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
+			}
 		}
+	}
+	else
+		print_label_ex( 0.5f, 0.0f, 0.9f, COL_XMB_CLOCK, xmb_date, 1.04f, 0.0f, 2, 6.40f, 36.0f, 1);
+
+	//draw_legend=1;
+
+	if(_xmb_icon==-1)
+	{
+		if(time(NULL)&1)
+		{
+			set_texture(xmb[0].data, 128, 128);
+			display_img(1770, 74, 64, 64, 128, 128, -0.1f, 128, 128);
+		}
+	}
+
+	if(_xmb_icon>0 && _xmb_icon<MAX_XMB_ICONS)
+	{
+		set_texture(xmb[_xmb_icon].data, 128, 128);
+		display_img(1834, 74, 64, 64, 128, 128, -0.1f, 128, 128);
+	}
+
+	memset(buffer, 0, 36000); flush_ttf(buffer, 300, 30);
+
+clock_text:
+	if(cover_mode!=1)
+	{
+		set_texture(buffer, 300, 30);
+		if(cover_mode!=6)
+		{
+			if(cover_mode==5)
+				display_img(1663, 1031, 300, 30, 300, 30, -0.25f, 300, 30);
+			else
+				display_img(1520, 90, 300, 30, 300, 30, -0.1f, 300, 30);
+		}
+		else
+			display_img(1520, 1020+bounce/2, 300, 30, 300, 30, -0.25f, 300, 30);
+	}
 }
 
 void draw_xmb_legend(const int _xmb_icon)
@@ -6939,6 +6875,7 @@ void draw_xmb_legend(const int _xmb_icon)
 
 		flush_ttf(text_MSG, 300, 70);
 	}
+
 	if(c_opacity2<=0x80) change_opacity(text_MSG, -95, 84000);
 	set_texture(text_MSG, 300, 70);
 	display_img(1520, 930, 300, 70, 300, 70, -0.2f, 300, 70);
@@ -7001,7 +6938,6 @@ void launch_web_browser(char *start_page)
 
 u8 read_pad_info_browse()
 {
-
 	if ( (new_pad & BUTTON_UP) )
 	{
 		c_opacity_delta=16;	dimc=0; dim=1;
@@ -7152,22 +7088,21 @@ u8 read_pad_info()
 		goto leave_for8;
 	}
 
+	if((old_pad & BUTTON_SELECT) && (new_pad & BUTTON_R2))
+	{
+		c_opacity_delta=16;	dimc=0; dim=1;
+		new_pad=0; //state_draw=1;
+		overscan+=0.01f; if(overscan>0.10f) overscan=0.10f;
+		{to_return=1; goto leave_for8;}
+	}
 
-		if((old_pad & BUTTON_SELECT) && (new_pad & BUTTON_R2))
-		{
-			c_opacity_delta=16;	dimc=0; dim=1;
-			new_pad=0; //state_draw=1;
-			overscan+=0.01f; if(overscan>0.10f) overscan=0.10f;
-			{to_return=1; goto leave_for8;}
-		}
-
-		if((old_pad & BUTTON_SELECT) && (new_pad & BUTTON_L2))
-		{
-			c_opacity_delta=16;	dimc=0; dim=1;
-			new_pad=0; //old_pad=0; state_draw=1;
-			overscan-=0.01f;if(overscan<0.0f) overscan=0.00f;
-			{to_return=1; goto leave_for8;}
-		}
+	if((old_pad & BUTTON_SELECT) && (new_pad & BUTTON_L2))
+	{
+		c_opacity_delta=16;	dimc=0; dim=1;
+		new_pad=0; //old_pad=0; state_draw=1;
+		overscan-=0.01f;if(overscan<0.0f) overscan=0.00f;
+		{to_return=1; goto leave_for8;}
+	}
 
 
 leave_for8:
@@ -7233,86 +7168,85 @@ void draw_whole_xmb(u8 mode)
 	drawing_xmb=0;
 }
 
-
 void show_sysinfo()
 {
-		char sys_info[512];
+	char sys_info[512];
 
-		get_free_memory();
+	get_free_memory();
 
-		char line1[128];
-		char line2[128];
-		char line3[128];
-		char line4[128];
-		char line5[128];
+	char line1[128];
+	char line2[128];
+	char line3[128];
+	char line4[128];
+	char line5[128];
 
-		char line0[128];
-		char line7[128];
+	char line0[128];
+	char line7[128];
 
-        uint16_t cobra_version;
-        cobra_get_version(&cobra_version, NULL);
+	uint16_t cobra_version;
+	cobra_get_version(&cobra_version, NULL);
 
-		//if(is_cobra)
-		//sprintf(line7, "COBRA: %i.%02X", (cobra_version>>8), (cobra_version & 0xFF));
+	//if(is_cobra)
+	//sprintf(line7, "COBRA: %i.%02X", (cobra_version>>8), (cobra_version & 0xFF));
 
-		#define SC_COBRA_SYSCALL8				(8)
-		#define SYSCALL8_OPCODE_GET_MAMBA		0x7FFFULL
+	#define SC_COBRA_SYSCALL8				(8)
+	#define SYSCALL8_OPCODE_GET_MAMBA		0x7FFFULL
 
-		bool is_mamba = false; {system_call_1(SC_COBRA_SYSCALL8, SYSCALL8_OPCODE_GET_MAMBA); is_mamba = ((int)p1 ==0x666);}
-		char cobra_name[8]; sprintf(cobra_name, "%s", is_mamba ? "MAMBA" : "COBRA");
+	bool is_mamba = false; {system_call_1(SC_COBRA_SYSCALL8, SYSCALL8_OPCODE_GET_MAMBA); is_mamba = ((int)p1 ==0x666);}
+	char cobra_name[8]; sprintf(cobra_name, "%s", is_mamba ? "MAMBA" : "COBRA");
 
-		if((cobra_version & 0xF) == 0)
-			sprintf(line7, "%s: %i.%01X", cobra_name, (cobra_version>>8), (cobra_version & 0xFF) >> 4);
+	if((cobra_version & 0xF) == 0)
+		sprintf(line7, "%s: %i.%01X", cobra_name, (cobra_version>>8), (cobra_version & 0xFF) >> 4);
+	else
+		sprintf(line7, "%s: %i.%02X", cobra_name, (cobra_version>>8), (cobra_version & 0xFF));
+
+	if(cobra_version==0) strcpy(line7, "\0");
+	sprintf(line0, STR_NUMFW);
+
+	u64 freeSpace = get_free_drive_space((char*)"/dev_hdd0");
+	sprintf(line5, (char*) "%s: %.2f GB", STR_FREEHDD, (double)(freeSpace/1073741824.00f));
+
+	strncpy(line4, current_version, 8); line4[8]=0;
+	get_eid();
+	//sprintf(line7, "\nCobra:%s", is_cobra?((char*)"Enabled"):((char*)"Disabled"));
+	sprintf(line1, (char*) "LV2 Kernel: %s\nTarget Type: %s", dex_mode?((char*)"DEX"):((char*)"CEX"), dex_flash?((char*)"DEX"):((char*)"CEX"));//, (double) ((meminfo.avail+meminfo.total)/1024.0f)
+	if(payload==-1) sprintf(line2, "%s %.2f", line0, c_firmware);
+	if(payload== 0 && payloadT[0]!=0x44) sprintf(line2, "%s %.2f [SC-36 | PSGroove]", line0, c_firmware);
+	if(dex_mode)
+	{
+		if(c_firmware==4.00f)
+			sprintf(line2, "%s 03.60-04.30 DEX", line0);
 		else
-			sprintf(line7, "%s: %i.%02X", cobra_name, (cobra_version>>8), (cobra_version & 0xFF));
-
-		if(cobra_version==0) strcpy(line7, "\0");
-		sprintf(line0, STR_NUMFW);
-
-		u64 freeSpace = get_free_drive_space((char*)"/dev_hdd0");
-		sprintf(line5, (char*) "%s: %.2f GB", STR_FREEHDD, (double)(freeSpace/1073741824.00f));
-
-		strncpy(line4, current_version, 8); line4[8]=0;
-		get_eid();
-		//sprintf(line7, "\nCobra:%s", is_cobra?((char*)"Enabled"):((char*)"Disabled"));
-		sprintf(line1, (char*) "LV2 Kernel: %s\nTarget Type: %s", dex_mode?((char*)"DEX"):((char*)"CEX"), dex_flash?((char*)"DEX"):((char*)"CEX"));//, (double) ((meminfo.avail+meminfo.total)/1024.0f)
-		if(payload==-1) sprintf(line2, "%s %.2f", line0, c_firmware);
-		if(payload== 0 && payloadT[0]!=0x44) sprintf(line2, "%s %.2f [SC-36 | PSGroove]", line0, c_firmware);
-		if(dex_mode)
 		{
-			if(c_firmware==4.00f)
-				sprintf(line2, "%s 03.60-04.30 DEX", line0);
-			else
-			{
-				if(payload == 0 && payloadT[0]==0x44)
-					sprintf(line2, "%s %.2f DEX [SC-36 | Standard]", line0, c_firmware);
-				else
-					sprintf(line2, "%s %.2f DEX", line0, c_firmware);
-			}
-		}
-		else
-		if(payload== 0 && payloadT[0]==0x44)
-		{
-			if(!dex_mode)
-				sprintf(line2, "%s %.2f [SC-36 | Standard]", line0, c_firmware);
-			else
+			if(payload == 0 && payloadT[0]==0x44)
 				sprintf(line2, "%s %.2f DEX [SC-36 | Standard]", line0, c_firmware);
+			else
+				sprintf(line2, "%s %.2f DEX", line0, c_firmware);
 		}
-		if(payload== 1) sprintf(line2, "%s %.2f [SC-36 | Hermes]", line0, c_firmware);
-		if(payload== 2) sprintf(line2, "%s %.2f [SC-35 | PL3]", line0, c_firmware);
-
-		net_avail=cellNetCtlGetInfo(16, &net_info);
-		if(net_avail<0)
-		{
-			sprintf(line3, "%s: [%s]", STR_IP, STR_NOTAV);
-		}
+	}
+	else
+	if(payload== 0 && payloadT[0]==0x44)
+	{
+		if(!dex_mode)
+			sprintf(line2, "%s %.2f [SC-36 | Standard]", line0, c_firmware);
 		else
-			sprintf(line3, "%s: %s", STR_IP, net_info.ip_address);
+			sprintf(line2, "%s %.2f DEX [SC-36 | Standard]", line0, c_firmware);
+	}
+	if(payload== 1) sprintf(line2, "%s %.2f [SC-36 | Hermes]", line0, c_firmware);
+	if(payload== 2) sprintf(line2, "%s %.2f [SC-35 | PL3]", line0, c_firmware);
 
-		//sprintf(line3, "%08X | %08X", idps0, idps1);
-		sprintf(sys_info, "%s %s: %s\n\n%s\n%s\n%s\n%s\n%s", (char*) STR_APP_NAME"-MULTI", (char*) "\nVersion", line4, line2, line3, line1, line5, line7);
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_back, sys_info, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
-		dialog_ret=0;
+	net_avail=cellNetCtlGetInfo(16, &net_info);
+	if(net_avail<0)
+	{
+		sprintf(line3, "%s: [%s]", STR_IP, STR_NOTAV);
+	}
+	else
+		sprintf(line3, "%s: %s", STR_IP, net_info.ip_address);
+
+	//sprintf(line3, "%08X | %08X", idps0, idps1);
+	sprintf(sys_info, "%s %s: %s\n\n%s\n%s\n%s\n%s\n%s", (char*) STR_APP_NAME"-MULTI", (char*) "\nVersion", line4, line2, line3, line1, line5, line7);
+	dialog_ret=0; cellMsgDialogOpen2( type_dialog_back, sys_info, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog();
+	dialog_ret=0;
 }
 
 void exit_app()
@@ -7400,7 +7334,7 @@ void read_flash(u64 device, u32 _flags, char *iso_path)
 
 		remove(_iso_path);
 		#define DUMP_OFFSET_SYSROM				0x2401fc00000ull
-		#define DUMP_SIZE_SYSROM						0x40000ull
+		#define DUMP_SIZE_SYSROM					  0x40000ull
 
 		if(cellFsOpen(_iso_path, CELL_FS_O_CREAT|CELL_FS_O_RDWR|CELL_FS_O_TRUNC, &f_iso, NULL, 0)==CELL_FS_SUCCEEDED) save_ok=1;
 
@@ -7657,11 +7591,11 @@ void set_idps(u8 _val) //0=EID5, 1=EID0, 2=EID5, 3..13=0x82..0x8E
 
 	u64 cIDPS= (idps0 & 0xFFFFFFFFFF00FFFFULL);
 
-    for(uint64_t n = 0; n < 0x7ffff0ULL; n ++)
+	for(uint64_t n = 0; n < 0x7ffff0ULL; n ++)
 	{
 		cval1 = peekq(0x8000000000000000ULL + n    ) & 0xFFFFFFFFFF00FFFFULL;
 		cval2 = peekq(0x8000000000000000ULL + n + 8);
-        if( cval1 == cIDPS && cval2 == idps1)
+		if( cval1 == cIDPS && cval2 == idps1)
 		{
 			newIDPS= cIDPS | (newID << 16);
 			pokeq(0x8000000000000000ULL + n, newIDPS);
@@ -7853,14 +7787,12 @@ void search_flash(u8 _mode, u8 _progr) // 0=CEX->DEX, 1=DEX->CEX
 				}
 			}
 
-
-
-		/*FILE *fpA;
-		sprintf(msg, "/dev_usb000/FD%i.BIN", _mode);
-		remove(msg);
-		fpA = fopen ( msg, "wb" );
-		fwrite(read_buffer, 1536, 1, fpA);
-		fclose(fpA);*/
+			/*FILE *fpA;
+			sprintf(msg, "/dev_usb000/FD%i.BIN", _mode);
+			remove(msg);
+			fpA = fopen ( msg, "wb" );
+			fwrite(read_buffer, 1536, 1, fpA);
+			fclose(fpA);*/
 
 			if(found==2)
 			{
@@ -8122,7 +8054,7 @@ leave_flash:
 				(char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.cex");
 			rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.dex",
 				(char*)"/dev_rebug/vsh/module/software_update_plugin.sprx");
-            // Host IP display for DEX mode
+			// Host IP display for DEX mode
 			rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
 				(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
 			rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
@@ -8141,138 +8073,138 @@ leave_flash:
 
 void write_to_device()
 {
-    if(!exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
-    {
-        if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && dex_mode)
-        {
-            char message[512];
-            sprintf(message, "%s (%2.2f DEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
-            cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
-        }
-        else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && !dex_mode)
-        {
-            char message[512];
-            sprintf(message, "%s (%2.2f CEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
-            cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
-        }
-        else
-        {
-            cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG3, dialog_fun2, (void*)0x0000aaab, NULL );
-        }
-        dialog_ret=0; wait_dialog_simple();
-    }
-    if(exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
-    {
-        dialog_ret=0;
-        u8 cid=get_idps(0);//EID0 TargetID
+	if(!exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
+	{
+		if((c_firmware==4.21f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && dex_mode)
+		{
+			char message[512];
+			sprintf(message, "%s (%2.2f DEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
+			cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
+		}
+		else if((c_firmware==3.55f || c_firmware==4.21f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f) && !dex_mode)
+		{
+			char message[512];
+			sprintf(message, "%s (%2.2f CEX kernel) %s", STR_WTDMSG1, c_firmware, STR_WTDMSG2);
+			cellMsgDialogOpen2( type_dialog_ok, message, dialog_fun2, (void*)0x0000aaab, NULL );
+		}
+		else
+		{
+			cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG3, dialog_fun2, (void*)0x0000aaab, NULL );
+		}
+		dialog_ret=0; wait_dialog_simple();
+	}
+	if(exist((char *)"/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key"))
+	{
+		dialog_ret=0;
+		u8 cid=get_idps(0);//EID0 TargetID
 		char str[128];
-		
-        if(cid!=0x82) {
+
+		if(cid!=0x82) {
 			sprintf(str, "%s CEX to DEX ?", STR_WTDMSG4);
 			cellMsgDialogOpen2( type_dialog_yes_no, str, dialog_fun1, (void*)0x0000aaaa, NULL );
-		}   
-        else {
+		}
+		else {
 			sprintf(str, "%s DEX to CEX ?", STR_WTDMSG4);
 			cellMsgDialogOpen2( type_dialog_yes_no, str, dialog_fun1, (void*)0x0000aaaa, NULL );
 		}
-            
-        wait_dialog_simple();
 
-        if(dialog_ret==1)
-        {
-            dialog_ret=0;
-            u8 eid5_idps=get_idps(5);
-            if(eid5_idps==0x82)
-            {
-                dialog_ret=0;
-				
-                cellMsgDialogOpen2( type_dialog_yes_no, STR_WTDMSG5, dialog_fun1, (void*)0x0000aaab, NULL );
-                wait_dialog_simple();
-                if(dialog_ret!=1) return;
+		wait_dialog_simple();
 
-                dialog_ret=0;
-            }
-            cex_dex();
+		if(dialog_ret==1)
+		{
+			dialog_ret=0;
+			u8 eid5_idps=get_idps(5);
+			if(eid5_idps==0x82)
+			{
+				dialog_ret=0;
 
-            get_eid();
-            if(!dex_flash)
-            {
-                rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx",
-                       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.dex");
-                rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.cex",
-                       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx");
+				cellMsgDialogOpen2( type_dialog_yes_no, STR_WTDMSG5, dialog_fun1, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
+				if(dialog_ret!=1) return;
+
+				dialog_ret=0;
+			}
+			cex_dex();
+
+			get_eid();
+			if(!dex_flash)
+			{
+				rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx",
+				       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.dex");
+				rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.cex",
+				       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx");
 				// Host IP addr display for DEX MODE
-                rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
-                       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex");
-                rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex",
-                       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-            }
-            else
-            {
-                rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx",
-                       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.cex");
-                rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.dex",
-                       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx");
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
+				       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex");
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex",
+				       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
+			}
+			else
+			{
+				rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx",
+				       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.cex");
+				rename((char*)"/dev_rebug/vsh/module/software_update_plugin.sprx.dex",
+				       (char*)"/dev_rebug/vsh/module/software_update_plugin.sprx");
 				// Host IP addr display for DEX MODE
-                rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
-                       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
-                rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
-                       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-            }
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx",
+				       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
+				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
+				       (char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
+			}
 
-            if(!dex_flash)
-            {
-                search_flash(1, 0);
-            }
+			if(!dex_flash)
+			{
+				search_flash(1, 0);
+			}
 
-            ss_timer=0;
-            ss_timer_last=time(NULL);
-            if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex"))
-            {
-                dialog_ret=0;
-                cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG6, dialog_fun2, (void*)0x0000aaab, NULL );
-                wait_dialog_simple();
-                remove("/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex");
-            }
-            return;
-            cellMsgDialogAbort();
-        }
-        dialog_ret=0;
-    }
-    u64 device;
-    char iso_path[512];
+			ss_timer=0;
+			ss_timer_last=time(NULL);
+			if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex"))
+			{
+				dialog_ret=0;
+				cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG6, dialog_fun2, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
+				remove("/dev_hdd0/game/RBGTLBOX2/USRDIR/error_cex_dex");
+			}
+			return;
+			cellMsgDialogAbort();
+		}
+		dialog_ret=0;
+	}
+	u64 device;
+	char iso_path[512];
 
-    get_eid();
-    if(dex_flash)
-    {
-        if(is_nor()) sprintf(iso_path, "/dev_usb000/CEX-FLASH.EID0.NORBIN");
-        else         sprintf(iso_path, "/dev_usb000/CEX-FLASH.EID0.NANDBIN");
-    }
-    else
-    {
-        if(is_nor()) sprintf(iso_path, "/dev_usb000/DEX-FLASH.EID0.NORBIN");
-        else         sprintf(iso_path, "/dev_usb000/DEX-FLASH.EID0.NANDBIN");
-    }
+	get_eid();
+	if(dex_flash)
+	{
+		if(is_nor()) sprintf(iso_path, "/dev_usb000/CEX-FLASH.EID0.NORBIN");
+		else         sprintf(iso_path, "/dev_usb000/CEX-FLASH.EID0.NANDBIN");
+	}
+	else
+	{
+		if(is_nor()) sprintf(iso_path, "/dev_usb000/DEX-FLASH.EID0.NORBIN");
+		else         sprintf(iso_path, "/dev_usb000/DEX-FLASH.EID0.NANDBIN");
+	}
 
-    if(is_nor()) device=FLASH_DEVICE_NOR; else device=FLASH_DEVICE_NAND;
+	if(is_nor()) device=FLASH_DEVICE_NOR; else device=FLASH_DEVICE_NAND;
 
-    if(exist(iso_path) && strstr(iso_path, ".EID0.NORBIN") || strstr(iso_path, ".EID0.NANDBIN"))
-        {write_eid(device, FLASH_FLAGS, iso_path); return;}
+	if(exist(iso_path) && strstr(iso_path, ".EID0.NORBIN") || strstr(iso_path, ".EID0.NANDBIN"))
+		{write_eid(device, FLASH_FLAGS, iso_path); return;}
 
-    cellMsgDialogAbort();
-    dialog_ret=0;
-    char msg[512];
-    sprintf(msg, STR_WTDMSG7, ":\n\n%s", iso_path);
-    cellMsgDialogOpen2( type_dialog_ok, (const char*) msg, dialog_fun2, (void*)0x0000aaab, NULL );
-    wait_dialog_simple();
+	cellMsgDialogAbort();
+	dialog_ret=0;
+	char msg[512];
+	sprintf(msg, STR_WTDMSG7, ":\n\n%s", iso_path);
+	cellMsgDialogOpen2( type_dialog_ok, (const char*) msg, dialog_fun2, (void*)0x0000aaab, NULL );
+	wait_dialog_simple();
 
-    dialog_ret=0;
-    if(is_nor())
-        cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG8, dialog_fun2, (void*)0x0000aaab, NULL );
-    else
-        cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG9, dialog_fun2, (void*)0x0000aaab, NULL );
-    wait_dialog_simple();
-    return;
+	dialog_ret=0;
+	if(is_nor())
+		cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG8, dialog_fun2, (void*)0x0000aaab, NULL );
+	else
+		cellMsgDialogOpen2( type_dialog_ok, STR_WTDMSG9, dialog_fun2, (void*)0x0000aaab, NULL );
+	wait_dialog_simple();
+	return;
 }
 
 int main(int argc, char **argv)
@@ -8495,7 +8427,6 @@ int main(int argc, char **argv)
 		xmb_icon_buf[n].data=text_bmpUBG+(n*XMB_THUMB_WIDTH*XMB_THUMB_HEIGHT*4);
 	}
 
-
 	sprintf(xmb_columns[0], STR_APP_NAME);
 	sprintf(xmb_columns[1], STR_SYSTEM);
 	sprintf(xmb_columns[2], STR_SELECTOR);
@@ -8560,7 +8491,7 @@ int main(int argc, char **argv)
 	else
 	if(peekq(0x80000000002ED860ULL)==CEX && peekq(0x80000000002FC938ULL)==0x323031342F31312FULL) {c_firmware=4.66f;} //timestamp: 2014/11
 	else
- 	if(peekq(0x800000000030F1A8ULL)==DEX && peekq(0x800000000031EBA8ULL)!=0x323031342F31312FULL) {dex_mode=2; c_firmware=4.65f;} //timestamp: 2014/08
+	if(peekq(0x800000000030F1A8ULL)==DEX && peekq(0x800000000031EBA8ULL)!=0x323031342F31312FULL) {dex_mode=2; c_firmware=4.65f;} //timestamp: 2014/08
 	else
 	if(peekq(0x800000000030F1A8ULL)==DEX && peekq(0x800000000031EBA8ULL)==0x323031342F31312FULL) {dex_mode=2; c_firmware=4.66f;} //timestamp: 2014/11
 	else
@@ -8571,15 +8502,15 @@ int main(int argc, char **argv)
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031352F30342FULL) {dex_mode=0; c_firmware=4.75f;} //timestamp: 2015/04
 	else
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031352F30382FULL) {dex_mode=0; c_firmware=4.76f;} //timestamp: 2015/08
-    else
+	else
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031352F31322FULL) {dex_mode=0; c_firmware=4.78f;} //timestamp: 2015/12
-    else
+	else
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031362F31302FULL) {dex_mode=0; c_firmware=4.81f;} //timestamp: 2016/10
-    else
+	else
 	if(peekq(0x80000000002ED818ULL)==CEX && peekq(0x80000000002FCB68ULL)==0x323031372F30382FULL) {dex_mode=0; c_firmware=4.82f;} //timestamp: 2017/08
-    else
+	else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F30342FULL) {dex_mode=2; c_firmware=4.75f;} //timestamp: 2015/04
-    else
+	else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F30382FULL) {dex_mode=2; c_firmware=4.76f;} //timestamp: 2015/08
 	else
 	if(peekq(0x800000000030F2D0ULL)==DEX && peekq(0x800000000031EF48ULL)==0x323031352F31322FULL) {dex_mode=2; c_firmware=4.78f;} //timestamp: 2015/12
@@ -8593,10 +8524,10 @@ int main(int argc, char **argv)
 	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031372F30382FULL) {dex_mode=2; c_firmware=4.82f;} //timestamp: 2017/08
 	else
 	if(c_firmware == 0)
-    {
-    dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNOFW, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
-    exit(0);
-    }
+	{
+		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNOFW, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
+		exit(0);
+	}
 	/*else
 	{
 		if(c_firmware<3.55f)
@@ -8773,18 +8704,11 @@ int main(int argc, char **argv)
 		SYSCALL_TABLE			= SYSCALL_TABLE_470D;
 	}
 	else
-	if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f && !dex_mode)
+	if((c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f) && !dex_mode)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_475;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_475;
 		SYSCALL_TABLE			= SYSCALL_TABLE_475;
-	}
-	else
-	if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f && dex_mode)
-	{
-		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_475D;
-		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_475D;
-		SYSCALL_TABLE			= SYSCALL_TABLE_475D;
 	}
 	else
 	if(c_firmware==4.80f && !dex_mode)
@@ -8794,6 +8718,13 @@ int main(int argc, char **argv)
 		SYSCALL_TABLE			= SYSCALL_TABLE_475; // The same for 4.75-4.80
 	}
 	else
+	if((c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f) && dex_mode)
+	{
+		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_475D;
+		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_475D;
+		SYSCALL_TABLE			= SYSCALL_TABLE_475D;
+	}
+	else
 	if(c_firmware==4.80f && dex_mode)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_480D;
@@ -8801,7 +8732,7 @@ int main(int argc, char **argv)
 		SYSCALL_TABLE			= SYSCALL_TABLE_480D;
 	}
 	else
-	if(c_firmware==4.81f || c_firmware==4.82f && dex_mode)
+	if((c_firmware==4.81f || c_firmware==4.82f) && dex_mode)
 	{
 		HVSC_SYSCALL_ADDR		= HVSC_SYSCALL_ADDR_481D;
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_481D;
@@ -8828,7 +8759,6 @@ int main(int argc, char **argv)
 		NEW_POKE_SYSCALL_ADDR	= NEW_POKE_SYSCALL_ADDR_341;
 		SYSCALL_TABLE			= SYSCALL_TABLE_341;
 	}
-
 
 	generic_patches();
 
@@ -8858,7 +8788,7 @@ int main(int argc, char **argv)
 
 	sprintf(blankBG, "%s/ICON0.PNG", app_homedir);
 
-    payload = -1;  // 0->psgroove  1->hermes  2->PL3
+	payload = -1;  // 0->psgroove  1->hermes  2->PL3
 	payloadT[0]=0x20;
 
 	load_texture(text_bmpIC, blankBG, 320);
@@ -8903,190 +8833,186 @@ int main(int argc, char **argv)
 	{
 
 //start_of_loop:
-	pad_read();
-	dimc=0; dim=0; c_opacity_delta=0;
-
+		pad_read();
+		dimc=0; dim=0; c_opacity_delta=0;
 
 force_reload:
 
-	// make screenshot in RAW RGB
-	if ( ((old_pad & BUTTON_START) && (new_pad & BUTTON_R2)))
-	{
-		new_pad=0;
-		time ( &rawtime );
-		timeinfo = localtime ( &rawtime );
-		char video_mem[64];
-		sprintf(video_mem, "/dev_hdd0/%04d%02d%02d-%02d%02d%02d-SCREENSHOT.RAW", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
-		FILE *fpA;
-		remove(video_mem);
-		fpA = fopen ( video_mem, "wb" );
-		uint64_t c_pos=0;
-		for(c_pos=0;c_pos<video_buffer;c_pos+=4){
-			fwrite((uint8_t*)(color_base_addr)+c_pos+1, 3, 1, fpA);
-		}
-		fclose(fpA);
-		if(exist((char*)"/dev_usb000")){
-			sprintf(string1, "/dev_usb000/%s", video_mem+10);
-			file_copy(video_mem, string1, 0);
-			remove(video_mem);
-			sprintf(video_mem, "%s", string1);
-		}
-		else
-		if(exist((char*)"/dev_usb001")){
-			sprintf(string1, "/dev_usb001/%s", video_mem+10);
-			file_copy(video_mem, string1, 0);
-			remove(video_mem);
-			sprintf(video_mem, "%s", string1);
-		}
-		sprintf(string1, "%s:\n\n[%s]", STR_SCRSHTSAVED, video_mem);
-		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog();
-	}
-
-	// screensaver
-	if (( (old_pad & BUTTON_L2) && (old_pad & BUTTON_R2)) || (ss_timer>=(ss_timeout*60) && ss_timeout)) screen_saver();
-	if(ss_timer>=(sao_timeout*3600) && sao_timeout) shutdown_system(0);
-
-	if ( (new_pad & BUTTON_R3))
-	{
-		new_pad=0;//new_pad=0;
-		user_font++; if (user_font>5) user_font=0;
-		//redraw_column_texts(xmb0_icon);
-		goto force_reload;
-	}
-
-	if ( (new_pad & BUTTON_L3))
-	{
-		new_pad=0;//new_pad=0;
-		show_temp++; if (show_temp>3) show_temp=0;
-		seconds_clock=0;
-		goto force_reload;
-	}
-
-	if(read_pad_info()) {cellSysutilCheckCallback(); sys_timer_usleep(3336); goto force_reload;}
-	xmb0_icon=xmb_icon;
-
-	int xRegID = 0;
-
-	if ( (new_pad & BUTTON_CROSS) &&
-		(xmb[xmb_icon].member[xmb[xmb_icon].first].type==6 || xmb[xmb_icon].member[xmb[xmb_icon].first].type==7))
-	{
-		while(xmb_slide || xmb_slide_y){draw_whole_xmb(1);}
-
-		int ret_f=-1;
-
-		if(xmb_icon==1) // Home/System column functions
+		// make screenshot in RAW RGB
+		if ( ((old_pad & BUTTON_START) && (new_pad & BUTTON_R2)))
 		{
-			if(xmb[xmb_icon].first==0) // system information
-			{
-				is_any_xmb_column=xmb_icon;
-				show_sysinfo();
-				is_any_xmb_column=0;
-				goto xmb_cancel_option;
-			}
-
-			if(xmb[xmb_icon].first==1) {unload_modules(); exit_app();}	// quit to XMB
-			//if(xmb[xmb_icon].first==2) {shutdown_system(0x11); }		// restart PS3
-			//if(xmb[xmb_icon].first==3) {boot_otherOS(); }				// boot OtherOS
-			if(xmb[xmb_icon].first==5) {shutdown_system(0x10);}			// shutdown PS3
-		}
-		if(xmb_icon==4) // DEX/CEX
-		{
-			if(rex_compatible==1)
-			{
-			if(xmb[xmb_icon].first==0) swap_kernel();
-			if(xmb[xmb_icon].first==1) write_to_device();
-			}
-			//if(xmb[xmb_icon].first==2) dump_flash();
-		}
-
-		if(xmb_icon==5) // Utilities
-		{
-			if(xmb[xmb_icon].first==3) {add_utilities();}
-
-			int n = (c_firmware==3.55f) ? 5 : 4;
-			xRegID = n + 0;
-			if(xmb[xmb_icon].first==n+1) {resize_vflash();}
-			if(xmb[xmb_icon].first==n+2) {install_petiboot();} //lv2
-			if(xmb[xmb_icon].first==n+3) {set_gameos_flag();} //lv2
-			if(xmb[xmb_icon].first==n+4) {create_packages();}
-			if(xmb[xmb_icon].first==n+5) {export_lv(1);} //lv1
-			if(xmb[xmb_icon].first==n+6) {export_lv(0);} //lv2
-			if(xmb[xmb_icon].first==n+7) {dump_flash();}
-            if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f)
-			{
-			  if(xmb[xmb_icon].first==n+8) {dump_root_key();}
-			}
-			uint16_t version;
-			cobra_get_version(&version, NULL);
-			int status_ps2=get_cobra_ps2netemu_status();
-			if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))		
-			{
-				if(xmb[xmb_icon].first==n+9) 
-					{
-					int param=0;
-					if(status_ps2==0)
-						param++;
-					enable_netemu_cobra(param);
-					}	// 2.02.12
-			}
-		}
-
-		if((xmb[xmb_icon].member[xmb[xmb_icon].first].option_size)) // || xmb[2].first<3 //settings
-		{
-/*			if(xmb[2].first==0)
-			{
-				goto xmb_cancel_option;
-			}
-*/
-
-			opt_list_max=0;
-			for(int n=0; n<xmb[xmb_icon].member[xmb[xmb_icon].first].option_size; n++)
-			{
-				sprintf(opt_list[opt_list_max].label, "-");	sprintf(opt_list[opt_list_max].value, "-"); opt_list_max++;
-				opt_list[n].color=0;
-			}
-
-
-			for(int n=0; n<xmb[xmb_icon].member[xmb[xmb_icon].first].option_size; n++)
-			{
-				sprintf(opt_list[n].label, " %s", xmb[xmb_icon].member[xmb[xmb_icon].first].option[n].label);
-				sprintf(opt_list[n].value, "%s", "---");
-			}
-
-			ret_f=open_side_menu( (opt_list_max>12?300:500), xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected);
-			//MM_LOG("Side menu result: %i\n", ret_f);
-			//MM_LOG("Side menu result: %s\n", xmb[xmb_icon].member[xmb[xmb_icon].first].optionini);
-			if(ret_f<0 || xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected==ret_f) goto xmb_cancel_option;
-
-			xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected=ret_f;
-			parse_settings();
-
-			apply_settings(xmb[xmb_icon].member[xmb[xmb_icon].first].optionini, ret_f, 0);
-			if(xRegID) xmb[xmb_icon].member[xRegID].option_selected=0;
-
-			/*if(!strcmp(xmb[2].member[xmb[2].first].optionini, "mount_dev_blind"))
-			{
-				if(mount_dev_blind) mount_dev_flash(); else unmount_dev_flash();
-			}*/
-
-			redraw_column_texts(xmb_icon);
-
-            xmb_cancel_option:
 			new_pad=0;
-			ss_timer=0;
-			ss_timer_last=time(NULL);
-			xmb_bg_counter=XMB_BG_COUNTER;
-			dialog_ret=0;
+			time ( &rawtime );
+			timeinfo = localtime ( &rawtime );
+			char video_mem[64];
+			sprintf(video_mem, "/dev_hdd0/%04d%02d%02d-%02d%02d%02d-SCREENSHOT.RAW", timeinfo->tm_year+1900, timeinfo->tm_mon+1, timeinfo->tm_mday, timeinfo->tm_hour, timeinfo->tm_min, timeinfo->tm_sec);
+			FILE *fpA;
+			remove(video_mem);
+			fpA = fopen ( video_mem, "wb" );
+			uint64_t c_pos=0;
+			for(c_pos=0;c_pos<video_buffer;c_pos+=4){
+				fwrite((uint8_t*)(color_base_addr)+c_pos+1, 3, 1, fpA);
+			}
+			fclose(fpA);
+			if(exist((char*)"/dev_usb000")){
+				sprintf(string1, "/dev_usb000/%s", video_mem+10);
+				file_copy(video_mem, string1, 0);
+				remove(video_mem);
+				sprintf(video_mem, "%s", string1);
+			}
+			else
+			if(exist((char*)"/dev_usb001")){
+				sprintf(string1, "/dev_usb001/%s", video_mem+10);
+				file_copy(video_mem, string1, 0);
+				remove(video_mem);
+				sprintf(video_mem, "%s", string1);
+			}
+			sprintf(string1, "%s:\n\n[%s]", STR_SCRSHTSAVED, video_mem);
+			dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, string1, dialog_fun2, (void*)0x0000aaab, NULL );	wait_dialog();
 		}
-	}
 
-	if ( ( ( (new_pad & BUTTON_CIRCLE) && key_repeat) || (new_pad & BUTTON_RED) ))
-	{
-		new_pad=0;
-		c_opacity_delta=16;	dimc=0; dim=1;
-		quit_app();
-	}
+		// screensaver
+		if (( (old_pad & BUTTON_L2) && (old_pad & BUTTON_R2)) || (ss_timer>=(ss_timeout*60) && ss_timeout)) screen_saver();
+		if(ss_timer>=(sao_timeout*3600) && sao_timeout) shutdown_system(0);
 
+		if ( (new_pad & BUTTON_R3))
+		{
+			new_pad=0;//new_pad=0;
+			user_font++; if (user_font>5) user_font=0;
+			//redraw_column_texts(xmb0_icon);
+			goto force_reload;
+		}
+
+		if ( (new_pad & BUTTON_L3))
+		{
+			new_pad=0;//new_pad=0;
+			show_temp++; if (show_temp>3) show_temp=0;
+			seconds_clock=0;
+			goto force_reload;
+		}
+
+		if(read_pad_info()) {cellSysutilCheckCallback(); sys_timer_usleep(3336); goto force_reload;}
+		xmb0_icon=xmb_icon;
+
+		int xRegID = 0;
+
+		if ( (new_pad & BUTTON_CROSS) &&
+			(xmb[xmb_icon].member[xmb[xmb_icon].first].type==6 || xmb[xmb_icon].member[xmb[xmb_icon].first].type==7))
+		{
+			while(xmb_slide || xmb_slide_y){draw_whole_xmb(1);}
+
+			int ret_f=-1;
+
+			if(xmb_icon==1) // Home/System column functions
+			{
+				if(xmb[xmb_icon].first==0) // system information
+				{
+					is_any_xmb_column=xmb_icon;
+					show_sysinfo();
+					is_any_xmb_column=0;
+					goto xmb_cancel_option;
+				}
+
+				if(xmb[xmb_icon].first==1) {unload_modules(); exit_app();}	// quit to XMB
+				//if(xmb[xmb_icon].first==2) {shutdown_system(0x11); }		// restart PS3
+				//if(xmb[xmb_icon].first==3) {boot_otherOS(); }				// boot OtherOS
+				if(xmb[xmb_icon].first==5) {shutdown_system(0x10);}			// shutdown PS3
+			}
+			if(xmb_icon==4) // DEX/CEX
+			{
+				if(rex_compatible==1)
+				{
+				if(xmb[xmb_icon].first==0) swap_kernel();
+				if(xmb[xmb_icon].first==1) write_to_device();
+				}
+				//if(xmb[xmb_icon].first==2) dump_flash();
+			}
+
+			if(xmb_icon==5) // Utilities
+			{
+				if(xmb[xmb_icon].first==3) {add_utilities();}
+
+				int n = (c_firmware==3.55f) ? 5 : 4;
+				xRegID = n + 0;
+				if(xmb[xmb_icon].first==n+1) {resize_vflash();}
+				if(xmb[xmb_icon].first==n+2) {install_petiboot();} //lv2
+				if(xmb[xmb_icon].first==n+3) {set_gameos_flag();} //lv2
+				if(xmb[xmb_icon].first==n+4) {create_packages();}
+				if(xmb[xmb_icon].first==n+5) {export_lv(1);} //lv1
+				if(xmb[xmb_icon].first==n+6) {export_lv(0);} //lv2
+				if(xmb[xmb_icon].first==n+7) {dump_flash();}
+				if((!dex_mode && (c_firmware==3.55f || c_firmware==4.46f || c_firmware==4.65f || c_firmware==4.66f) ) || c_firmware==4.21f  || c_firmware==4.70f || c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.80f || c_firmware==4.81f || c_firmware==4.82f)
+				{
+				  if(xmb[xmb_icon].first==n+8) {dump_root_key();}
+				}
+				uint16_t version;
+				cobra_get_version(&version, NULL);
+				int status_ps2=get_cobra_ps2netemu_status();
+				if((is_cobra_based()) && (version>=0x750) && (status_ps2!=-1))
+				{
+					if(xmb[xmb_icon].first==n+9)
+						{
+						int param=0;
+						if(status_ps2==0)
+							param++;
+						enable_netemu_cobra(param);
+						}	// 2.02.12
+				}
+			}
+
+			if((xmb[xmb_icon].member[xmb[xmb_icon].first].option_size)) // || xmb[2].first<3 //settings
+			{
+/*				if(xmb[2].first==0)
+				{
+					goto xmb_cancel_option;
+				}
+*/
+				opt_list_max=0;
+				for(int n=0; n<xmb[xmb_icon].member[xmb[xmb_icon].first].option_size; n++)
+				{
+					sprintf(opt_list[opt_list_max].label, "-");	sprintf(opt_list[opt_list_max].value, "-"); opt_list_max++;
+					opt_list[n].color=0;
+				}
+
+				for(int n=0; n<xmb[xmb_icon].member[xmb[xmb_icon].first].option_size; n++)
+				{
+					sprintf(opt_list[n].label, " %s", xmb[xmb_icon].member[xmb[xmb_icon].first].option[n].label);
+					sprintf(opt_list[n].value, "%s", "---");
+				}
+
+				ret_f=open_side_menu( (opt_list_max>12?300:500), xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected);
+				//MM_LOG("Side menu result: %i\n", ret_f);
+				//MM_LOG("Side menu result: %s\n", xmb[xmb_icon].member[xmb[xmb_icon].first].optionini);
+				if(ret_f<0 || xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected==ret_f) goto xmb_cancel_option;
+
+				xmb[xmb_icon].member[xmb[xmb_icon].first].option_selected=ret_f;
+				parse_settings();
+
+				apply_settings(xmb[xmb_icon].member[xmb[xmb_icon].first].optionini, ret_f, 0);
+				if(xRegID) xmb[xmb_icon].member[xRegID].option_selected=0;
+
+				/*if(!strcmp(xmb[2].member[xmb[2].first].optionini, "mount_dev_blind"))
+				{
+					if(mount_dev_blind) mount_dev_flash(); else unmount_dev_flash();
+				}*/
+
+				redraw_column_texts(xmb_icon);
+
+				xmb_cancel_option:
+				new_pad=0;
+				ss_timer=0;
+				ss_timer_last=time(NULL);
+				xmb_bg_counter=XMB_BG_COUNTER;
+				dialog_ret=0;
+			}
+		}
+
+		if ( ( ( (new_pad & BUTTON_CIRCLE) && key_repeat) || (new_pad & BUTTON_RED) ))
+		{
+			new_pad=0;
+			c_opacity_delta=16;	dimc=0; dim=1;
+			quit_app();
+		}
 
 		if(dim==1) c_opacity+=c_opacity_delta;
 		if(c_opacity<0x20) c_opacity=0x20;
@@ -9164,7 +9090,6 @@ void change_bri(u8 *buffer, int delta, u32 size)
 		*(uint32_t*) ((uint8_t*)(buffer)+fsr)= deltaR<<24 | deltaG<<16 | deltaB<<8 | pixel&0xff;
 	}
 }
-
 
 static void png_thread_entry( uint64_t arg )
 {
@@ -9261,7 +9186,6 @@ void load_jpg_threaded(int _xmb_icon, int cn)
 						   0, "jpeg" );
 }
 
-
 void load_png_threaded(int _xmb_icon, int cn)
 {
 	if(is_decoding_png) return;
@@ -9317,7 +9241,7 @@ void set_xReg()
 		return;
 
 	if(util_xReg==1)
-       {
+	{
 		dialog_ret=0;
 		cellMsgDialogOpen2( type_dialog_yes_no, STR_SAVXREG, dialog_fun1, (void*)0x0000aaaa, NULL );
 		wait_dialog_simple();
@@ -9333,24 +9257,23 @@ void set_xReg()
 
 				if(exist((char*)"/dev_usb000/xRegistry.sys"))
 					cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGOK, dialog_fun1, (void*)0x0000aaaa, NULL );
-			    	else
+				else
 					cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR1, dialog_fun1, (void*)0x0000aaaa, NULL );
-		 	}
-		 	else
-	     	cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR2, dialog_fun1, (void*)0x0000aaaa, NULL );
-		 	wait_dialog_simple();
-     	}
-	        else
- 	        {
+			}
+			else
+				cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR2, dialog_fun1, (void*)0x0000aaaa, NULL );
+			wait_dialog_simple();
+		}
+		else
+		{
 			dialog_ret=0;
 			cellMsgDialogOpen2( type_dialog_ok, STR_SAVXREGERR3, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
-	        }
-      }
+		}
+	}
 
-
-		if (util_xReg==2)
-		{
+	if (util_xReg==2)
+	{
 		dialog_ret=0;
 		cellMsgDialogOpen2( type_dialog_yes_no, STR_RESXREG, dialog_fun1, (void*)0x0000aaaa, NULL );
 		wait_dialog_simple();
@@ -9373,7 +9296,7 @@ void set_xReg()
 			}
 
 			wait_dialog_simple();
-   	 	}
+		}
 		else
 		{
 			dialog_ret=0;
@@ -9382,10 +9305,9 @@ void set_xReg()
 		}
 
 	}
-		else
+	else
 		return;
 }
-
 
 void create_packages()
 {
@@ -9666,10 +9588,10 @@ int readmem(unsigned char *_x, uint64_t _fsiz, uint64_t _chunk, u8 mode) //read 
 	uint64_t n, m;
 	uint64_t val;
 
-    for(n = 0; n < _chunk; n += 8) {
+	for(n = 0; n < _chunk; n += 8) {
 		 if((_fsiz + n)>0x7ffff8ULL && mode==2) return (int)(n-8);
 		 if(mode==2)
-	        val = peekq(0x8000000000000000ULL + _fsiz + n);
+			val = peekq(0x8000000000000000ULL + _fsiz + n);
 
 		else
 		{
@@ -9786,7 +9708,7 @@ void check_settings()
 		if( (peek_lv1_cobra(0x25B340) >> 32) == 0x38600001ULL)			lv1_acl=1;	else lv1_acl=0; //yes
 
 		/* Value changes depending on kernel type*/
-        lv1_smgo = lv1_go = 0;
+		lv1_smgo = lv1_go = 0;
 		/* NOR */
 		if(is_nor() &&(cid!=0x82) &&((peek_lv1_cobra(0x11B4D8) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1;
 		if(is_nor() &&(cid==0x82) &&((peek_lv1_cobra(0x1524D8) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1;
@@ -9820,7 +9742,7 @@ void check_settings()
 		if( (peek_lv1_cobra(0x25C504) >> 32) == 0x38600001ULL)			lv1_acl=1;	else lv1_acl=0;
 
 		/* Value changes depending on kernel type*/
-        lv1_smgo = lv1_go = 0;
+		lv1_smgo = lv1_go = 0;
 		/* NOR, CEX , DEX */
 		if(is_nor() &&(cid!=0x82) &&((peek_lv1_cobra(0x118370) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1; //4.21 CEX
 		if(is_nor() &&(cid==0x82) &&((peek_lv1_cobra(0x11F370) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1; //4.21 DEX
@@ -9960,14 +9882,14 @@ void check_settings()
 		if( (peek_lv1_cobra(0x25C504) >> 32) == 0x38600001ULL)			lv1_acl=1;	else lv1_acl=0;  // Fixed
 
 		/* Value changes depending on kernel type*/
-        lv1_smgo = lv1_go = 0;
+		lv1_smgo = lv1_go = 0;
 		/* NOR, DEX */
 		if(is_nor() && (cid==0x82) &&((peek_lv1_cobra(0x1544B8) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1;
 
 		/* NAND, CEX */
 		if(!is_nor() && (cid==0x82) &&((peek_lv1_cobra(0x37C4B8) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1;
 
-        /* NAND , NOR , CEX */
+		/* NAND , NOR , CEX */
 		if((cid!=0x82) &&((peek_lv1_cobra(0x11D4B8) >> 32) == 0x6400FFFFULL) ) lv1_smgo=1;
 		if((cid!=0x82) &&((peek_lv1_cobra(0x11807C) >> 32) == 0x38600001ULL) ) lv1_go=1;
 		if((cid==0x82) &&((peek_lv1_cobra(0x11F07C) >> 32) == 0x38600001ULL) ) lv1_go=1;
@@ -10061,7 +9983,6 @@ void check_settings()
 
 	}
 
-
 	if(xmb_icon!=2 /*&& rebug_checked  */&& cobra_checked) return; // don't access flash each time we check current settings
 
 	//rebug_checked=1;
@@ -10080,34 +10001,34 @@ void check_settings()
 		}
 	}
 
-struct CellFsStat stat;
-cellFsStat("/dev_rebug/ps2emu/ps2_netemu.self", &stat);
-if(stat.st_size==2605184)
-	swap_emu=1;
+	struct CellFsStat stat;
+	cellFsStat("/dev_rebug/ps2emu/ps2_netemu.self", &stat);
+	if(stat.st_size==2605184)
+		swap_emu=1;
 
-else if(stat.st_size==2605232)
-	swap_emu=1;
+	else if(stat.st_size==2605232)
+		swap_emu=1;
 
-else if(stat.st_size==2605424)
-	swap_emu=1;
+	else if(stat.st_size==2605424)
+		swap_emu=1;
 
-else if(stat.st_size==2605216)
-	swap_emu=1;
+	else if(stat.st_size==2605216)
+		swap_emu=1;
 
-else if(stat.st_size==2605280)
-	swap_emu=1;
+	else if(stat.st_size==2605280)
+		swap_emu=1;
 
-else if(stat.st_size==2605232)
-	swap_emu=1;
+	else if(stat.st_size==2605232)
+		swap_emu=1;
 
-else if(stat.st_size==2605104)
-	swap_emu=1;
+	else if(stat.st_size==2605104)
+		swap_emu=1;
 
-else if(stat.st_size==2606768)
-	swap_emu=1;
+	else if(stat.st_size==2606768)
+		swap_emu=1;
 
-else
-	swap_emu=0;
+	else
+		swap_emu=0;
 
 	if( exist((char*)"/dev_flash/vsh/module/webftp_server.sprx") )
 		webman_mode=1;	//enabled
@@ -10124,7 +10045,7 @@ else
 	/*if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
 		wmlp=1;	//enabled
 	else if( (c_firmware==4.81f) && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp") )
-		wmlp=0;	//disabled*/	
+		wmlp=0;	//disabled*/
 	if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex") )
 		xmb_plugin=1;	//enabled
 	else if( exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex") )
@@ -10239,8 +10160,6 @@ else
 			}
 		}
 	}
-
-
 }
 
 void change_lv1_um(u8 val)
@@ -10400,7 +10319,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(val)	poke_lv1(0x273494, 0x3920005F00000000ULL | org);
 			else	poke_lv1(0x273494, 0x3920004F00000000ULL | org);
 		}
-
 
 		if((cid!=0x82) &&is_nor() && (_forced || !strcmp(option, "lv1_smgo")) ) // CEX 3.55 , NOR
 		{
@@ -11117,7 +11035,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			else	poke_lv1(0x274FEC, 0x392000CF00000000ULL | org);
 		}
 
-
 		if(!strcmp(option, "lv1_smgo") || _forced && is_nor()) // Fixed
 		{
 			org=	peek_lv1_cobra(0x11C3B0) & 0x00000000FFFFFFFFULL;
@@ -11254,7 +11171,6 @@ void apply_settings(char *option, int val, u8 _forced)
 
 	} // 4.31 Firmware
 
-
 	if(c_firmware==4.40f || c_firmware==4.41f || c_firmware==4.46f) // Fixed
 	{
 		if(!strcmp(option, "lv1_pp"))// || _forced) // Fixed
@@ -11311,7 +11227,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(val)	poke_lv1(0x274FEC, 0x392000DF00000000ULL | org);
 			else	poke_lv1(0x274FEC, 0x392000CF00000000ULL | org);
 		}
-
 
 		if((cid!=0x82) && (_forced || !strcmp(option, "lv1_smgo")) ) // CEX 4.40,4.41, 4.46 , NOR , NAND
 		{
@@ -11540,7 +11455,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			else	poke_lv1(0x274FEC, 0x392000CF00000000ULL | org);
 		}
 
-
 		if(!strcmp(option, "lv1_smgo") || _forced && is_nor()) // Fixed
 		{
 			org=	peek_lv1_cobra(0x11D4B8) & 0x00000000FFFFFFFFULL;
@@ -11733,7 +11647,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(val)	poke_lv1(0x274FEC, 0x392000DF00000000ULL | org);
 			else	poke_lv1(0x274FEC, 0x392000CF00000000ULL | org);
 		}
-
 
 		if((cid!=0x82) && (_forced || !strcmp(option, "lv1_smgo")) ) // CEX 4.53 NAND , NOR
 		{
@@ -12268,7 +12181,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			else	poke_lv1(0x118090, 0x3860000000000000ULL | org);
 		}
 
-
 		if(!strcmp(option, "util_recovery") || !strcmp(option, "util_qa"))
 		{
 			u8 old_lv1_um=lv1_um;
@@ -12358,7 +12270,6 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(val)	poke_lv1(0x274FEC, 0x392001DF00000000ULL | org);
 			else	poke_lv1(0x274FEC, 0x392001CF00000000ULL | org);
 		}
-
 
 		if((cid!=0x82) &&is_nor() && (_forced || !strcmp(option, "lv1_smgo")) ) // CEX 4.65-4.75 , NOR
 		{
@@ -12546,14 +12457,12 @@ void apply_settings(char *option, int val, u8 _forced)
 
 	if(!strcmp(option, "util_xReg")) set_xReg();
 
-
 	if(!strcmp(option, "otheros")) boot_otherOS(val);
 	if(!strcmp(option, "reboot")) reboot_ps3(val);
 
 	if(!strcmp(option, "lv2_kernel")) {load_lv2_kernel(val);add_utilities();}
 	if(!strcmp(option, "util_qa") || !strcmp(option, "util_prodmode") || !strcmp(option, "util_recovery"))
 		add_utilities();
-
 
 	struct stat statinfo;
 	char status[512];
@@ -12564,76 +12473,76 @@ void apply_settings(char *option, int val, u8 _forced)
 		//  [NORMAL MODE]
 		if(!rebug_mode) //switch to normal //mode_select == 0)
 		{
-		  result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
-		  if(result == 0 )
-		  {
-			if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.swp" )== 0 &&
-				rename ("/dev_rebug/vsh/module/vsh.self.nrm","/dev_rebug/vsh/module/vsh.self" )== 0){};
-
-			if(rename ("/dev_rebug/vsh/etc/index.dat","/dev_rebug/vsh/etc/index.dat.swp" )== 0 &&
-				rename ("/dev_rebug/vsh/etc/index.dat.nrm","/dev_rebug/vsh/etc/index.dat" )== 0){};
-
-			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.swp" )== 0 &&
-				rename ("/dev_rebug/vsh/etc/version.txt.nrm", "/dev_rebug/vsh/etc/version.txt") == 0)
+			result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
+			if(result == 0 )
 			{
-				strcpy(status, STR_MODNORM);
-				auto_reboot = 1;
+				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.swp" )== 0 &&
+					rename ("/dev_rebug/vsh/module/vsh.self.nrm","/dev_rebug/vsh/module/vsh.self" )== 0){};
+
+				if(rename ("/dev_rebug/vsh/etc/index.dat","/dev_rebug/vsh/etc/index.dat.swp" )== 0 &&
+					rename ("/dev_rebug/vsh/etc/index.dat.nrm","/dev_rebug/vsh/etc/index.dat" )== 0){};
+
+				if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.swp" )== 0 &&
+					rename ("/dev_rebug/vsh/etc/version.txt.nrm", "/dev_rebug/vsh/etc/version.txt") == 0)
+				{
+					strcpy(status, STR_MODNORM);
+					auto_reboot = 1;
+				}
+				else
+				{
+					strcpy(status, STR_TRYAGAIN);
+				}
 			}
 			else
 			{
-				strcpy(status, STR_TRYAGAIN);
-			}
-		  }
-		  else
-		  {
 				strcpy(status, STR_MODNORMALRD);
-		  }
+			}
 		}
 
 		// [REBUG MODE]
 		if(rebug_mode) //switch to REBUG //mode_select == 1)
 		{
-		  result = stat("/dev_rebug/vsh/module/vsh.self.swp", &statinfo);
-		  if(result == 0 )
-		  {
-			result = stat("/dev_rebug/vsh/module/vsh.self.dexsp", &statinfo);
+			result = stat("/dev_rebug/vsh/module/vsh.self.swp", &statinfo);
 			if(result == 0 )
 			{
-				result = stat("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", &statinfo);
-				if(result == 0)
+				result = stat("/dev_rebug/vsh/module/vsh.self.dexsp", &statinfo);
+				if(result == 0 )
 				{
-					/*result = stat("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", &statinfo);
+					result = stat("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", &statinfo);
 					if(result == 0)
 					{
-						if(rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco","/dev_rebug/vsh/resource/sysconf_plugin.rco.dex" )== 0 &&
-						rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
-					}*/
-					if(rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx","/dev_rebug/vsh/module/sysconf_plugin.sprx.dex" )== 0 &&
-						rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", "/dev_rebug/vsh/module/sysconf_plugin.sprx") == 0){};
+						/*result = stat("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", &statinfo);
+						if(result == 0)
+						{
+							if(rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco","/dev_rebug/vsh/resource/sysconf_plugin.rco.dex" )== 0 &&
+							rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
+						}*/
+						if(rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx","/dev_rebug/vsh/module/sysconf_plugin.sprx.dex" )== 0 &&
+							rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", "/dev_rebug/vsh/module/sysconf_plugin.sprx") == 0){};
+					}
 				}
-			}
 
-			if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.nrm" )== 0 &&
-				rename ("/dev_rebug/vsh/module/vsh.self.swp","/dev_rebug/vsh/module/vsh.self" )== 0){};
+				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.nrm" )== 0 &&
+					rename ("/dev_rebug/vsh/module/vsh.self.swp","/dev_rebug/vsh/module/vsh.self" )== 0){};
 
-			if(rename ("/dev_rebug/vsh/etc/index.dat","/dev_rebug/vsh/etc/index.dat.nrm" )== 0 &&
-				rename ("/dev_rebug/vsh/etc/index.dat.swp","/dev_rebug/vsh/etc/index.dat" )== 0){};
+				if(rename ("/dev_rebug/vsh/etc/index.dat","/dev_rebug/vsh/etc/index.dat.nrm" )== 0 &&
+					rename ("/dev_rebug/vsh/etc/index.dat.swp","/dev_rebug/vsh/etc/index.dat" )== 0){};
 
-			if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.nrm" )== 0 &&
-				rename ("/dev_rebug/vsh/etc/version.txt.swp", "/dev_rebug/vsh/etc/version.txt") == 0)
-			{
-				strcpy(status, STR_MODREB);
-				auto_reboot = 1;
+				if(rename ("/dev_rebug/vsh/etc/version.txt","/dev_rebug/vsh/etc/version.txt.nrm" )== 0 &&
+					rename ("/dev_rebug/vsh/etc/version.txt.swp", "/dev_rebug/vsh/etc/version.txt") == 0)
+				{
+					strcpy(status, STR_MODREB);
+					auto_reboot = 1;
+				}
+				else
+				{
+					strcpy(status, STR_TRYAGAIN);
+				}
 			}
 			else
 			{
-				strcpy(status, STR_TRYAGAIN);
+				strcpy(status, STR_MODREBALRD);
 			}
-		  }
-		  else
-		  {
-			strcpy(status, STR_MODREBALRD);
-		  }
 		}
 
 		dialog_ret=0;
@@ -12641,8 +12550,8 @@ void apply_settings(char *option, int val, u8 _forced)
 		wait_dialog_simple();
 	}
 
-    //bool is_cobra_toggle = (!strcmp(option, "cobra_mode"));
-#define ORG_DIR              "/dev_hdd0/game/RBGTLBOX2/USRDIR/wm_lang"	
+	//bool is_cobra_toggle = (!strcmp(option, "cobra_mode"));
+#define ORG_DIR              "/dev_hdd0/game/RBGTLBOX2/USRDIR/wm_lang"
 #define LANG_DIR             "/dev_hdd0/tmp/wm_lang"
 
 	if(!strcmp(option, "webman_mode"))
@@ -12658,41 +12567,43 @@ void apply_settings(char *option, int val, u8 _forced)
 		else if((webman_mode==1) && exist((char*)"/dev_rebug/vsh/module/webftp_server.sprx.bak"))
 		{
 			rename ("/dev_rebug/vsh/module/webftp_server.sprx.bak","/dev_rebug/vsh/module/webftp_server.sprx" );
-				mkdir((char*)"/dev_hdd0/tmp/wm_lang", S_IRWXO | S_IRWXU | S_IRWXG | S_IFDIR);
-				file_copy((char*)ORG_DIR "/LANG_EN.TXT", (char*)LANG_DIR "/LANG_EN.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_AR.TXT", (char*)LANG_DIR "/LANG_AR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_CN.TXT", (char*)LANG_DIR "/LANG_CN.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_DE.TXT", (char*)LANG_DIR "/LANG_DE.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_ES.TXT", (char*)LANG_DIR "/LANG_ES.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_FR.TXT", (char*)LANG_DIR "/LANG_FR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_GR.TXT", (char*)LANG_DIR "/LANG_GR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_DK.TXT", (char*)LANG_DIR "/LANG_DK.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_HU.TXT", (char*)LANG_DIR "/LANG_HU.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_HR.TXT", (char*)LANG_DIR "/LANG_HR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_BG.TXT", (char*)LANG_DIR "/LANG_BG.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_CZ.TXT", (char*)LANG_DIR "/LANG_CZ.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_SK.TXT", (char*)LANG_DIR "/LANG_SK.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_IN.TXT", (char*)LANG_DIR "/LANG_IN.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_IT.TXT", (char*)LANG_DIR "/LANG_IT.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_JP.TXT", (char*)LANG_DIR "/LANG_JP.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_KR.TXT", (char*)LANG_DIR "/LANG_KR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_NL.TXT", (char*)LANG_DIR "/LANG_NL.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_PL.TXT", (char*)LANG_DIR "/LANG_PL.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_PT.TXT", (char*)LANG_DIR "/LANG_PT.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_RU.TXT", (char*)LANG_DIR "/LANG_RU.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_TR.TXT", (char*)LANG_DIR "/LANG_TR.TXT", 0);
-				file_copy((char*)ORG_DIR "/LANG_ZH.TXT", (char*)LANG_DIR "/LANG_ZH.TXT", 0);
-			strcpy(status, STR_WMENA);	
+			mkdir((char*)"/dev_hdd0/tmp/wm_lang", S_IRWXO | S_IRWXU | S_IRWXG | S_IFDIR);
+
+			file_copy((char*)ORG_DIR "/LANG_EN.TXT", (char*)LANG_DIR "/LANG_EN.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_AR.TXT", (char*)LANG_DIR "/LANG_AR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_CN.TXT", (char*)LANG_DIR "/LANG_CN.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_DE.TXT", (char*)LANG_DIR "/LANG_DE.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_ES.TXT", (char*)LANG_DIR "/LANG_ES.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_FR.TXT", (char*)LANG_DIR "/LANG_FR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_GR.TXT", (char*)LANG_DIR "/LANG_GR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_DK.TXT", (char*)LANG_DIR "/LANG_DK.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_HU.TXT", (char*)LANG_DIR "/LANG_HU.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_HR.TXT", (char*)LANG_DIR "/LANG_HR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_BG.TXT", (char*)LANG_DIR "/LANG_BG.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_CZ.TXT", (char*)LANG_DIR "/LANG_CZ.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_SK.TXT", (char*)LANG_DIR "/LANG_SK.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_IN.TXT", (char*)LANG_DIR "/LANG_IN.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_IT.TXT", (char*)LANG_DIR "/LANG_IT.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_JP.TXT", (char*)LANG_DIR "/LANG_JP.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_KR.TXT", (char*)LANG_DIR "/LANG_KR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_NL.TXT", (char*)LANG_DIR "/LANG_NL.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_PL.TXT", (char*)LANG_DIR "/LANG_PL.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_PT.TXT", (char*)LANG_DIR "/LANG_PT.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_RU.TXT", (char*)LANG_DIR "/LANG_RU.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_TR.TXT", (char*)LANG_DIR "/LANG_TR.TXT", 0);
+			file_copy((char*)ORG_DIR "/LANG_ZH.TXT", (char*)LANG_DIR "/LANG_ZH.TXT", 0);
+
+			strcpy(status, STR_WMENA);
 			auto_reboot = 1;
 		}
+
 		if(auto_reboot)
 		{
-		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
-		wait_dialog_simple();
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
 
-
-		//system_call_4(379,0x1200,0,0,0);
+			//system_call_4(379,0x1200,0,0,0);
 		}
 	}
 
@@ -12701,74 +12612,74 @@ void apply_settings(char *option, int val, u8 _forced)
 		// [RETAIL XMB]: REBUG MODE ONLY
 		if(xmb_mode==0) //switch to retail xmb //xmb_select == 2)
 		{
-		  result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
-		  if(result == 0 )
-		  {
-			result = stat("/dev_rebug/vsh/module/vsh.self.cexsp", &statinfo);
+			result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
 			if(result == 0 )
 			{
-				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.dexsp" )== 0 &&
-					rename ("/dev_rebug/vsh/module/vsh.self.cexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
+				result = stat("/dev_rebug/vsh/module/vsh.self.cexsp", &statinfo);
+				if(result == 0 )
 				{
-					if(menu_mode==0) //switch to CEX QA menu //menu_select == 1)
+					if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.dexsp" )== 0 &&
+						rename ("/dev_rebug/vsh/module/vsh.self.cexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
 					{
-						if(rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx","/dev_rebug/vsh/module/sysconf_plugin.sprx.dex" )== 0 &&
-							rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", "/dev_rebug/vsh/module/sysconf_plugin.sprx") == 0){};
-						/*result = stat("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", &statinfo);
-						if(result == 0)
+						if(menu_mode==0) //switch to CEX QA menu //menu_select == 1)
 						{
-							if(rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco","/dev_rebug/vsh/resource/sysconf_plugin.rco.dex" )== 0 &&
-								rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
-						}*/
+							if(rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx","/dev_rebug/vsh/module/sysconf_plugin.sprx.dex" )== 0 &&
+								rename ("/dev_rebug/vsh/module/sysconf_plugin.sprx.cex", "/dev_rebug/vsh/module/sysconf_plugin.sprx") == 0){};
+							/*result = stat("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", &statinfo);
+							if(result == 0)
+							{
+								if(rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco","/dev_rebug/vsh/resource/sysconf_plugin.rco.dex" )== 0 &&
+									rename ("/dev_rebug/vsh/resource/sysconf_plugin.rco.cex", "/dev_rebug/vsh/resource/sysconf_plugin.rco") == 0){};
+							}*/
+						}
+						strcpy(status, STR_MODRET);
+						auto_reboot = 1;
 					}
-					strcpy(status, STR_MODRET);
-					auto_reboot = 1;
+					else
+					{
+						strcpy(status, STR_TRYAGAIN);
+					}
 				}
 				else
 				{
-					strcpy(status, STR_TRYAGAIN);
+					strcpy(status, STR_MODRETERR1);
 				}
 			}
 			else
 			{
-				strcpy(status, STR_MODRETERR1);
+				strcpy(status, STR_MODRETERR2);
 			}
-		  }
-		  else
-		  {
-			strcpy(status, STR_MODRETERR2);
-		  }
 		}
 
 		// [DEBUG XMB]: REBUG MODE ONLY
 		if(xmb_mode==1) // switch to debug xmb //xmb_select == 1)
 		{
-		  result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
-		  if(result == 0 )
-		  {
-			result = stat("/dev_rebug/vsh/module/vsh.self.dexsp", &statinfo);
+			result = stat("/dev_rebug/vsh/module/vsh.self.nrm", &statinfo);
 			if(result == 0 )
 			{
-				if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.cexsp" )== 0 &&
-					rename ("/dev_rebug/vsh/module/vsh.self.dexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
+				result = stat("/dev_rebug/vsh/module/vsh.self.dexsp", &statinfo);
+				if(result == 0 )
 				{
-					strcpy(status, STR_MODDEB);
-					auto_reboot = 1;
+					if(rename ("/dev_rebug/vsh/module/vsh.self","/dev_rebug/vsh/module/vsh.self.cexsp" )== 0 &&
+						rename ("/dev_rebug/vsh/module/vsh.self.dexsp","/dev_rebug/vsh/module/vsh.self" )== 0)
+					{
+						strcpy(status, STR_MODDEB);
+						auto_reboot = 1;
+					}
+					else
+					{
+						strcpy(status, STR_TRYAGAIN);
+					}
 				}
 				else
 				{
-					strcpy(status, STR_TRYAGAIN);
+					strcpy(status, STR_MODDEBERR1);
 				}
 			}
 			else
 			{
-				strcpy(status, STR_MODDEBERR1);
+				strcpy(status, STR_MODDEBERR2);
 			}
-		  }
-		  else
-		  {
-			strcpy(status, STR_MODDEBERR2);
-		  }
 		}
 
 		dialog_ret=0;
@@ -12910,7 +12821,7 @@ void apply_settings(char *option, int val, u8 _forced)
 		{
 			system_call_4(379,0x1200,0,0,0);
 		}
-        */
+		*/
 	}
 
 	if(!strcmp(option, "swap_emu"))
@@ -12936,15 +12847,17 @@ void apply_settings(char *option, int val, u8 _forced)
 			wait_dialog_simple();
 			if(dialog_ret==1)
 			{
-			unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self");
-			unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self");
-			unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_emu.self");
-			file_copy((char*)"/dev_usb000/rebug/ps2_netemu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self", 0);
-			file_copy((char*)"/dev_usb000/rebug/ps2_emu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_emu.self", 0);
-			file_copy((char*)"/dev_usb000/rebug/ps2_gxemu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self", 0);
-			dialog_ret=0;
-			cellMsgDialogOpen2( type_dialog_ok, STR_PS2COP, dialog_fun2, (void*)0x0000aaab, NULL );
-			wait_dialog_simple();
+				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self");
+				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self");
+				unlink("/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_emu.self");
+
+				file_copy((char*)"/dev_usb000/rebug/ps2_netemu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self", 0);
+				file_copy((char*)"/dev_usb000/rebug/ps2_emu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_emu.self", 0);
+				file_copy((char*)"/dev_usb000/rebug/ps2_gxemu.self", (char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_gxemu.self", 0);
+
+				dialog_ret=0;
+				cellMsgDialogOpen2( type_dialog_ok, STR_PS2COP, dialog_fun2, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
 			}
 		}
 		if(exist((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/ps2_netemu.self"))
@@ -12987,6 +12900,7 @@ void apply_settings(char *option, int val, u8 _forced)
 			unlink("/dev_rebug/rebug/cobra/stage2.dex.bak");
 			unlink("/dev_rebug/ps2emu/ps2gxemu_stage2.bin");
 			unlink("/dev_rebug/ps2emu/ps2hwemu_stage2.bin");
+
 			if(update_cobra==1)
 			{
 				file_copy((char*)"/dev_hdd0/game/RBGTLBOX2/USRDIR/update/stage2.cex.update", (char*)"/dev_rebug/rebug/cobra/stage2.cex", 0);
@@ -13001,6 +12915,7 @@ void apply_settings(char *option, int val, u8 _forced)
 			{
 				return;
 			}
+
 			dialog_ret=0;
 			cellMsgDialogOpen2( type_dialog_ok, STR_COBUPSUCC, dialog_fun2, (void*)0x0000aaab, NULL );
 			wait_dialog_simple();
@@ -13010,177 +12925,181 @@ void apply_settings(char *option, int val, u8 _forced)
 	if((c_firmware==4.78f || c_firmware==4.80f) && !strcmp(option, "cfw_settings"))
 	{
 
-	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org") )
-		cfw_settings=1;	//enabled
-	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw") )
-		cfw_settings=0;	//disabled
+		if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org") )
+			cfw_settings=1;	//enabled
+		else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw") )
+			cfw_settings=0;	//disabled
 
-			if(cfw_settings==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org") )
-			{
-				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak");
-				rename((char*)"/dev_rebug/vsh/resource/xai_plugin.rco",
-					(char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
+		if(cfw_settings==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org") )
+		{
+			rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak");
+			rename((char*)"/dev_rebug/vsh/resource/xai_plugin.rco",
+				(char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
+
 			strcpy(status, STR_XMBCFWDIS);
 			auto_reboot = 1;
-			}
-			else
-			if(cfw_settings==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw")
-								&& exist((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak")
-								&& exist((char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak")
-				)
-			{
-				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak",
-					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx");
-				rename((char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak",
-					(char*)"/dev_rebug/vsh/resource/xai_plugin.rco");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
+		}
+		else
+		if(cfw_settings==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw")
+							&& exist((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak")
+							&& exist((char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak")
+			)
+		{
+			rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak",
+				(char*)"/dev_rebug/vsh/module/xai_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/resource/xai_plugin.rco.bak",
+				(char*)"/dev_rebug/vsh/resource/xai_plugin.rco");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.org");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml.cfw",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.org");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml.cfw",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_network_tool2.xml");
+
 			sprintf(status, "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.");
 			auto_reboot = 1;
-			}
+		}
+
 		if(auto_reboot)
 		{
-		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
-		wait_dialog_simple();
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
 
-
-		//system_call_4(379,0x1200,0,0,0);
+			//system_call_4(379,0x1200,0,0,0);
 		}
 	}
 	else if((c_firmware==4.81f || c_firmware==4.82f) && !strcmp(option, "cfw_settings"))
 	{
+		if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
+			cfw_settings=1;	//enabled
+		else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on") )
+			cfw_settings=0;	//disabled
 
-	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
-		cfw_settings=1;	//enabled
-	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on") )
-		cfw_settings=0;	//disabled
+		if(cfw_settings==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
+		{
+			rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
 
-			if(cfw_settings==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off") )
-			{
-				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
 			sprintf(status, "XMB CFW settings MOD is Disabled. The plugin will be unloaded on next boot.");
 			auto_reboot = 1;
-			}
-			else
-			if(cfw_settings==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on")
-								&& exist((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak")
-				)
-			{
-				rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak",
-					(char*)"/dev_rebug/vsh/module/xai_plugin.sprx");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
+		}
+		else
+		if(cfw_settings==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on")
+							&& exist((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak")
+			)
+		{
+			rename((char*)"/dev_rebug/vsh/module/xai_plugin.sprx.bak",
+				(char*)"/dev_rebug/vsh/module/xai_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.off");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml.on",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/cfw_settings.xml");
+
 			sprintf(status, "XMB CFW settings MOD is Enabled. The feature will be available via Network Column on XMB.");
 			auto_reboot = 1;
-			}
+		}
 		if(auto_reboot)
 		{
-		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
-		wait_dialog_simple();
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
 
-
-		//system_call_4(379,0x1200,0,0,0);
+			//system_call_4(379,0x1200,0,0,0);
 		}
 	}/*
 	if(!strcmp(option, "wmlp"))
 	{
 
-	if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
-		wmlp=1;	//enabled
-	else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp") )
-		wmlp=0;	//disabled
+		if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
+			wmlp=1;	//enabled
+		else if( exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp") )
+			wmlp=0;	//disabled
 
-			if(wmlp==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
-			{
-				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp");
-				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org",
-					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");					
-				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp");
-				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org",
-					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");					
-				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
-					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp");
-				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org",
-					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");					
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");					
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");				
-			sprintf(status, "webMAN MOD LaunchPAD is Disabled. The plugin will be unloaded on next boot.");				
+		if(wmlp==1 && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org") )
+		{
+			rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp");
+			rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org",
+				(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp");
+			rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org",
+				(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
+				(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp");
+			rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org",
+				(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");
+
+			sprintf(status, "webMAN MOD LaunchPAD is Disabled. The plugin will be unloaded on next boot.");
 			auto_reboot = 1;
-			}
-			else
-			if(wmlp==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp"))
-			{									
-				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org");
-				rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp",
-					(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");					
-				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
-					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org");
-				rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp",
-					(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");					
-				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
-					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org");
-				rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp",
-					(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");					
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");					
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");	
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org");
-				rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp",
-					(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");
-			sprintf(status, "webMAN MOD LaunchPAD is Enabled. The feature will be available on What's NEW on XMB.\n\n webMAN must be enabled to use this feature as well as PSN account registration on your user profile.");			
+		}
+		else
+		if(wmlp==0  && exist((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp"))
+		{
+			rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.org");
+			rename((char*)"/dev_rebug/vsh/module/wboard_plugin.sprx.wmlp",
+				(char*)"/dev_rebug/vsh/module/wboard_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx",
+				(char*)"/dev_rebug/vsh/module/explore_plugin.sprx.org");
+			rename((char*)"/dev_rebug/vsh/module/explore_plugin.sprx.wmlp",
+				(char*)"/dev_rebug/vsh/module/explore_plugin.sprx");
+			rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx",
+				(char*)"/dev_rebug/vsh/module/explore_category_game.sprx.org");
+			rename((char*)"/dev_rebug/vsh/module/explore_category_game.sprx.wmlp",
+				(char*)"/dev_rebug/vsh/module/explore_category_game.sprx");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.org");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml.wmlp",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.org");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml.wmlp",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_game_tool2.xml");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.org");
+			rename((char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml.wmlp",
+				(char*)"/dev_rebug/vsh/resource/explore/xmb/category_psn.xml");
+
+			sprintf(status, "webMAN MOD LaunchPAD is Enabled. The feature will be available on What's NEW on XMB.\n\n webMAN must be enabled to use this feature as well as PSN account registration on your user profile.");
 			auto_reboot = 1;
-			}
+		}
+
 		if(auto_reboot)
 		{
-		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
-		wait_dialog_simple();
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
 
-
-		//system_call_4(379,0x1200,0,0,0);
+			//system_call_4(379,0x1200,0,0,0);
 		}
 	}	*/
 
@@ -13198,8 +13117,9 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex");
 				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex",
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-			sprintf(status, "HOST information will no longer be displayed on XMB.");
-			auto_reboot = 1;
+
+				sprintf(status, "HOST information will no longer be displayed on XMB.");
+				auto_reboot = 1;
 			}
 			else
 			if(xmb_plugin==0  && exist((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex")	)
@@ -13208,17 +13128,17 @@ void apply_settings(char *option, int val, u8 _forced)
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.cex");
 				rename((char*)"/dev_rebug/vsh/module/xmb_plugin.sprx.dex",
 					(char*)"/dev_rebug/vsh/module/xmb_plugin.sprx");
-			sprintf(status, "HOST information will be displayed on XMB.");
-			auto_reboot = 1;
+
+				sprintf(status, "HOST information will be displayed on XMB.");
+				auto_reboot = 1;
 			}
 		if(auto_reboot)
 		{
-		dialog_ret=0;
-		cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
-		wait_dialog_simple();
+			dialog_ret=0;
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
 
-
-		//system_call_4(379,0x1200,0,0,0);
+			//system_call_4(379,0x1200,0,0,0);
 		}
 	}
 
@@ -13301,6 +13221,6 @@ done:
 		sprintf(reload, "/dev_hdd0/game/%s/USRDIR/RELOAD.SELF", STR_APP_ID);
 		launch_self2(reload);
 	}
-	
+
 	check_settings();
 }
