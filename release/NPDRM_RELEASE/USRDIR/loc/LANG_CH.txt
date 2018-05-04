@@ -190,7 +190,7 @@ STR_LOADLV2KERR2                                    {LV2内核：操作失败。
 STR_BOOTOOSMSG1                                     {你想改变启动顺序，启用所有LV1补丁并装载otheros？}
 STR_BOOTOOSMSG2                                     {你想改变启动顺序并装载otheros？}
 STR_BOOTOOSERR1                                     {otheros的：操作失败。}
-STR_SWPKERR                                         {此功能不可在CEX模式使用。\n \n请先刷写DEX模式的 NOR / NAND。}（翻译到这里）
+STR_SWPKERR                                         {此功能不可在CEX模式使用。\n \n请先刷写DEX模式的 NOR / NAND。}
 STR_DMPFLSH                                         {你想导出FLASH存储器到文件？}
 STR_DMPFLSHERR                                      {请插入至少有256MB空余空间的USB驱动器（/ dev_usb000），然后再试一次！}
 STR_EXPLVMSG1                                       {你想导出GameOS LV2内存到一个文件？}
