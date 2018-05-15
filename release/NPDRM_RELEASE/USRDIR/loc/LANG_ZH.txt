@@ -9,7 +9,7 @@ STR_SYSTEM                                          {系統}
 STR_SELECTOR                                        {選擇}
 STR_LV1PATCH                                        {LV1補丁}
 STR_DTC                                             {DEX / CEX}
-STR_UTLS                                            {公用事業}
+STR_UTLS                                            {工具}
 STR_EIDRK                                           {你想備份你的EID Root Key，然後重新啟動嗎？\n\neid_root_key將導出至/dev_hdd0/game/RBGTLBOX2/USRDIR}
 STR_SCRSHOT                                         {保存截圖}
 STR_DONE                                            {搞定！ }
@@ -17,8 +17,8 @@ STR_SHTDWN                                          {關閉...}
 STR_TRYRESTART                                      {嘗試重新啟動...}
 STR_NOTFOUND                                        {未找到！ }
 STR_PETBOOTINST                                     {你想在VFLASH/NAND Region 5安裝Petitboot？}
-STR_PETBOOTOK                                       {Petitboot已安裝...享受OtherOS。}
-STR_PETBOOTERROR                                    {錯誤：無法找到Petitboot..VFLASH檢測\n\n請把[dtbimage.ps3.bin]檔案放入USB設備，然後再試一次。 }
+STR_PETBOOTOK                                       {Petitboot已安裝...享受OtherOS吧。}
+STR_PETBOOTERROR                                    {錯誤：無法找到Petitboot..已檢測到VFLASH\n\n請把[dtbimage.ps3.bin]檔案放入USB設備，然後再試一次。 }
 STR_RESIZE5                                         {你想調整VFLASH/NAND Region 5使其容許OtherOS？ }
 STR_RESIZE5OK                                       {成功 ： 你的PS3需要重新啟動使更改生效。 }
 STR_RESIZE5ERROR                                    {失敗 ： 調整VFLASH/NAND Region 5未完成。 }
@@ -47,10 +47,10 @@ STR_QADESC                                          {啟用或禁用QA標誌功�
 STR_NOTAV                                           {不可用}
 STR_TOGREC                                          {切換恢復模式}
 STR_TOGRECDESC                                      {下次重新啟動時啟用或禁用恢復模式。 }
-STR_TOGPM                                           {切換產品模式}
-STR_TOGPMDESC                                       {啟用或禁用產品模式（FSM）。 }
+STR_TOGPM                                           {切換至工廠模式}
+STR_TOGPMDESC                                       {啟用或禁用工廠模式（FSM）。 }
 STR_LOADLV2                                         {載入LV2內核}
-STR_LOADLV2DESC                                     {載入lv2_kernel.self。 [KERNEL_NAME]來自USB或/dev_hdd0。 }
+STR_LOADLV2DESC                                     {從USB或/ dev_hdd0載入lv2_kernel.self[KERNEL_NAME] }
 STR_BUT                                             {按鍵分配}
 STR_BUTDESC                                         {設置按鍵用於 接受/輸入 與 取消/返回 鍵。 }
 STR_CIRCLE                                          {圈為[接受]}
@@ -64,7 +64,7 @@ STR_RESIZEVFLASHDESC                                {調整VFLASH/NAND Regions 5
 STR_INSTPETBOOT                                     {安裝petitboot}
 STR_INSTPETBOOTDESC                                 {從USB安裝Petitboot至VFLASH/NAND Regions 5。 }
 STR_GAMEOSBOOTFLG                                   {設GameOS為啟動標誌}
-STR_GAMEOSBOOTFLGDESC                               {修復了在安裝了OtherOS後無法正常載入PS2遊戲的問題。 }
+STR_GAMEOSBOOTFLGDESC                               {修復了在安裝OtherOS後無法正常載入PS2遊戲的問題。 }
 STR_PKG                                             {創建\x22Packages\x22文件夾}
 STR_PKGDESC                                         {創建/dev_hdd0/packages文件夾。 }
 STR_SAVLV1                                          {導出Hypervisor LV1 Memory}
@@ -89,37 +89,37 @@ STR_TOGCFWDESC                                      {啟用或禁用XMB CFW sett
 STR_TOGCOB                                          {啟用COBRA模式}
 STR_TOGCOBDESC                                      {下次重新啟動後啟用或禁用COBRA模式。 }
 STR_TOGPS2                                          {切換PS2模擬器}
-STR_TOGPS2DESC                                      {PS2Emu切換使用Original PS2 Emu文件。 }
+STR_TOGPS2DESC                                      {PS2Emu切換成使用Original PS2 Emu文件。 }
 STR_TOGWM                                           {啟用 webMAN}
 STR_TOGWMDESC                                       {啟用或下次重新後啟用或禁用內置webMAN。 }
 STR_COBPUPD                                         {更新COBRA Payload}
 STR_COBPUPDDESC                                     {COBRA Payload已更新至最新版本}
 STR_NORBG                                           {REBUG選擇功能不可用}
 STR_NORBGDESC                                       {請安裝REBUG REX / D-REX固件以獲取選擇功能。 }
-STR_PATCHLV1                                        {LV1 Peek/Poke Support}
-STR_PATCHLV1DESC                                    {補丁未使用LV1 syscalls 182和183}
+STR_PATCHLV1                                        {LV1 Peek/Poke Support}
+STR_PATCHLV1DESC                                    {給未使用的LV1 syscalls 182和183打補丁}
 STR_LV2MEMPRO                                       {LV2 Memory保護}
 STR_LV2MEMPRODESC                                   {Patch Shutdown on LV2 modification. }
 STR_HTAB                                            {帶寫入保護的HTAB映射}
 STR_HTABDESC                                        {啟用或禁用HTAB映射保護。 }
 STR_INDI                                            {訪問所有INDI Info Manager服務}
 STR_INDIDESC                                        {啟用或禁用INDI訪問。 }
-STR_EEPROM                                          {更新管理器EEPROM寫訪問}
-STR_EEPROMDESC                                      {補丁更新管理器訪問EEPROM。 }
+STR_EEPROM                                          {允許更新管理器寫入EEPROM}
+STR_EEPROMDESC                                      {允許更新管理器訪問EEPROM。 }
 STR_DISPATCH                                        {調度管理訪問}
-STR_DISPATCHDESC                                    {補丁調度管理訪問所有服務。 }
+STR_DISPATCHDESC                                    {允許調度管理訪問所有服務。 }
 STR_ENCDEC                                          {允許ENCDEC IOCTL Command 0x85}
 STR_ENCDECDESC                                      {啟用IOCTL Command 0x85}
-STR_SYSMAN                                          {GameOS的系統管理器能力掩碼}
+STR_SYSMAN                                          {GameOS的系統管理器能力掩蓋}
 STR_SYSMANDESC                                      {允許訪問所有系統管理服務。 }
 STR_ALLPKG                                          {提取所有PKG類型}
 STR_ALLPKGDESC                                      {允許更新管理器來提取所有PKG類型。 }
 STR_LPAR                                            {完全訪問任何LPAR中的Repo節點}
 STR_LPARDESC                                        {允許創建，修改，刪除存儲庫節點。 }
-STR_LV1SPE                                          {LV1完整存取MFC_SR1 SPE註冊}
-STR_LV1SPEDESC                                      {允許all-bit訪問暫存器。 }
+STR_LV1SPE                                          {LV1完整存取MFC_SR1 SPE暫存器}
+STR_LV1SPEDESC                                      {允許訪問暫存器all-bit。 }
 STR_LV1DABR                                         {LV1訪問組數據中斷點}
-STR_LV1DABRDESC                                     {啟用藉由lv1_set_dabr()訪問LV1}
+STR_LV1DABRDESC                                     {啟用LV1訪問lv1_set_dabr()}
 STR_LV1GART                                         {LV1訪問GPU GART Memory}
 STR_LV1GARTDESC                                     {允許LV1使用4KB IO分頁大小。 }
 STR_LV1KEYS                                         {使用ENCDEC Keys訪問存儲管理器}
@@ -130,8 +130,8 @@ STR_LV1GO                                           {初始化GuestOS載入器}
 STR_LV1GODESC                                       {啟用GameOS的GuestOS模式1}
 STR_SWPLV2K                                         {切換LV2內核}
 STR_SWPLV2KDESC                                     {Retail和Debug內核之間切換。 }
-STR_REWTID                                          {在Flash重寫Target ID}
-STR_REWTIDDESC                                      {若提供了有效的flash dump/eid_root_key，可以將PS3轉換為cex/dex。}
+STR_REWTID                                          {對Flash重寫Target ID}
+STR_REWTIDDESC                                      {若提供了有效的flash dump/eid_root_key，可以將PS3在cex/dex之間轉換。}
 STR_NOCEXDEX                                        {CEX/DEX 功能不可用}
 STR_NOCEXDEXDESC                                    {安裝REBUG REX EDITION以獲取這些功能。 }
 STR_SELECT                                          {：選擇}
@@ -149,35 +149,35 @@ STR_SWP2CEXOK                                       {LV2內核成功更改為CEX
 STR_SWPERROR                                        {不兼容的固件版本或發生錯誤。 }
 STR_NEEDRESTSYS                                     {系統需要重新啟動。按OK鍵重啟}
 STR_WEIDERROR1                                      {訪問Flash時發生錯誤}
-STR_WEIDERROR2                                      {您提供的文件與您的系統兼容！ }
-STR_WEIDRUSURE1                                     {你是即將更新您的PS3™地區/Target ID!\n\nREGION /Target ID：！ }
+STR_WEIDERROR2                                      {您提供的文件與您的系統不兼容！ }
+STR_WEIDRUSURE1                                     {你即將更新您的PS3™地區/Target ID!\n\nREGION /Target ID：！ }
 STR_WEIDRUSURE2                                     {ARE YOU SURE？ }
 STR_WEIDRUSURE3                                     {您將要改變你的PS3™地區/Target ID!\nTarget ID：！ }
 STR_WEIDRUSURE4                                     {New ID:}
 STR_WEIDRRUUSURE                                    {警告：\n\n此操作是危險的，只有在您在確保的情況下才應執行！\n\nA R E   Y O U   S U R E ? }
-STR_WEIDOK1                                         {Flash EID0 region覆寫成功（192 bytes）。\n\n請退出到XMB，關閉和開啟系統！ }
-STR_WEIDOK2                                         {Flash EID0 region覆寫成功（192 bytes）。\n\n要應用region變更，請退出到XMB，關閉和開啟系統！ }
+STR_WEIDOK1                                         {Flash EID0 region覆寫成功（192 bytes）。\n\n請退出到XMB，關閉再開啟系統！ }
+STR_WEIDOK2                                         {Flash EID0 region覆寫成功（192 bytes）。\n\n要應用region變更，請退出到XMB，關閉再開啟系統！ }
 STR_WEIDERROR3                                      {寫入Flash EID0時出錯！ }
 STR_WEIDERROR4                                      {訪問FLASH設備時出錯！}
 STR_WTDMSG1                                         {您的固件是current mode}
-STR_WTDMSG2                                         {允許您轉儲eid_root_key。\n您可以轉儲它並使用此工具箱從DEX轉換為CEX，反之亦然。\n如果你的root key放在/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key，那麼你將現在選擇的歡迎。 }
-STR_WTDMSG3                                         {如果你有/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key比你一個選擇，現在迎接你的根密鑰。 }
-STR_WTDMSG4                                         {發現eid_root_key，你想自動轉換為}
-STR_WTDMSG5                                         {找到真正的DEX\nCEX切換將區域ID更改為美國（0x84）}
+STR_WTDMSG2                                         {允許您轉儲eid_root_key。\n您可以轉儲它並使用此工具箱從DEX轉換為CEX，反之亦然。\n如果你的root key放在/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key，那麼你將收到一個選擇框。 }
+STR_WTDMSG3                                         {如果你有/dev_hdd0/game/RBGTLBOX2/USRDIR/eid_root_key比你一個選擇，那麼你將收到一個選擇框。 }
+STR_WTDMSG4                                         {發現eid_root_key，你想自動轉換嗎}
+STR_WTDMSG5                                         {找到真正的DEX\n切換至CEX會將區域ID更改為美國（0x84）}
 STR_WTDMSG6                                         {發生錯誤。\n\n請驗證您的eid_root_key，您的key可能是別人的或已損壞}
 STR_WTDMSG7                                         {請提供以下文件，然後再試一次}
-STR_WTDMSG8                                         {Flash整個NOR已禁用。\n\n正確地命名您的NOR轉儲以啟用僅刷入EID0部分。\n\n[*.EID0.NORBIN]必須為16MB，並且也來自您的設備。\n只有192個字節被寫進flash (EID0)。 }
-STR_WTDMSG9                                         {Flash整個NAND已禁用。\n\n正確命名您的NAND轉儲以啟用僅刷入EID0部分。\n\n[*.EID0.NORBIN]必須是239MB或256MB，，並且也來自您的設備。\n只有192個字節被寫進flash (EID0)。 }
+STR_WTDMSG8                                         {刷寫整個NOR時發生錯誤。 \n\n請正確重命名NOR備份以使得只有EID0部分刷入。\n\n [*.EID0.NORBIN]必須是16MB，並必須是你這台主機的。\n只有192個字節將被寫進flash (EID0)。 }
+STR_WTDMSG9                                         {刷寫整個NAND時發生錯誤。 \n \n請正確重命名NAND備份以使得只有EID0部分刷入。 \n \n [*.EID0.NANDBIN]必須是239或256MB，並必須是你這台主機的。\n只有192個字節將被寫進flash (EID0)。 }
 STR_MAINNORBG                                       {您的系統不兼容REBUG配置下運行！\n\n某些選項將不可用。 }
-STR_MAINNOCOB                                       {您的系統不兼容REBUG COBRA配置下運行！\n\n"啟用COBRA模式"將不可用。 }
+STR_MAINNOCOB                                       {您的系統不兼容REBUG COBRA配置下運行！\n\n"COBRA模式"將不可用。 }
 STR_MAINNOFW                                        {無法檢測固件版本，按確定退出。 }
 STR_MAINERRFLASH                                    {無法訪問FLASH設備，按確定退出。 }
-STR_SCRSHTSAVED                                     {截圖保存成功為}
+STR_SCRSHTSAVED                                     {截圖保存成功}
 STR_SAVXREG                                         {你想備份/dev_flash2/etc/xRegistry.sys至/dev_usb000？ }
 STR_SAVXREGOK                                       {備份完成！\nxRegistry.sys備份至/dev_usb000}
 STR_SAVXREGERR1                                     {錯誤！\nxRegistry.sys未備份}
-STR_SAVXREGERR2                                     {錯誤！\n沒有存儲設備連接到dev_usb000}
-STR_SAVXREGERR3                                     {錯誤：/沒有找到dev_flash2/etc/xRegistry.sys！ }
+STR_SAVXREGERR2                                     {錯誤！\n沒有存儲設備掛載到dev_usb000}
+STR_SAVXREGERR3                                     {錯誤：沒有找到/dev_flash2/etc/xRegistry.sys！ }
 STR_RESXREG                                         {你想從/dev_usb000復原xRegistry.sys？ }
 STR_RESXREGOK                                       {復原完成！\已從/dev_usb000復原nxRegistry.sys }
 STR_RESXREGERR1                                     {錯誤！\nxRegistry.sys未復原}
@@ -189,10 +189,10 @@ STR_LOADLV2K                                        {你想載入所選LV2內核
 STR_LOADLV2KNOSPACE                                 {/dev_flash沒有足夠的可用空間！ }
 STR_LOADLV2KCHKLV1                                  {檢查LV1，請稍候...}
 STR_LOADLV2KERR2                                    {LV2內核：操作失敗。 }
-STR_BOOTOOSMSG1                                     {你想改變啟動順序，啟用LV1 patches並載入OtherOS？ }
+STR_BOOTOOSMSG1                                     {你想改變啟動順序，啟用全部LV1 patches並載入OtherOS？ }
 STR_BOOTOOSMSG2                                     {你想改變啟動順序並載入OtherOS？ }
 STR_BOOTOOSERR1                                     {OtherOS的：操作失敗。 }
-STR_SWPKERR                                         {CEX模式無法使用此功能。\n\n請先刷了DEX NOR/NAND。 }
+STR_SWPKERR                                         {CEX模式中無法使用此功能。\n\n請先刷了DEX模式的NOR/NAND。 }
 STR_DMPFLSH                                         {你想將FLASH memory導出到文件？ }
 STR_DMPFLSHERR                                      {請插入至少有256MB可用空間的USB設備(/dev_usb000)，然後再試一次！ }
 STR_EXPLVMSG1                                       {你想將GameOS LV2 memory導出到一個文件？ }
@@ -205,45 +205,45 @@ STR_EXPLVMSG5                                       {導出GameOS memory至文�
 STR_EXPLVMSG4                                       {請稍候，可能需要大約5分鐘...}
 STR_EXPLVOK2                                        {Hypervisor memory成功導出到文件}
 STR_EXPLVERR2                                       {Hypervisor memory導出失敗！\n\n無法創建}
-STR_MODNORM                                         {[NORMAL MODE]現在是活動的。\n\n當你退出時，系統將會自動重啟。 }
+STR_MODNORM                                         {[NORMAL MODE]已經啟用。\n\n當你退出時，系統將會自動重啟。 }
 STR_TRYAGAIN                                        {失敗：請重試}
 STR_MODNORMALRD                                     {[NORMAL MODE]已經設定！ }
-STR_MODREB                                          {[REBUG MODE]現在是活動的。\n\n當你退出時，系統將會自動重啟。 }
+STR_MODREB                                          {[REBUG MODE]已經啟用。\n\n當你退出時，系統將會自動重啟。 }
 STR_MODREBALRD                                      {[REBUG MODE]已經設定！ }
 STR_WMDIS                                           {WebMAN已禁用，當你退出時，系統將會自動重啟。 }
-STR_WMENA                                           {WebMAN已啟用。webMAN將在下次啟動中載入。\n\n請務必確認COBRA已啟用}
-STR_MODRET                                          {[RETAIL XMB]現在是活動的。\n\n當你退出時，系統將會自動重啟。 }
+STR_WMENA                                           {WebMAN已啟用。webMAN將在下次啟動中載入。\n\n請務必先啟用webMAN後再啟用COBRA}
+STR_MODRET                                          {[RETAIL XMB]已經啟用。\n\n當你退出時，系統將會自動重啟。 }
 STR_MODRETERR1                                      {請嘗試[DEBUG XMB]}
-STR_MODRETERR2                                      {UNAVAILABLE [標準模式]}
-STR_MODDEB                                          {[DEBUG XMB]現在是活動的。\n\n當你退出時，系統將會自動重啟。 }
+STR_MODRETERR2                                      {無法使用於 [標準模式]}
+STR_MODDEB                                          {[DEBUG XMB]已經啟用。\n\n當你退出時，系統將會自動重啟。 }
 STR_MODDEBERR1                                      {請嘗試[RETAIL XMB]}
-STR_MODDEBERR2                                      {UNAVAILABLE [標準模式]}
-STR_MODDEBSQA                                       {[DEBUG設置：MENU CEX QA]現在是活動的\n\n當你退出時，系統將會自動重啟。 }
-STR_MODDEBSQAOK                                     {[DEBUG設置：MENU CEX QA]現在是活動的。 }
+STR_MODDEBERR2                                      {無法使用於 [標準模式]}
+STR_MODDEBSQA                                       {[DEBUG設置：MENU CEX QA]已經啟用\n\n當你退出時，系統將會自動重啟。 }
+STR_MODDEBSQAOK                                     {[DEBUG設置：MENU CEX QA]已經啟用。 }
 STR_MODDEBSQAERR1                                   {[DEBUG設置：MENU CEX QA]失敗}
 STR_MODDEBSQAERR2                                   {TRY [DEBUG設置：MENU DEBUG]}
-STR_MODDEBSDEB                                      {[DEBUG設置：MENU DEBUG]現在是活動的\n\n當你退出時，系統將會自動重啟。 }
-STR_MODDEBSDEBOK                                    {[DEBUG設置：MENU DEBUG]現在是活動的。 }
+STR_MODDEBSDEB                                      {[DEBUG設置：MENU DEBUG]已經啟用\n\n當你退出時，系統將會自動重啟。 }
+STR_MODDEBSDEBOK                                    {[DEBUG設置：MENU DEBUG]已經啟用。 }
 STR_MODDEBSDEBERR1                                  {[DEBUG設置：MENU DEBUG]失敗}
 STR_MODDEBSDEBERR2                                  {TRY [DEBUG設置：MENU CEX QA]}
 STR_MODCOBENA                                       {COBRA模式已啟用。 }
 STR_MODCOBDIS                                       {COBRA模式已禁用。 }
 STR_ERRCOBUP                                        {沒有找到COBRA payload文件。}
-STR_COBUPSUCC                                       {Cobra payload已更新!\n重新啟動使更改生效。}
+STR_COBUPSUCC                                       {Cobra payload已更新!\n重新啟動後更改生效。}
 STR_ERRFLASH                                        {Flash錯誤，請重新安裝固件來解決這個問題}
-STR_PS2ERR1                                         {在HDD或USB（dev_usb000）沒有找到PS2Emu文件。 }
+STR_PS2ERR1                                         {在HDD或USB(dev_usb000)中沒有找到PS2Emu文件。 }
 STR_PS2CONT                                         {繼續從USB（dev_usb000）複製PS2Emu文件？}
 STR_PS2COP                                          {已從USB複製PS2Emu文件！ }
-STR_PS2SWPOK                                        {PS2Emu已切換！\n重新啟動重啟使更改生效。 }
+STR_PS2SWPOK                                        {PS2Emu已切換！\n重啟後更改生效。 }
 STR_XMBCFWDIS                                       {XMB CFW settings MOD已禁用。該插件將在下次啟動時被卸載。 }
-STR_XMBCFWENA                                       {XMB CFW settings MOD已啟用。該功能將通過XMB上的網絡列可用。 }
+STR_XMBCFWENA                                       {XMB CFW settings MOD已啟用。該功能可通過XMB上的“網絡”列訪問。 }
 STR_FLASHSET                                        {標誌已設置。 }
 STR_1                                               {數據保存為：}
 STR_2                                               {處理：}
-STR_3                                               {在MB}
-STR_4                                               {最小值}
+STR_3                                               {MB，剩餘}
+STR_4                                               {分鐘}
 STR_5                                               {MB/s}
-STR_READFLASHERROR1                                 {訪問數據時發生錯誤！\n\nSectors讀取時出現錯誤：}
+STR_READFLASHERROR1                                 {訪問數據時發生錯誤！\n\n已讀取磁區數：}
 STR_READFLASHERROR2                                 {\n總磁區: } 
 STR_TOGHOSTINF                                      {在XMB [DEX]顯示主機信息}
 STR_TOGHOSTINFDESC                                  {在XMB上啟用或禁用主機信息}
