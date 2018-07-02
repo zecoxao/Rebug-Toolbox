@@ -36,12 +36,12 @@ STR_RESTSYSDESC1			{Zamknij}
 STR_RESTSYSDESC2			{i ponownie uruchom system PLAYSTATION® 3}
 STR_RESTSYS_SUB1			{Soft (tylko LV2 Reboot)}
 STR_RESTSYS_SUB2			{Pełny (cykl włączania/wyłączania}
-STR_BOOTOOS					{Uruchom InnyOS}
-STR_BOOTOOSDESC				{Wybierz łatki LV1 i uruchom ponownie system w systemie InnyOS}
+STR_BOOTOOS					{Uruchom OtherOS}
+STR_BOOTOOSDESC				{Wybierz łatki LV1 i uruchom ponownie system w OtherOS}
 STR_BOOTOOS_SUB1			{Boot (łatki LV1: Zastosuj wszystko)}
 STR_BOOTOOS_SUB2			{Boot (łatki LV1: Użyj bieżącego)}
 STR_TRNOFF					{Wyłącz system}
-STR_TRNOFFDESC				{Zamknij system PLAYSTATION® 3}
+STR_TRNOFFDESC				{Zamknij system PLAYSTATION®3}
 STR_QA						{Przełącz flagę QA}
 STR_QADESC					{Włącz lub wyłącz funkcje flagi QA.}
 STR_NOTAV					{Niedostępne}
@@ -62,7 +62,7 @@ STR_RESTORE					{Przywracać}
 STR_RESIZEVFLASH			{Zmień rozmiar regionów VFLASH/NAND}
 STR_RESIZEVFLASHDESC		{Zmień rozmiar regionów VFLASH/NAND 5, aby zezwolić na działanie innych systemów.}
 STR_INSTPETBOOT				{Zainstaluj petitboot}
-STR_INSTPETBOOTDESC			{Zainstaluj Petitboot na VFLASH/NAND Regions 5 z USB.}
+STR_INSTPETBOOTDESC			{Zainstaluj petitboot na VFLASH/NAND Regions 5 z USB.}
 STR_GAMEOSBOOTFLG			{Ustaw flagę rozruchową GameOS}
 STR_GAMEOSBOOTFLGDESC		{rozwiązuje problem ładowania tytułów PS2, jeśli zainstalowany jest OtherOS.}
 STR_PKG						{Utwórz folder \x22Packages\x22}
@@ -89,7 +89,7 @@ STR_TOGCFWDESC				{Włączanie lub wyłączanie ustawień XMB CFW v0.1a (MOD)}
 STR_TOGCOB					{Włącz tryb COBRA}
 STR_TOGCOBDESC				{Włącz lub wyłącz tryb COBRA przy następnym uruchomieniu.}
 STR_TOGPS2					{Przełącz emulator PS2}
-STR_TOGPS2DESC				{PS2Emu zamienia się na oryginalne pliki PS2 Emu.}
+STR_TOGPS2DESC				{PS2Emu zamienia się na oryginalne pliki PS2Emu.}
 STR_TOGWM					{Włącz webMAN}
 STR_TOGWMDESC				{Włącz lub wyłącz zintegrowany webMAN przy następnym uruchomieniu.}
 STR_COBPUPD       			{COBRA Payload Updater}
@@ -102,11 +102,11 @@ STR_LV2MEMPRO				{Zabezpieczenie pamięci LV2}
 STR_LV2MEMPRODESC			{Zamknięcie poprawki na modyfikacji LV2}
 STR_HTAB					{Mapowanie HTAB z ochroną przed zapisem}
 STR_HTABDESC				{Włącz lub wyłącz chronione mapowanie HTAB}
-STR_INDI					{Dostęp do wszystkich usług INDI Info Manager}
+STR_INDI					{Dostęp do wszystkich usług INDI menedżera informacji}
 STR_INDIDESC				{Włącz lub wyłącz dostęp INDI.}
 STR_EEPROM					{Dostęp do zapisu EEPROM dla menedżera aktualizacji}
 STR_EEPROMDESC				{Dostęp do aktualizacji do EEPROM.}
-STR_DISPATCH				{Dostęp do Dispatch Manager}
+STR_DISPATCH				{Dostęp do menedżera wysyłki}
 STR_DISPATCHDESC			{Dostęp do Menedżera wysyłek do wszystkich usług.}
 STR_ENCDEC					{Zezwalaj komendzie IOCTL ENCDEC 0x85}
 STR_ENCDECDESC				{Włącz komendę IOCTL 0x85}
@@ -152,7 +152,7 @@ STR_WEIDERROR1				{Wystąpił błąd podczas uzyskiwania dostępu do flash}
 STR_WEIDERROR2				{Podany plik nie jest zgodny z twoim systemem!}
 STR_WEIDRUSURE1				{Za chwilę zaktualizujesz swój PS3™ Region/Cel ID!\n\nRegion/Cel ID:}
 STR_WEIDRUSURE2				{JESTEŚ PEWNY?}
-STR_WEIDRUSURE3				{Zamierzasz zmienić PS3™ Region/Cel ID!\nCurrent ID:}
+STR_WEIDRUSURE3				{Zamierzasz zmienić PS3™ Region/Cel ID!\nBieżący ID:}
 STR_WEIDRUSURE4				{Nowy identyfikator:}
 STR_WEIDRRUUSURE			{OSTRZEŻENIE:\n\nTa operacja jest NIEBEZPIECZNA i powinna być przeprowadzana WYŁĄCZNIE, jeśli jesteś POUFNY!\n\nJESTEŚ PEWNY ?}
 STR_WEIDOK1					{Region Flash EID0 został pomyślnie nadpisany (192 bajty).\n\nProszę wyjść do XMB, wyłączyć i włączyć system!}
@@ -189,9 +189,9 @@ STR_LOADLV2K				{Czy chcesz wczytać wybrane jądro LV2 i miękki restart?}
 STR_LOADLV2KNOSPACE			{Za mało wolnego miejsca w/dev_flash!}
 STR_LOADLV2KCHKLV1			{Sprawdzanie LV1, proszę czekać...}
 STR_LOADLV2KERR2			{LV2 Kernel: Operacja nieudana.}
-STR_BOOTOOSMSG1				{Czy chcesz zmienić kolejność rozruchu, włączyć wszystkie łatki LV1 i załadować inneOS?}
-STR_BOOTOOSMSG2				{Czy chcesz zmienić kolejność rozruchu i załadować inneOS?}
-STR_BOOTOOSERR1				{InneOS: operacja nie powiodła się.}
+STR_BOOTOOSMSG1				{Czy chcesz zmienić kolejność rozruchu, włączyć wszystkie łatki LV1 i załadować OtherOS?}
+STR_BOOTOOSMSG2				{Czy chcesz zmienić kolejność rozruchu i załadować OtherOS?}
+STR_BOOTOOSERR1				{OtherOS: operacja nie powiodła się.}
 STR_SWPKERR					{Ta funkcja nie jest dostępna w trybie CEX.\n\nNajpierw proszę nacisnąć przycisk DEX NOR/NAND.}
 STR_DMPFLSH					{Czy chcesz wyeksportować pamięć FLASH do pliku?}
 STR_DMPFLSHERR				{Włóż dysk USB (/ dev_usb000) z co najmniej 256 MB wolnego miejsca i spróbuj ponownie!}
@@ -207,7 +207,7 @@ STR_EXPLVOK2				{Pamięć Hypervisor została pomyślnie wyeksportowana do pliku
 STR_EXPLVERR2				{Eksportowanie pamięci Hypervisor nie powiodło się!\n\nNie można utworzyć}
 STR_MODNORM					{[NORMAL MODE] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
 STR_TRYAGAIN				{NIEPOWODZENIE: PROSZĘ SPRÓBUJ PONOWNIE}
-STR_MODNORMALRD				{[NORMAL MODE] JEST JUŻ USTAWION!!}
+STR_MODNORMALRD				{[NORMAL MODE] JEST JUŻ USTAWIONY!!}
 STR_MODREB					{[REBUG MODE] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
 STR_MODREBALRD				{[REBUG MODE] JEST JUŻ USTAWIONY!}
 STR_WMDIS					{WebMAN jest wyłączony, system automatycznie zrestartuje się po zamknięciu.}
@@ -218,13 +218,13 @@ STR_MODRETERR2				{NIEDOSTĘPNE [NORMAL MODE]}
 STR_MODDEB					{[DEBUG XMB] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
 STR_MODDEBERR1				{PROSZĘ SPRÓBOWAĆ [RETAIL XMB]}
 STR_MODDEBERR2				{NIEDOSTĘPNE [NORMAL MODE]}
-STR_MODDEBSQA				{[DEBUG STAWIENIA: MENU CEX QA] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
-STR_MODDEBSQAOK				{[DEBUG STAWIENIA: MENU CEX QA] jest teraz aktywny.}
-STR_MODDEBSQAERR1			{[DEBUG STAWIENIA: MENU CEX QA] NIEUDANE}
-STR_MODDEBSQAERR2			{Próbuj [DEBUG STAWIENIA: MENU DEBUG]}
-STR_MODDEBSDEB				{[DEBUG STAWIENIA: MENU DEBUG] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
-STR_MODDEBSDEBOK			{[DEBUG STAWIENIA: MENU DEBUG] jest teraz aktywny.}
-STR_MODDEBSDEBERR1			{[DEBUG STAWIENIA: MENU DEBUG] NIEUDANE}
+STR_MODDEBSQA				{[DEBUG USTAWIENIA: MENU CEX QA] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
+STR_MODDEBSQAOK				{[DEBUG USTAWIENIA: MENU CEX QA] jest teraz aktywny.}
+STR_MODDEBSQAERR1			{[DEBUG USTAWIENIA: MENU CEX QA] NIEUDANE}
+STR_MODDEBSQAERR2			{Próbuj [DEBUG USTAWIENIA: MENU DEBUG]}
+STR_MODDEBSDEB				{[DEBUG USTAWIENIA: MENU DEBUG] jest teraz aktywny.\n\nSystem automatycznie uruchomi się ponownie po zamknięciu.}
+STR_MODDEBSDEBOK			{[DEBUG USTAWIENIA: MENU DEBUG] jest teraz aktywny.}
+STR_MODDEBSDEBERR1			{[DEBUG USTAWIENIA: MENU DEBUG] NIEUDANE}
 STR_MODDEBSDEBERR2			{Próbuj [USTAWIENIA DEBUGA: MENU CEX QA]}
 STR_MODCOBENA				{Włączony tryb COBRA.}
 STR_MODCOBDIS				{Tryb COBRA wyłączony.}
@@ -243,7 +243,7 @@ STR_2                       {Przetworzono:}
 STR_3                       {MB w}
 STR_4                       {min}
 STR_5                       {MB/s}
-STR_READFLASHERROR1			{Wystąpił błąd podczas uzyskiwania dostępu do danych!\n\nCzytaj sektory: }
+STR_READFLASHERROR1			{Wystąpił błąd podczas uzyskiwania dostępu do danych!\n\nCzytaj sektory:}
 STR_READFLASHERROR2			{\Suma sektorów: }
 STR_TOGHOSTINF              {Przełącz informacje o hoście na XMB [DEX]}
-STR_TOGHOSTINFDESC 			{Włącz lub wyłącz Host Information na XMB}
+STR_TOGHOSTINFDESC 			{Włącz lub wyłącz informacje o hostach w XMB}
