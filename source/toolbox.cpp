@@ -83,7 +83,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.02.17"
+#define STR_APP_VER	 "02.03.01"
 
 
 //#include "syscall8.h"
@@ -194,6 +194,8 @@ char STR_INSTPETBOOT[50] = "Install petitboot";
 char STR_INSTPETBOOTDESC[130] = "Install Petitboot to VFLASH/NAND Regions 5 from USB.";
 char STR_GAMEOSBOOTFLG[130] = "Set GameOS Boot Flag";
 char STR_GAMEOSBOOTFLGDESC[130] = "fixes issue loading PS2 titles if OtherOS is installed.";
+char STR_LOADPAYLOAD[130] = "Load payload in kernel.";
+char STR_LOADPAYLOADDESC[130] = "Use payload in /dev_usb000/payload.bin to execute in kernel";
 char STR_PKG[130] = "Create \x22Packages\x22 Folder";
 char STR_PKGDESC[130] = "Create /dev_hdd0/packages folder.";
 char STR_SAVLV1[130] = "Export Hypervisor LV1 Memory";
@@ -708,7 +710,9 @@ static void update_language(void)
 	language("STR_INSTPETBOOT", STR_INSTPETBOOT);
 	language("STR_INSTPETBOOTDESC", STR_INSTPETBOOTDESC);
 	language("STR_GAMEOSBOOTFLG", STR_GAMEOSBOOTFLG);
-	language("STR_GAMEOSBOOTFLGDESC", STR_GAMEOSBOOTFLGDESC);
+	language("STR_GAMEOSBOOTFLGDESC", STR_GAMEOSBOOTFLGDESC);	
+	language("STR_LOADPAYLOAD", STR_LOADPAYLOAD);
+	language("STR_LOADPAYLOADDESC", STR_LOADPAYLOADDESC);
 	language("STR_PKG", STR_PKG);
 	language("STR_PKGDESC", STR_PKGDESC);
 	language("STR_SAVLV1", STR_SAVLV1);
@@ -900,7 +904,7 @@ static void update_language(void)
 
 static int sys_get_version(uint32_t *version)
 {
-	system_call_2(8, SYSCALL8_OPCODE_GET_VERSION, (uint64_t)(uint32_t)version);
+	system_call_2(8, SYSCALL8_OPCODE_GET_VERSION, (uint64_t)version);
 	return (int)p1;
 }
 
@@ -909,6 +913,7 @@ static int sys_get_version2(uint16_t *version)
 	system_call_2(8, SYSCALL8_OPCODE_GET_VERSION2, (uint64_t)(uint32_t)version);
 	return (int)p1;
 }
+
 
 int cobra_get_version(uint16_t *cobra_version, uint16_t *ps3_version)
 {
@@ -973,6 +978,35 @@ int cobra_get_version(uint16_t *cobra_version, uint16_t *ps3_version)
 	}
 
 	return 0;
+}
+
+#define SYSCALL8_OPCODE_DISABLE_COBRA_STAGE		0x6A13
+
+static int disable_cobra(char *path)
+{
+	uint16_t version;
+	cobra_get_version(&version, NULL);
+	char path_new[200];
+	if(version>=0x760)
+	{
+		system_call_1(8, SYSCALL8_OPCODE_DISABLE_COBRA_STAGE);
+		return (int)p1;
+	}
+	else
+	{
+		strcpy(path_new, path);
+		strcat(path_new, ".bak");
+		rename(path, path_new);
+	}
+	return 0;
+}
+
+#define SYSCALL8_OPCODE_RUN_PAYLOAD				0x6CDF
+
+static int run_payload(uint8_t *payload, int size)
+{
+	system_call_3(8, SYSCALL8_OPCODE_RUN_PAYLOAD, (uint64_t)payload, size);
+	return (int)p1;
 }
 
 u32 COL_XMB_CLOCK=0xffd0d0d0;
@@ -5684,6 +5718,47 @@ void change_opacity(u8 *buffer, int delta, u32 size)
 
 }
 
+void load_kern_payload()
+{
+	
+	char status[512];
+	
+	uint64_t read;
+	dialog_ret=0;
+	int file;
+	CellFsStat stat1;
+	uint8_t *payload1=(uint8_t *)malloc(0x10001);
+	memset(payload1, 0, 0x10001);
+	if(cellFsStat("/dev_usb000/payload.bin", &stat1)==0)
+	{
+		uint64_t len=stat1.st_size;
+		if(len>0x10000)
+		{
+			sprintf(status, "Too big payload. max 0x10000");
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
+		}
+		else
+		{
+			cellFsOpen("/dev_usb000/payload.bin", CELL_FS_O_RDONLY, &file, NULL, 0);
+			cellFsRead(file, payload1, len, &read);
+			cellFsClose(file);
+			run_payload(payload1, len);
+			sprintf(status, "Executed!");
+			free(payload1);
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
+		}
+	}
+	else
+	{
+			sprintf(status, "No payload found!");
+			cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+			wait_dialog_simple();
+	}
+		
+}
+
 void set_gameos_flag()
 {
 	uint32_t dev_handle;
@@ -6092,6 +6167,7 @@ u8 cobra_mode=0;
 u8 swap_emu=0;
 u8 update_cobra=0; // 02.02.13
 u8 gameos_flag=0;
+u8 load_payload=0;
 u8 webman_mode=0;
 u8 cfw_settings=0;
 u8 wmlp=0;
@@ -6149,6 +6225,7 @@ void parse_settings()
 			else if(!strcmp(oini, "xmb_plugin"))		xmb_plugin		=val;
 			else if(!strcmp(oini, "confirm_with_x"))	{confirm_with_x	=val; set_xo(); save_options();}
 			else if(!strcmp(oini, "gameos_flag"))		gameos_flag		=val;
+			else if(!strcmp(oini, "load_payload"))		load_payload		=val;
 
 			else if(!strcmp(oini, "otheros"))			otheros			=val;
 
@@ -6316,6 +6393,12 @@ void add_utilities()
 		add_xmb_member(xmb[col].member, &xmb[col].size, (char*)"Toggle PS2 netemu", (char*)"Force Enable PS2 Soft Emulation on Backward Compatible Consoles",
 			/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
 	}
+	if((is_cobra_based()) && (version>=0x760))
+	{
+		add_xmb_member(xmb[col].member, &xmb[col].size, STR_LOADPAYLOAD, STR_LOADPAYLOADDESC,
+				/*type*/6, /*status*/2, /*icon*/xmb_icon_tool, 128, 128);
+	}
+
 	// 2.02.12 END
 
 	add_xmb_option(xmb[col].member, &xmb[col].size, STR_PS3ID, STR_PS3IDDESC,	(char*)"util_idps");
@@ -8531,6 +8614,10 @@ int main(int argc, char **argv)
 	else
 	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031372F30382FULL) {dex_mode=2; c_firmware=4.82f;} //timestamp: 2017/08
 	else
+	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031382F30392FULL) {dex_mode=2; c_firmware=4.83f;} //timestamp: 2018/09
+	else
+	if(peekq(0x800000000030F3B0ULL)==DEX && peekq(0x800000000031F028ULL)==0x323031392F30312FULL) {dex_mode=2; c_firmware=4.84f;} //timestamp: 2019/01
+	else
 	if(c_firmware == 0)
 	{
 		dialog_ret=0; cellMsgDialogOpen2( type_dialog_ok, STR_MAINNOFW, dialog_fun2, (void*)0x0000aaab, NULL ); wait_dialog_simple();
@@ -8964,8 +9051,19 @@ force_reload:
 						if(status_ps2==0)
 							param++;
 						enable_netemu_cobra(param);
-						}	// 2.02.12
+						}	// 2.02.12					
 				}
+				if(is_cobra_based() && version>=0x760)
+				{
+					if(status_ps2==-1)
+					{	
+						if(xmb[xmb_icon].first==n+9) {load_kern_payload();}
+					}
+					else
+					{
+						if(xmb[xmb_icon].first==n+10) {load_kern_payload();}
+					}
+				}		
 			}
 
 			if((xmb[xmb_icon].member[xmb[xmb_icon].first].option_size)) // || xmb[2].first<3 //settings
@@ -12782,11 +12880,12 @@ void apply_settings(char *option, int val, u8 _forced)
 			if(result == 0)
 			{
 				rename ("/dev_rebug/rebug/cobra/stage2.cex.bak","/dev_rebug/rebug/cobra/stage2.cex" );
+				cellFsUnlink("/dev_hdd0/tmp/loadoptical");
 
 				result = stat("/dev_rebug/rebug/cobra/stage2.dex.bak", &statinfo);
 				if(result == 0)
 				{
-						rename ("/dev_rebug/rebug/cobra/stage2.dex.bak", "/dev_rebug/rebug/cobra/stage2.dex");
+						rename ("/dev_rebug/rebug/cobra/stage2.dex.bak", "/dev_rebug/rebug/cobra/stage2.dex"); //no cobra 8.00 dex
 				}
 
 				{
@@ -12801,12 +12900,12 @@ void apply_settings(char *option, int val, u8 _forced)
 			result = stat("/dev_rebug/rebug/cobra/stage2.cex", &statinfo);
 			if(result == 0)
 			{
-				rename ("/dev_rebug/rebug/cobra/stage2.cex","/dev_rebug/rebug/cobra/stage2.cex.bak" );
+				disable_cobra((char *)"/dev_rebug/rebug/cobra/stage2.cex");
 
 				result = stat("/dev_rebug/rebug/cobra/stage2.dex", &statinfo);
 				if(result == 0)
 				{
-						rename ("/dev_rebug/rebug/cobra/stage2.dex", "/dev_rebug/rebug/cobra/stage2.dex.bak");
+						disable_cobra ((char *)"/dev_rebug/rebug/cobra/stage2.dex");
 				}
 
 				{
@@ -13111,6 +13210,42 @@ void apply_settings(char *option, int val, u8 _forced)
 		}
 	}	*/
 
+	if(!strcmp(option, "load_payload"))
+	{
+		uint64_t read;
+		int file;
+		CellFsStat stat1;
+		uint8_t *payload1=(uint8_t *)malloc(0x10001);
+		memset(payload1, 0, 0x10001);
+		if(cellFsStat("/dev_usb000/payload.bin", &stat1)==0)
+		{
+			uint64_t len=stat1.st_size;
+			if(len>0x10000)
+			{
+				sprintf(status, "Too big payload. max 0x10000");
+				cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
+			}
+			else
+			{
+				cellFsOpen("/dev_usb000/payload.bin", CELL_FS_O_RDONLY, &file, NULL, 0);
+				cellFsRead(file, payload1, len, &read);
+				cellFsClose(file);
+				run_payload(payload1, len);
+				sprintf(status, "Executed!");
+				free(payload1);
+				cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
+			}
+		}
+		else
+		{
+				sprintf(status, "No payload found!");
+				cellMsgDialogOpen2( type_dialog_ok, (const char*) status, dialog_fun2, (void*)0x0000aaab, NULL );
+				wait_dialog_simple();
+		}
+	}
+	
 	if(!strcmp(option, "xmb_plugin"))
 	{
 
