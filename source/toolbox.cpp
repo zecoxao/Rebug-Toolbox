@@ -83,7 +83,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.03.01"
+#define STR_APP_VER	 "02.03.02"
 
 
 //#include "syscall8.h"
@@ -6508,7 +6508,9 @@ void add_settings_column()
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cobra_mode; //cobra_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
-
+		uint16_t version;
+		cobra_get_version(&version, NULL);
+		if((c_firmware==4.84f) && (is_cobra_based()) && (version<0x801))
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"COBRA",				(char*)"1");
