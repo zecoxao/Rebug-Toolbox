@@ -6508,9 +6508,11 @@ void add_settings_column()
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cobra_mode; //cobra_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
+		}
 		uint16_t version;
 		cobra_get_version(&version, NULL);
 		if((c_firmware==4.84f) && (is_cobra_based()) && (version<0x801))
+		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"COBRA",				(char*)"1");
@@ -6526,9 +6528,7 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=webman_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
-		// 02.02.14
-		uint16_t version;
-		cobra_get_version(&version, NULL);
+
 		if((c_firmware==4.81f) && (is_cobra_based()) && (version<0x753))
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
@@ -6537,7 +6537,7 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].option_selected=update_cobra; //update_cobra payload;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
-		// 02.02.13 END
+
 
 /*			add_xmb_option(xmb[col].member, &xmb[col].size, (char*)"GameOS boot flag", (char*)"set gameos boot flag to fix ps2 issue",	(char*)"gameos_flag");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Set it",			(char*)"0");
@@ -6565,7 +6565,11 @@ void add_settings_column()
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)STR_ENABLE,				(char*)"1");
 			xmb[col].member[xmb[col].size-1].option_selected=cobra_mode; //cobra_mode;
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
-
+		}
+		uint16_t version;
+		cobra_get_version(&version, NULL);
+		if((c_firmware==4.84f) && (is_cobra_based()) && (version<0x801))
+		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"COBRA",				(char*)"1");
@@ -6591,9 +6595,6 @@ void add_settings_column()
 			xmb[col].member[xmb[col].size-1].icon=xmb_icon_tool;
 		}
 
-		// 12.12.17 Add payload updater 7.55 for 4.82.1 Light 7.54
-		uint16_t version;
-		cobra_get_version(&version, NULL);
 		if((c_firmware==4.82f) && (is_cobra_based()) && (version==0x754))
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_COBPUPD, STR_COBPUPDDESC,	(char*)"update_cobra");
