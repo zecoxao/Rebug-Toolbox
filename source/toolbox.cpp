@@ -6511,7 +6511,7 @@ void add_settings_column()
 		}
 		uint16_t version;
 		cobra_get_version(&version, NULL);
-		if((c_firmware==4.84f) && (is_cobra_based()) && (version<0x801))
+		if((is_cobra_based()) && (version<0x801))
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
@@ -6568,7 +6568,7 @@ void add_settings_column()
 		}
 		uint16_t version;
 		cobra_get_version(&version, NULL);
-		if((c_firmware==4.84f) && (is_cobra_based()) && (version<0x801))
+		if((is_cobra_based()) && (version<0x801))
 		{
 			add_xmb_option(xmb[col].member, &xmb[col].size, STR_TOGPS2, STR_TOGPS2DESC,	(char*)"swap_emu");
 			add_xmb_suboption(xmb[col].member[xmb[col].size-1].option, &xmb[col].member[xmb[col].size-1].option_size, 0, (char*)"Original",			(char*)"0");
