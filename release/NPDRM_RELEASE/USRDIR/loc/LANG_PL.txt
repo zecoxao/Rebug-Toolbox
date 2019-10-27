@@ -137,7 +137,7 @@ STR_NOCEXDEXDESC			{Zainstaluj REBUG REX EDITION, aby uzyskać dostęp do tych f
 STR_SELECT					{: Wybierz}
 STR_HOLDQUITREB				{: Przytrzymaj, aby zakończyć i zrestartować}
 STR_HOLDQUIT				{: Przytrzymaj, aby zakończyć}
-STR_FREEHDD					{Darmowe miejsce na HDD}  
+STR_FREEHDD					{Wolne miejsce na HDD}  
 STR_NUMFW                   {PS3\xE2\x84\xA2 System: Firmware}
 STR_IP						{Adres IP}
 STR_QUITXMB					{Wyjdź do XMB?}
