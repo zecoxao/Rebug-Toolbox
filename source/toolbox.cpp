@@ -83,7 +83,7 @@ sys_process_param_t __sys_process_param SYS_PROCESS_PARAM_SECTION = {
 
 #define STR_APP_NAME "Rebug Toolbox"
 #define STR_APP_ID	 "RBGTLBOX2"
-#define STR_APP_VER	 "02.03.05 [unofficial]"
+#define STR_APP_VER	 "02.03.05"
 
 
 //#include "syscall8.h"
