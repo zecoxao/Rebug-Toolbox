@@ -90,7 +90,7 @@ void generic_patches()
 		Lv2Syscall2(9, HV_START_OFFSET_421 + 16, 0xc232fcad552c80d7ULL);
 		Lv2Syscall2(9, HV_START_OFFSET_421 + 24, 0x65140cd200000000ULL);
 	}
-	
+
 	if( (c_firmware>=4.30f && c_firmware<=4.53f) )
 	{
 		Lv2Syscall2(9, HV_START_OFFSET_430 +  0, 0x0000000000000001ULL);
@@ -161,9 +161,9 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000059AF0ULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x8000000000059B04ULL, 0x2F83000060000000ULL );
 		}
-		
+
 #define pokeq(a, b)		(Lv2Syscall2(7, a, b))
-		
+
 		if(c_firmware==4.41f)
 		{
 			Lv2Syscall2(7, 0x80000000000560C0ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
@@ -193,8 +193,8 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000059AF0ULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x8000000000059B04ULL, 0x2F83000060000000ULL );
 		}
-		
-		
+
+
 		if(c_firmware==4.53f)
 		{
 			Lv2Syscall2(7, 0x80000000000560C0ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
@@ -233,7 +233,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000056604ULL, 0x2F84000448000098ULL );
 			Lv2Syscall2(7, 0x800000000005A658ULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x800000000005A66CULL, 0x2F83000060000000ULL );
-			Lv2Syscall2(7, 0x8000000000056230ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
+			Lv2Syscall2(7, 0x8000000000056230ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
 		}
 		if(c_firmware==4.70f || c_firmware==4.80f)
 		{
@@ -243,9 +243,9 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000056600ULL, 0x2F84000448000098ULL );
 			Lv2Syscall2(7, 0x800000000005A6DCULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x800000000005A6F0ULL, 0x2F83000060000000ULL );
-			Lv2Syscall2(7, 0x800000000005622CULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
+			Lv2Syscall2(7, 0x800000000005622CULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
 		}
-		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f || c_firmware==4.83f || c_firmware==4.84f || c_firmware==4.85f || c_firmware==4.86f || c_firmware==4.87f)
+		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f || c_firmware==4.83f || c_firmware==4.84f || c_firmware==4.85f || c_firmware==4.86f || c_firmware==4.87f || c_firmware==4.88f)
 		{
 			Lv2Syscall2(7, 0x800000000005658CULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x8000000000056650ULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
@@ -253,7 +253,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x8000000000056604ULL, 0x2F84000448000098ULL ); // Original: 0x2F840004409C0048ULL //PATCH_JUMP
 			Lv2Syscall2(7, 0x800000000005A6E0ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
 			Lv2Syscall2(7, 0x800000000005A6F4ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
-			Lv2Syscall2(7, 0x8000000000056230ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
+			Lv2Syscall2(7, 0x8000000000056230ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
 		}
 	}
 	else if (dex_mode)
@@ -278,7 +278,7 @@ void generic_patches()
 			Lv2Syscall2(7, 0x800000000005E36CULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x800000000005E380ULL, 0x2F83000060000000ULL );
 		}
-		
+
 		if(c_firmware==4.30f)
 		{
 			Lv2Syscall2(7, 0x800000000005AA88ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
@@ -353,7 +353,7 @@ void generic_patches()
 		}
 
 		if(c_firmware==4.65f || c_firmware==4.66f)
-		{			
+		{
 			Lv2Syscall2(7, 0x8000000000059F5CULL, 0x63FF003D60000000ULL ); // fix 8001003D error  Original: 0x63FF003D419EFFD4ULL
 			Lv2Syscall2(7, 0x800000000005A020ULL, 0x3FE080013BE00000ULL ); // fix 8001003E error  Original: 0x3FE0800163FF003EULL
 			Lv2Syscall2(7, 0x8000000000059FCCULL, 0x419E00D860000000ULL ); // Original: 0x419E00D8419D00C0ULL
@@ -364,26 +364,26 @@ void generic_patches()
         }
 
 		if(c_firmware==4.70f || c_firmware==4.80f)
-		{		
+		{
 			Lv2Syscall2(7, 0x8000000000059F58ULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x800000000005A01CULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
 			Lv2Syscall2(7, 0x8000000000059FC8ULL, 0x419E00D860000000ULL );
 			Lv2Syscall2(7, 0x8000000000059FD0ULL, 0x2F84000448000098ULL );
 			Lv2Syscall2(7, 0x800000000005E0ACULL, 0x2F83000060000000ULL );
 			Lv2Syscall2(7, 0x800000000005E0C0ULL, 0x2F83000060000000ULL );
-			Lv2Syscall2(7, 0x8000000000059BFCULL, 0x386000012F830000ULL ); // ignore LIC.DAT check		
+			Lv2Syscall2(7, 0x8000000000059BFCULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
 		}
 
-		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f || c_firmware==4.83f || c_firmware==4.84f || c_firmware==4.85f || c_firmware==4.86f || c_firmware==4.87f)
-		{		
+		if(c_firmware==4.75f || c_firmware==4.76f || c_firmware==4.78f || c_firmware==4.81f || c_firmware==4.82f || c_firmware==4.83f || c_firmware==4.84f || c_firmware==4.85f || c_firmware==4.86f || c_firmware==4.87f || c_firmware==4.88f)
+		{
 			Lv2Syscall2(7, 0x80000000000595FCULL, 0x63FF003D60000000ULL ); // fix 8001003D error
 			Lv2Syscall2(7, 0x800000000005A020ULL, 0x3FE080013BE00000ULL ); // fix 8001003E error
 			Lv2Syscall2(7, 0x8000000000059FCCULL, 0x419E00D860000000ULL ); // Original: 0x419E00D8419D00C0ULL
 			Lv2Syscall2(7, 0x8000000000059FD4ULL, 0x2F84000448000098ULL ); // Original: 0x2F840004409C0048ULL //PATCH_JUMP
 			Lv2Syscall2(7, 0x800000000005E0B0ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
 			Lv2Syscall2(7, 0x800000000005E0C4ULL, 0x2F83000060000000ULL ); // fix 80010009 error  Original: 0x2F830000419E00ACULL
-			Lv2Syscall2(7, 0x8000000000059C00ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check			
-		}	
+			Lv2Syscall2(7, 0x8000000000059C00ULL, 0x386000012F830000ULL ); // ignore LIC.DAT check
+		}
 	}
 }
 

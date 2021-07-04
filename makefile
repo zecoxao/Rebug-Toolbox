@@ -4,6 +4,7 @@ CELL_SDK	?= /c/cell
 CELL_MK_DIR = $(CELL_SDK)/samples/mk
 include $(CELL_MK_DIR)/sdk.makedef.mk
 CELL_INC_DIR = $(CELL_SDK)/target/include
+PPU_OBJCOPY = /c/msys/1.0/cell/host-win32/ppu/bin/ppu-lv2-objcopy
 
 #=========================================================
 
